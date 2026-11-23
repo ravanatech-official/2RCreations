@@ -1,0 +1,104 @@
+{
+  "entities": {
+    "LeadInquiry": {
+      "title": "LeadInquiry",
+      "description": "Client project inquiry or sample request submitted via website contact form",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Full name or studio name of the photographer/client"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200,
+          "description": "Client email address for correspondence"
+        },
+        "whatsapp": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Phone or WhatsApp number with international country code"
+        },
+        "projectType": {
+          "type": "string",
+          "description": "Type of service requested (e.g. Wedding Album Design, Photo Retouching)"
+        },
+        "message": {
+          "type": "string",
+          "description": "Project scope, timeline, or notes provided by client"
+        },
+        "requestFreeSample": {
+          "type": "boolean",
+          "description": "Flag indicating if client requested a complimentary test retouching frame"
+        },
+        "samplePhotosLink": {
+          "type": "string",
+          "description": "Optional cloud storage link (Google Drive, Dropbox, WeTransfer)"
+        },
+        "source": {
+          "type": "string",
+          "description": "Traffic source identifier (e.g. website_inquiry_form, contact_form)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of submission creation"
+        }
+      },
+      "required": ["name", "email", "whatsapp", "projectType"]
+    },
+    "DataSubjectRequest": {
+      "title": "DataSubjectRequest",
+      "description": "GDPR/TCPA user preference, WhatsApp opt-out, data export, or erasure request",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200,
+          "description": "Client email associated with the inquiry"
+        },
+        "whatsapp": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Phone number for WhatsApp opt-out verification"
+        },
+        "requestType": {
+          "type": "string",
+          "description": "Type of request (WHATSAPP_OPT_OUT, DATA_EXPORT, RIGHT_TO_BE_FORGOTTEN, COMMUNICATION_PREFERENCE)"
+        },
+        "details": {
+          "type": "string",
+          "description": "Specific instructions or additional context from client"
+        },
+        "status": {
+          "type": "string",
+          "description": "Workflow processing status (PENDING, PROCESSED)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of request submission"
+        }
+      },
+      "required": ["email", "requestType"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": {
+        "$ref": "#/entities/LeadInquiry"
+      },
+      "description": "Collection of prospective client inquiries received by 2R Creations studio"
+    },
+    "/data_requests/{requestId}": {
+      "schema": {
+        "$ref": "#/entities/DataSubjectRequest"
+      },
+      "description": "Collection of GDPR/TCPA user preference, WhatsApp opt-out, and data subject requests"
+    }
+  }
+}

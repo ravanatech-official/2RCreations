@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+  :root {
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FBF9F5;
+    color: #242424;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+}
+
+/* Dedicated Editorial Scale Utilities following the Typography Specification */
+.type-hero-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.125rem, 4.5vw, 3.875rem); /* 34px mobile -> ~58-62px desktop */
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.type-section-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.875rem, 3.2vw, 2.625rem); /* 30px mobile -> ~40-42px desktop */
+  line-height: 1.14;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.type-small-section-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 2.5vw, 2.125rem); /* 26px mobile -> ~32-34px desktop */
+  line-height: 1.16;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.type-card-title {
+  font-size: clamp(1.1875rem, 1.8vw, 1.4375rem); /* 19px mobile -> ~22-23px desktop */
+  line-height: 1.25;
+}
+
+.type-large-body {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.2vw, 1.125rem); /* 16px mobile -> ~17-18px desktop */
+  line-height: 1.62;
+  font-weight: 400;
+}
+
+.type-normal-body {
+  font-family: var(--font-sans);
+  font-size: clamp(0.9375rem, 1vw, 1rem); /* 15px mobile -> ~16px desktop */
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+.type-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.type-nav-item {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.type-button {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+}
+
+.type-metadata {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+}
+
+.type-caption {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* Subtle Book Spread Shadow & Spine effect */
+.album-spread-shadow {
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.album-gutter-shadow {
+  background: linear-gradient(
+    90deg, 
+    rgba(0, 0, 0, 0.14) 0%, 
+    rgba(0, 0, 0, 0.04) 40%, 
+    rgba(0, 0, 0, 0) 50%, 
+    rgba(0, 0, 0, 0.04) 60%, 
+    rgba(0, 0, 0, 0.14) 100%
+  );
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FBF9F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #E0D9CE;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A880;
+}
+

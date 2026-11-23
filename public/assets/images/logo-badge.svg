@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700&amp;family=Cinzel:wght@500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap');
+      .badge-bg { fill: #0D0D0D; }
+      .badge-border { stroke: #FFFFFF; stroke-width: 2; fill: none; }
+      .badge-slash { stroke: #FFFFFF; stroke-width: 4; stroke-linecap: square; }
+      .badge-two { font-family: 'Playfair Display', serif; font-size: 175px; font-weight: 600; fill: #FFFFFF; }
+      .badge-r { font-family: 'Playfair Display', serif; font-size: 175px; font-weight: 600; fill: #FFFFFF; }
+      .creations-box { fill: #FFFFFF; }
+      .creations-text { font-family: 'Cinzel', 'Playfair Display', serif; font-size: 26px; font-weight: 600; letter-spacing: 0.32em; fill: #0D0D0D; text-anchor: middle; }
+      .signature { font-family: 'Alex Brush', cursive; font-size: 27px; fill: #FFFFFF; text-anchor: middle; }
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="520" class="badge-bg" rx="2" />
+  
+  <!-- Outer border -->
+  <rect x="18" y="18" width="364" height="484" class="badge-border" stroke-width="1.8" />
+  <rect x="24" y="24" width="352" height="472" class="badge-border" stroke-width="0.8" opacity="0.6" />
+
+  <!-- Diagonal slash divider -->
+  <line x1="115" y1="305" x2="285" y2="135" class="badge-slash" />
+
+  <!-- 2 and R -->
+  <text x="160" y="215" class="badge-two" text-anchor="middle">2</text>
+  <text x="240" y="305" class="badge-r" text-anchor="middle">R</text>
+
+  <!-- Banner Box -->
+  <rect x="45" y="345" width="310" height="36" class="creations-box" />
+  <text x="200" y="371" class="creations-text">CREATIONS</text>
+
+  <!-- by Sachini Fernando -->
+  <text x="200" y="418" class="signature">by Sachini Fernando</text>
+</svg>

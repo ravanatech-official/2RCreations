@@ -1,0 +1,71 @@
+name: Deploy to Firebase Hosting on merge
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools@15.32.1
+
+      - name: Deploy to Firebase Hosting
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IIR_CREATIONS || secrets.FIREBASE_SERVICE_ACCOUNT_IIRCREATIONSS || secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::Missing GitHub Secret in repository settings."
+            exit 1
+          fi
+          CRED_FILE="$RUNNER_TEMP/firebase-service-account.json"
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$CRED_FILE"
+          export GOOGLE_APPLICATION_CREDENTIALS="$CRED_FILE"
+
+          CONFIGSTORE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/configstore"
+          mkdir -p "$CONFIGSTORE_DIR"
+          cat << 'EOF' > "$CONFIGSTORE_DIR/firebase-tools.json"
+          {
+            "apiEnablementCache": {
+              "iir-creations": {
+                "firebasehosting.googleapis.com": true,
+                "firebase.googleapis.com": true,
+                "cloudresourcemanager.googleapis.com": true
+              }
+            }
+          }
+          EOF
+
+          set +e
+          DEPLOY_OUTPUT=$(firebase deploy --only hosting --project iir-creations --non-interactive --force 2>&1)
+          DEPLOY_EXIT=$?
+          set -e
+
+          echo "$DEPLOY_OUTPUT"
+          if [ $DEPLOY_EXIT -ne 0 ]; then
+            if echo "$DEPLOY_OUTPUT" | grep -q "is the current active version"; then
+              echo "Firebase Hosting already has this exact build active. Treating as success."
+              exit 0
+            fi
+            exit $DEPLOY_EXIT
+          fi
+
+      - name: Clean up credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/firebase-service-account.json"

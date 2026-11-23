@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 76" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,800;0,6..96,900&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap');
+      .logo-2r {
+        font-family: 'Bodoni Moda', 'Didot', 'Playfair Display', serif;
+        font-size: 52px;
+        font-weight: 800;
+        fill: #111111;
+        letter-spacing: -0.02em;
+      }
+      .logo-creations {
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        fill: #1A1A1A;
+        letter-spacing: 0.38em;
+      }
+      .logo-tagline {
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 8.5px;
+        font-weight: 500;
+        fill: #737373;
+        letter-spacing: 0.22em;
+      }
+    </style>
+  </defs>
+  <!-- 2R Mark -->
+  <text x="0" y="48" class="logo-2r">2R</text>
+  
+  <!-- CREATIONS -->
+  <text x="84" y="37" class="logo-creations">CREATIONS</text>
+  
+  <!-- PROFESSIONAL WEDDING ALBUM DESIGNER -->
+  <text x="86" y="58" class="logo-tagline">PROFESSIONAL WEDDING ALBUM DESIGNER</text>
+</svg>
