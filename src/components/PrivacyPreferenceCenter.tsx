@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   ShieldCheck, 
@@ -14,7 +14,8 @@ import {
 } from 'lucide-react';
 import { usePrivacy, PreferenceTab } from '../context/PrivacyContext';
 import { submitDataSubjectRequest, DataRequestSubmissionResult } from '../services/leads';
-import { STUDIO_CONFIG, getWhatsAppUrl, hasWhatsApp } from '../config';
+import { STUDIO_CONFIG } from '../config';
+import { firebaseConfig } from '../firebase';
 import { DataRequestType } from '../types';
 
 interface PrivacyPreferenceCenterProps {
@@ -37,6 +38,24 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
   const [localAnalytics, setLocalAnalytics] = useState(cookiePreferences.analytics);
   const [localFunctional, setLocalFunctional] = useState(cookiePreferences.functional);
   const [cookieSavedNotice, setCookieSavedNotice] = useState(false);
+
+  // Sync local toggles whenever saved preferences update or modal opens
+  useEffect(() => {
+    setLocalAnalytics(cookiePreferences.analytics);
+    setLocalFunctional(cookiePreferences.functional);
+  }, [cookiePreferences.analytics, cookiePreferences.functional, isPreferenceModalOpen]);
+
+  // Allow closing Preference Center modal with Escape key
+  useEffect(() => {
+    if (isPageEmbed || !isPreferenceModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closePreferencesModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPageEmbed, isPreferenceModalOpen, closePreferencesModal]);
 
   // Communication / WhatsApp Opt-Out Form State
   const [optOutPhone, setOptOutPhone] = useState('');
@@ -268,7 +287,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
                       </span>
                     </div>
                     <p className="text-xs text-[#242424]/70 mt-1.5 leading-relaxed font-light">
-                      Enables Google Analytics 4 (Measurement ID: G-E1XWMCL7C1) to record aggregated, anonymous engagement metrics (e.g. which album spreads are viewed, page load times). IP masking is enabled.
+                      Enables Google Analytics 4{firebaseConfig.measurementId ? ` (Measurement ID: ${firebaseConfig.measurementId})` : ''} to record aggregated, anonymous engagement metrics (e.g. which album spreads are viewed, page load times) only after you opt in. IP masking is enabled.
                     </p>
                   </div>
                   <div className="shrink-0 pt-0.5">
@@ -395,11 +414,15 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
               </div>
 
               {optOutResult ? (
-                <div className={`p-4 rounded-xs text-xs ${
-                  optOutResult.success 
-                    ? 'bg-emerald-50 border border-emerald-300 text-emerald-900' 
-                    : 'bg-red-50 border border-red-300 text-red-900'
-                }`}>
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`p-4 rounded-xs text-xs ${
+                    optOutResult.success 
+                      ? 'bg-emerald-50 border border-emerald-300 text-emerald-900' 
+                      : 'bg-red-50 border border-red-300 text-red-900'
+                  }`}
+                >
                   <div className="flex items-start gap-2.5">
                     {optOutResult.success ? (
                       <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
@@ -544,11 +567,15 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
               </div>
 
               {rightsResult ? (
-                <div className={`p-4 rounded-xs text-xs ${
-                  rightsResult.success 
-                    ? 'bg-emerald-50 border border-emerald-300 text-emerald-900' 
-                    : 'bg-red-50 border border-red-300 text-red-900'
-                }`}>
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`p-4 rounded-xs text-xs ${
+                    rightsResult.success 
+                      ? 'bg-emerald-50 border border-emerald-300 text-emerald-900' 
+                      : 'bg-red-50 border border-red-300 text-red-900'
+                  }`}
+                >
                   <div className="flex items-start gap-2.5">
                     {rightsResult.success ? (
                       <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />

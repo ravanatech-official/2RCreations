@@ -13,7 +13,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
   const [email, setEmail] = useState('');
   const [cloudLink, setCloudLink] = useState('');
   const [notes, setNotes] = useState('');
-  const [whatsappConsent, setWhatsappConsent] = useState(true);
+  const [whatsappConsent, setWhatsappConsent] = useState(false);
   const [honeypot, setHoneypot] = useState('');
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -167,7 +167,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
 
                 {/* Error Banner with Direct Fallback */}
                 {submissionResult && !submissionResult.success && (
-                  <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xs text-xs text-red-200">
+                  <div role="alert" aria-live="polite" className="p-4 bg-red-950/40 border border-red-500/30 rounded-xs text-xs text-red-200">
                     <div className="flex items-center gap-2 mb-2">
                       <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
                       <span className="font-semibold">{submissionResult.message}</span>
@@ -205,7 +205,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                       className="mt-0.5 h-3.5 w-3.5 rounded-xs border-white/20 bg-[#242424] text-[#C5A880] focus:ring-[#C5A880] cursor-pointer"
                     />
                     <span className="text-[11px] text-[#FBF9F5]/70 leading-relaxed font-light">
-                      I agree to receive sample design proofs and review feedback via email and WhatsApp. (No marketing spam. You can adjust your choices anytime in our{' '}
+                      I explicitly consent to receive sample design proofs via WhatsApp in addition to email (leave unchecked for email-only replies; adjust anytime in our{' '}
                       <a href="/preferences" target="_blank" rel="noopener noreferrer" className="underline text-[#C5A880] hover:text-white">
                         Preference Center
                       </a>

@@ -8,7 +8,8 @@ export const NotFoundPage: React.FC = () => {
     updateSEO({
       title: 'Page Not Found | 2R CREATIONS',
       description: 'The requested page could not be found.',
-      canonicalPath: '/404'
+      canonicalPath: '/404',
+      noIndex: true
     });
   }, []);
 

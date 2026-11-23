@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { ShieldCheck, ArrowLeft, Lock, FileText, CheckCircle2 } from 'lucide-react';
 import { PrivacyPreferenceCenter } from '../components/PrivacyPreferenceCenter';
 import { STUDIO_CONFIG } from '../config';
+import { updateSEO } from '../utils/seo';
 
 export const PreferencesPage: React.FC = () => {
   useEffect(() => {
-    document.title = 'Privacy Preferences & WhatsApp Opt-Out | 2R Creations';
+    updateSEO({
+      title: 'Privacy Preferences & WhatsApp Opt-Out | 2R CREATIONS',
+      description: 'Manage your cookie consent preferences, submit an instant WhatsApp opt-out, or exercise GDPR/CCPA data export and erasure rights.',
+      canonicalPath: '/preferences'
+    });
     window.scrollTo(0, 0);
   }, []);
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { AlbumViewer } from './components/AlbumViewer';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { ALBUMS } from './data/albums';
 import { Album } from './types';
 
@@ -42,6 +43,7 @@ function ScrollToTop() {
 }
 
 function MainApp() {
+  const navigate = useNavigate();
   const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null);
   const [selectedSpreadNumber, setSelectedSpreadNumber] = useState<number | undefined>(undefined);
   const [selectedRetouchingStudyId, setSelectedRetouchingStudyId] = useState<string | null>(null);
@@ -74,13 +76,20 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-[#FBF9F5] text-[#242424] flex flex-col selection:bg-[#C5A880]/20 selection:text-[#111111]">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#111111] focus:text-[#FBF9F5] focus:text-xs focus:font-mono focus:uppercase focus:tracking-wider focus:rounded-xs focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
       <ScrollToTop />
       
       {/* Universal Studio Navigation */}
       <Navbar />
 
       {/* Primary Route Outlet */}
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <Routes>
           <Route path="/" element={<HomePage onOpenAlbum={handleOpenAlbum} />} />
           <Route path="/portfolio" element={<PortfolioPage onOpenAlbum={handleOpenAlbum} onOpenRetouching={handleOpenRetouching} />} />
@@ -114,7 +123,7 @@ function MainApp() {
           onClose={handleCloseAlbum}
           onStartProject={() => {
             handleCloseAlbum();
-            window.location.href = `/contact?project=${encodeURIComponent(`Wedding Album (${selectedAlbum.title})`)}`;
+            navigate(`/contact?project=${encodeURIComponent(`Wedding Album (${selectedAlbum.title})`)}`);
           }}
           onOpenDifferentAlbum={(id) => handleOpenAlbum(id)}
           otherAlbums={otherAlbums}
@@ -129,7 +138,7 @@ function MainApp() {
           onClose={handleCloseRetouching}
           onStartProject={(serviceName) => {
             handleCloseRetouching();
-            window.location.href = `/contact?project=${encodeURIComponent(serviceName || 'Photo Retouching')}`;
+            navigate(`/contact?project=${encodeURIComponent(serviceName || 'Photo Retouching')}`);
           }}
           onOpenDifferentStudy={(id) => handleOpenRetouching(id, 1)}
           allStudies={RETOUCHING_STUDIES}
@@ -149,10 +158,12 @@ function MainApp() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <PrivacyProvider>
-        <MainApp />
-      </PrivacyProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <PrivacyProvider>
+          <MainApp />
+        </PrivacyProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }

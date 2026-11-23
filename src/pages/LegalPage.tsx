@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { ArrowLeft, Shield, Lock, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Shield } from 'lucide-react';
 import { updateSEO } from '../utils/seo';
 import { STUDIO_CONFIG } from '../config';
 
@@ -26,16 +26,30 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (activePolicy === 'client-image-policy') {
+      updateSEO({
+        title: 'Client Image Protection Policy | 2R CREATIONS',
+        description: 'Our strict confidentiality standards for client wedding photographs and non-disclosure commitments.',
+        canonicalPath: '/client-image-policy'
+      });
+    } else if (activePolicy === 'terms') {
+      updateSEO({
+        title: 'Terms of Service | 2R CREATIONS',
+        description: 'Terms and conditions governing album design orders, turnaround estimates, proofing revisions, and lab print exports.',
+        canonicalPath: '/terms'
+      });
+    } else {
+      updateSEO({
+        title: 'Privacy Policy | 2R CREATIONS',
+        description: 'How 2R Creations collects, protects, and handles contact form submissions and inquiry details.',
+        canonicalPath: '/privacy'
+      });
+    }
   }, [activePolicy]);
 
   const renderContent = () => {
     switch (activePolicy) {
       case 'client-image-policy':
-        updateSEO({
-          title: 'Client Image Protection Policy | 2R CREATIONS',
-          description: 'Our strict confidentiality standards for client wedding photographs and non-disclosure commitments.',
-          canonicalPath: '/client-image-policy'
-        });
         return (
           <article className="prose prose-neutral max-w-none text-[#242424]/85 leading-relaxed space-y-6">
             <div className="p-4 bg-[#F5F2EB] rounded-xs border border-[#C5A880]/30 mb-6">
@@ -49,10 +63,10 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             </div>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
-              1. Non-Disclosure & Private Storage
+              1. Non-Disclosure &amp; Private Storage
             </h2>
             <p>
-              When photographers or couples share wedding galleries with 2R Creations via cloud services (Google Drive, Dropbox, Pixieset, WeTransfer), all files are used exclusively to design, proof, and export your ordered album spreads. Files are stored on encrypted local workstations and secure project servers.
+              When photographers or couples share wedding galleries with 2R Creations via cloud services (Google Drive, Dropbox, Pixieset, WeTransfer), all files are used exclusively to design, proof, and export your ordered album spreads. Files are stored on encrypted local workstations and access-controlled project servers.
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
@@ -63,20 +77,15 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
-              3. Archival Retention & Deletion
+              3. Archival Retention &amp; Secure Deletion
             </h2>
             <p>
-              We retain high-resolution project design files for up to 90 days after delivery to facilitate client re-orders, lab size adaptations, or cover adjustments. Upon client request, all raw image assets and project backups will be permanently purged from our systems.
+              We retain high-resolution project design files for up to 90 days after final delivery to facilitate client re-orders, lab size adaptations, or cover adjustments, after which working assets are securely purged. Upon immediate client request via our <Link to="/preferences" className="underline font-semibold text-[#111111] hover:text-[#C5A880]">Privacy Preference Center</Link>, all raw image assets and project backups are permanently deleted within 72 business hours.
             </p>
           </article>
         );
 
       case 'terms':
-        updateSEO({
-          title: 'Terms of Service | 2R CREATIONS',
-          description: 'Terms and conditions governing album design orders, turnaround estimates, proofing revisions, and lab print exports.',
-          canonicalPath: '/terms'
-        });
         return (
           <article className="prose prose-neutral max-w-none text-[#242424]/85 leading-relaxed space-y-6">
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
@@ -94,7 +103,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
-              3. Proofing & Revision Protocol
+              3. Proofing &amp; Revision Protocol
             </h2>
             <p>
               Revisions are handled according to the scope of each project. We provide digital proofing links where clients can request image swaps, layout shifts, or caption tweaks. Once final print files are approved and delivered, additional modifications may be subject to minor revision fees.
@@ -104,18 +113,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
 
       case 'privacy':
       default:
-        updateSEO({
-          title: 'Privacy Policy | 2R CREATIONS',
-          description: 'How 2R Creations collects, protects, and handles contact form submissions and inquiry details.',
-          canonicalPath: '/privacy'
-        });
         return (
           <article className="prose prose-neutral max-w-none text-[#242424]/85 leading-relaxed space-y-6">
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
-              1. Information We Collect
+              1. Information We Collect &amp; Data Controller
             </h2>
             <p>
-              When you submit a project inquiry or contact us via our website, we collect your name, email address, phone/WhatsApp number, project requirements, and optional sample links. This information is used solely to respond to your inquiry and deliver project estimates.
+              2R Creations (Colombo, Sri Lanka — reachable at <a href={`mailto:${STUDIO_CONFIG.email}`} className="underline font-medium text-[#111111]">{STUDIO_CONFIG.email}</a>) acts as the Data Controller for project inquiries submitted on this website. When you submit a project inquiry or sample request, we collect your name or studio name, email address, phone/WhatsApp number, project specifications, and optional cloud gallery links solely to respond to your inquiry and deliver project estimates.
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
@@ -126,17 +130,17 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
-              3. Analytics &amp; Cookies
+              3. Analytics, Sub-Processors &amp; Opt-In Cookies
             </h2>
             <p>
-              We utilize privacy-friendly analytics (Google Analytics 4) to understand aggregate visitor traffic, album viewer engagement, and device performance. IP anonymization is applied, and you can freely disable non-essential cookies at any time via our Privacy Preference Center.
+              In strict compliance with EU GDPR and the ePrivacy Directive, optional analytics (Google Analytics 4) remain disabled until you explicitly opt in via our Cookie Banner or Preference Center. Infrastructure sub-processors are limited to Google Cloud / Firebase (encrypted inquiry storage and global CDN hosting) and Google Analytics 4 (when consented, with IP anonymization enabled).
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
               4. WhatsApp Communication Policy &amp; Opt-Out
             </h2>
             <p>
-              Under our zero-spam commitment and in compliance with GDPR Article 7, TCPA § 227, and Meta’s WhatsApp Business Policy, we only contact clients via WhatsApp when requested for project scope discussions or proof revisions. You have the unconditional right to withdraw consent at any time. Simply reply <code>STOP</code> to any WhatsApp chat or visit our <Link to="/preferences" className="underline font-semibold text-[#111111] hover:text-[#C5A880]">Privacy Preference Center</Link> to log an instant 1-click opt-out.
+              Under our zero-spam commitment and in compliance with GDPR Article 7, TCPA § 227, and Meta’s WhatsApp Business Policy, we only contact clients via WhatsApp when explicitly consented to for project scope discussions or proof revisions. You have the unconditional right to withdraw consent at any time. Simply reply <code>STOP</code> to any WhatsApp chat or visit our <Link to="/preferences" className="underline font-semibold text-[#111111] hover:text-[#C5A880]">Privacy Preference Center</Link> to log an instant 1-click opt-out.
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
@@ -147,7 +151,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-xs text-[#242424]/80">
               <li><strong>Right of Access &amp; Portability:</strong> Request a copy of all data and project notes linked to your email.</li>
-              <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Request permanent purging of all inquiries, contact numbers, and cloud links from our database.</li>
+              <li><strong>Right to Erasure (&ldquo;Right to be Forgotten&rdquo;):</strong> Request permanent purging of all inquiries, contact numbers, and cloud links from our database.</li>
               <li><strong>Right to Rectification:</strong> Request correction of inaccurate contact records.</li>
             </ul>
             <div className="pt-4">
@@ -228,13 +232,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
         {/* Main Document Body */}
         <div className="bg-[#FAF8F5] p-8 sm:p-12 rounded-xs border border-[#242424]/10 shadow-2xs">
           <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
-            LEGAL & STUDIO PROTOCOLS
+            LEGAL &amp; STUDIO PROTOCOLS
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#111111] mb-6">
             {getTitle()}
           </h1>
           <p className="text-xs font-mono text-[#242424]/50 mb-8 pb-4 border-b border-[#242424]/10">
-            Last Updated: March 2026 &bull; 2R CREATIONS
+            Last Updated: November 2026 &bull; 2R CREATIONS
           </p>
 
           {renderContent()}

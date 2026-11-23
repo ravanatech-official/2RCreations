@@ -27,7 +27,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
   const [message, setMessage] = useState('');
   const [samplePhotosLink, setSamplePhotosLink] = useState('');
   const [requestFreeSample, setRequestFreeSample] = useState(false);
-  const [whatsappConsent, setWhatsappConsent] = useState(true);
+  const [whatsappConsent, setWhatsappConsent] = useState(false);
   const [honeypot, setHoneypot] = useState(''); // Anti-spam honeypot
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -278,7 +278,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
 
                 {/* Honest error alert if submission failed */}
                 {errorMessage && (
-                  <div className="p-4 bg-red-50/90 border border-red-200 rounded-xs text-xs text-red-900 flex items-start gap-3">
+                  <div role="alert" aria-live="polite" className="p-4 bg-red-50/90 border border-red-200 rounded-xs text-xs text-red-900 flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold mb-1">We couldn’t submit the enquiry right now.</p>
@@ -331,6 +331,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       id="contact-name"
                       type="text"
                       required
+                      minLength={2}
+                      maxLength={120}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Elena Rostova or Fine Art Photography"
@@ -347,6 +349,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       id="contact-email"
                       type="email"
                       required
+                      maxLength={200}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="studio@example.com"
@@ -455,7 +458,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       className="mt-0.5 h-4 w-4 rounded-xs border-[#242424]/30 text-[#111111] focus:ring-[#C5A880] cursor-pointer"
                     />
                     <span className="text-[11.5px] text-[#242424]/80 leading-relaxed font-light">
-                      I consent to receive direct project updates and proof reviews via WhatsApp. (No unsolicited marketing spam. You may opt out anytime in our{' '}
+                      I explicitly consent to receive direct project updates and proof reviews via WhatsApp (leave unchecked if you prefer email-only replies; you may opt out anytime in our{' '}
                       <a href="/preferences" target="_blank" rel="noopener noreferrer" className="underline font-normal text-[#111111] hover:text-[#C5A880]">
                         Preference Center
                       </a>

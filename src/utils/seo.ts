@@ -1,6 +1,6 @@
 /**
  * SEO & Metadata Utility for 2R Creations
- * Manages document title, meta descriptions, canonical URLs, and OpenGraph tags dynamically.
+ * Manages document title, meta descriptions, robots directives, canonical URLs, and OpenGraph tags dynamically.
  */
 
 interface SEOProps {
@@ -9,6 +9,7 @@ interface SEOProps {
   canonicalPath?: string;
   ogImage?: string;
   type?: 'website' | 'article';
+  noIndex?: boolean;
 }
 
 export function updateSEO({
@@ -16,7 +17,8 @@ export function updateSEO({
   description,
   canonicalPath = '',
   ogImage = '/assets/images/2R-Creations-Designer-Portrait-Editorial.jpg',
-  type = 'website'
+  type = 'website',
+  noIndex = false
 }: SEOProps) {
   if (typeof document === 'undefined') return;
 
@@ -32,6 +34,20 @@ export function updateSEO({
     document.head.appendChild(descMeta);
   }
   descMeta.setAttribute('content', description);
+
+  // Robots directive (prevent soft-404 indexing while keeping normal pages indexable)
+  let robotsMeta = document.querySelector('meta[name="robots"]');
+  if (!robotsMeta) {
+    robotsMeta = document.createElement('meta');
+    robotsMeta.setAttribute('name', 'robots');
+    document.head.appendChild(robotsMeta);
+  }
+  robotsMeta.setAttribute(
+    'content',
+    noIndex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  );
 
   // Canonical URL
   const baseUrl = import.meta.env.VITE_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://2rcreations.com');

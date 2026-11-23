@@ -1,0 +1,17 @@
+{
+  "name": "2R CREATIONS — Professional Wedding Album Designer",
+  "short_name": "2R CREATIONS",
+  "description": "Story-driven wedding album design and fine art photo retouching for photographers and studios worldwide.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF9F5",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/assets/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

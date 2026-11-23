@@ -6,37 +6,255 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // 2R Creations Lead Submissions Collection
-    match /leads/{leadId} {
-      // Allow visitors to submit inquiries with valid payloads
-      allow create: if leadId.size() <= 128
-                    && request.resource.data.name is string
-                    && request.resource.data.name.size() >= 2
-                    && request.resource.data.name.size() <= 120
-                    && request.resource.data.email is string
-                    && request.resource.data.email.size() >= 5
-                    && request.resource.data.email.size() <= 200
-                    && request.resource.data.whatsapp is string
-                    && request.resource.data.whatsapp.size() <= 50
-                    && request.resource.data.projectType is string;
+    // Reusable hardened validation primitives
+    function isValidId(id) {
+      return id is string
+          && id.size() >= 1
+          && id.size() <= 128
+          && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
 
-      // Disallow public reads, updates, and deletions
-      // Only studio owner with admin privileges in Firebase Console can view or manage leads
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+          && (
+            exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+            exists(/databases/$(database)/documents/2rcreations_admins/$(request.auth.uid))
+          );
+    }
+
+    function isValidLeadInquiry(data) {
+      return data.keys().hasAll(['name', 'email', 'whatsapp', 'projectType', 'createdAt', 'serverTimestamp'])
+          && data.keys().hasOnly([
+               'name', 'email', 'whatsapp', 'projectType', 'message',
+               'requestFreeSample', 'samplePhotosLink', 'whatsappConsent',
+               'source', 'createdAt', 'serverTimestamp'
+             ])
+          && data.name is string && data.name.size() >= 2 && data.name.size() <= 120
+          && data.email is string && data.email.size() >= 5 && data.email.size() <= 200
+          && data.whatsapp is string && data.whatsapp.size() >= 5 && data.whatsapp.size() <= 50
+          && data.projectType is string && data.projectType.size() >= 2 && data.projectType.size() <= 120
+          && data.createdAt is string && data.createdAt.size() <= 40
+          && data.serverTimestamp == request.time
+          && (!('message' in data) || (data.message is string && data.message.size() <= 4000))
+          && (!('requestFreeSample' in data) || data.requestFreeSample is bool)
+          && (!('whatsappConsent' in data) || data.whatsappConsent is bool)
+          && (!('samplePhotosLink' in data) || (data.samplePhotosLink is string && data.samplePhotosLink.size() <= 500 && data.samplePhotosLink.matches('^https?://.*')))
+          && (!('source' in data) || (data.source is string && data.source.size() <= 80));
+    }
+
+    function isValidDataSubjectRequest(data) {
+      return data.keys().hasAll(['email', 'requestType', 'status', 'createdAt', 'serverTimestamp'])
+          && data.keys().hasOnly([
+               'email', 'whatsapp', 'name', 'requestType',
+               'details', 'status', 'createdAt', 'source', 'serverTimestamp'
+             ])
+          && data.email is string && data.email.size() >= 5 && data.email.size() <= 200
+          && data.requestType in ['WHATSAPP_OPT_OUT', 'COMMUNICATION_PREFERENCE', 'DATA_EXPORT', 'RIGHT_TO_BE_FORGOTTEN']
+          && data.status == 'PENDING'
+          && data.createdAt is string && data.createdAt.size() <= 40
+          && data.serverTimestamp == request.time
+          && (!('whatsapp' in data) || (data.whatsapp is string && data.whatsapp.size() <= 50))
+          && (!('name' in data) || (data.name is string && data.name.size() <= 120))
+          && (!('details' in data) || (data.details is string && data.details.size() <= 2000))
+          && (!('source' in data) || (data.source is string && data.source.size() <= 80));
+    }
+
+    function isValidMarketplaceProduct(data) {
+      return data.keys().hasAll([
+               'slug', 'title', 'description', 'category', 'priceCents',
+               'currency', 'fileFormat', 'previewImages', 'isPublished', 'featured',
+               'createdAt', 'updatedAt', 'serverTimestamp'
+             ])
+          && data.keys().hasOnly([
+               'slug', 'title', 'description', 'category', 'priceCents',
+               'currency', 'fileFormat', 'previewImages', 'isPublished', 'featured',
+               'createdAt', 'updatedAt', 'serverTimestamp'
+             ])
+          && data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 120 && data.slug.matches('^[a-z0-9\\-]+$')
+          && data.title is string && data.title.size() >= 3 && data.title.size() <= 160
+          && data.description is string && data.description.size() <= 4000
+          && data.category in ['ALBUM_TEMPLATES', 'LIGHTROOM_PRESETS', 'RETOUCHING_ACTIONS', 'COVER_MOCKUPS', 'OVERLAYS_TEXTURES']
+          && data.priceCents is int && data.priceCents >= 0 && data.priceCents <= 10000000
+          && data.currency in ['USD', 'LKR']
+          && data.fileFormat in ['PSD', 'INDD', 'XMP', 'ATN', 'ZIP']
+          && data.previewImages is list && data.previewImages.size() <= 6
+          && (data.previewImages.size() == 0 || (data.previewImages[0] is string && data.previewImages[0].size() <= 500))
+          && data.isPublished is bool
+          && data.featured is bool
+          && data.createdAt is string && data.createdAt.size() <= 40
+          && data.updatedAt is string && data.updatedAt.size() <= 40
+          && data.serverTimestamp == request.time;
+    }
+
+    function isValidMarketplaceOrder(data) {
+      return data.keys().hasAll([
+               'buyerUid', 'buyerEmail', 'productId', 'amountCents',
+               'currency', 'status', 'createdAt', 'updatedAt', 'serverTimestamp'
+             ])
+          && data.keys().hasOnly([
+               'buyerUid', 'buyerEmail', 'productId', 'amountCents',
+               'currency', 'status', 'paymentProvider', 'paymentReference',
+               'createdAt', 'updatedAt', 'serverTimestamp'
+             ])
+          && isValidId(data.buyerUid)
+          && data.buyerEmail is string && data.buyerEmail.size() >= 5 && data.buyerEmail.size() <= 200
+          && isValidId(data.productId)
+          && data.amountCents is int && data.amountCents >= 0 && data.amountCents <= 10000000
+          && data.currency in ['USD', 'LKR']
+          && data.status in ['PENDING', 'PAID', 'FULFILLED', 'REFUNDED', 'CANCELLED']
+          && (!('paymentProvider' in data) || (data.paymentProvider is string && data.paymentProvider.size() <= 50))
+          && (!('paymentReference' in data) || (data.paymentReference is string && data.paymentReference.size() <= 160))
+          && data.createdAt is string && data.createdAt.size() <= 40
+          && data.updatedAt is string && data.updatedAt.size() <= 40
+          && data.serverTimestamp == request.time;
+    }
+
+    function isValidMarketplaceEntitlement(data) {
+      return data.keys().hasAll([
+               'buyerUid', 'productId', 'orderId', 'licenseKey',
+               'downloadCount', 'maxDownloads', 'revoked', 'createdAt', 'serverTimestamp'
+             ])
+          && data.keys().hasOnly([
+               'buyerUid', 'productId', 'orderId', 'licenseKey',
+               'downloadCount', 'maxDownloads', 'revoked', 'createdAt', 'serverTimestamp'
+             ])
+          && isValidId(data.buyerUid)
+          && isValidId(data.productId)
+          && isValidId(data.orderId)
+          && data.licenseKey is string && data.licenseKey.size() >= 8 && data.licenseKey.size() <= 128
+          && data.downloadCount is int && data.downloadCount >= 0 && data.downloadCount <= 1000
+          && data.maxDownloads is int && data.maxDownloads >= 1 && data.maxDownloads <= 100
+          && data.revoked is bool
+          && data.createdAt is string && data.createdAt.size() <= 40
+          && data.serverTimestamp == request.time;
+    }
+
+    // === DEDICATED 2R CREATIONS DATABASE COLLECTIONS (two-r-creations-db) ===
+    match /admins/{uid} {
+      allow get: if isSignedIn() && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+
+    match /leads/{leadId} {
+      allow create: if isValidId(leadId) && isValidLeadInquiry(incoming());
       allow read, update, delete: if false;
     }
 
-    // 2R Creations Privacy & Communication Preference Requests (Opt-Outs, Erasure, Export)
     match /data_requests/{requestId} {
-      // Allow visitors to submit privacy and preference requests with validated contact details
-      allow create: if requestId.size() <= 128
-                    && request.resource.data.email is string
-                    && request.resource.data.email.size() >= 5
-                    && request.resource.data.email.size() <= 200
-                    && request.resource.data.requestType is string
-                    && request.resource.data.requestType.size() <= 50;
-
-      // Disallow public read, update, or deletion for privacy protection
+      allow create: if isValidId(requestId) && isValidDataSubjectRequest(incoming());
       allow read, update, delete: if false;
+    }
+
+    match /marketplace_products/{productId} {
+      allow get: if isValidId(productId) && (existing().isPublished == true || isAdmin());
+      allow list: if resource.data.isPublished == true;
+      allow create: if isAdmin() && isValidId(productId) && isValidMarketplaceProduct(incoming());
+      allow update: if isAdmin() && isValidId(productId) && isValidMarketplaceProduct(incoming())
+                    && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(productId);
+    }
+
+    match /marketplace_orders/{orderId} {
+      allow get: if isSignedIn() && isValidId(orderId) && (existing().buyerUid == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.buyerUid == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(orderId)
+                    && isValidMarketplaceOrder(incoming())
+                    && incoming().buyerUid == request.auth.uid
+                    && incoming().status == 'PENDING'
+                    && exists(/databases/$(database)/documents/marketplace_products/$(incoming().productId));
+      allow update: if isAdmin() && isValidId(orderId)
+                    && isValidMarketplaceOrder(incoming())
+                    && !(existing().status in ['FULFILLED', 'REFUNDED'])
+                    && incoming().buyerUid == existing().buyerUid
+                    && incoming().productId == existing().productId
+                    && incoming().createdAt == existing().createdAt
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'paymentProvider', 'paymentReference', 'updatedAt', 'serverTimestamp']);
+      allow delete: if false;
+    }
+
+    match /marketplace_entitlements/{entitlementId} {
+      allow get: if isSignedIn() && isValidId(entitlementId) && (existing().buyerUid == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.buyerUid == request.auth.uid;
+      allow create: if isAdmin() && isValidId(entitlementId) && isValidMarketplaceEntitlement(incoming())
+                    && exists(/databases/$(database)/documents/marketplace_orders/$(incoming().orderId))
+                    && exists(/databases/$(database)/documents/marketplace_products/$(incoming().productId));
+      allow update: if isAdmin() && isValidId(entitlementId) && isValidMarketplaceEntitlement(incoming())
+                    && incoming().buyerUid == existing().buyerUid
+                    && incoming().productId == existing().productId
+                    && incoming().orderId == existing().orderId
+                    && incoming().createdAt == existing().createdAt
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['downloadCount', 'maxDownloads', 'revoked', 'serverTimestamp']);
+      allow delete: if false;
+    }
+
+    // === PREFIXED ALIASES (Backwards compatible if prefix is set) ===
+    match /2rcreations_admins/{uid} {
+      allow get: if isSignedIn() && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+
+    match /2rcreations_leads/{leadId} {
+      allow create: if isValidId(leadId) && isValidLeadInquiry(incoming());
+      allow read, update, delete: if false;
+    }
+
+    match /2rcreations_data_requests/{requestId} {
+      allow create: if isValidId(requestId) && isValidDataSubjectRequest(incoming());
+      allow read, update, delete: if false;
+    }
+
+    match /2rcreations_marketplace_products/{productId} {
+      allow get: if isValidId(productId) && (existing().isPublished == true || isAdmin());
+      allow list: if resource.data.isPublished == true;
+      allow create: if isAdmin() && isValidId(productId) && isValidMarketplaceProduct(incoming());
+      allow update: if isAdmin() && isValidId(productId) && isValidMarketplaceProduct(incoming())
+                    && incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin() && isValidId(productId);
+    }
+
+    match /2rcreations_marketplace_orders/{orderId} {
+      allow get: if isSignedIn() && isValidId(orderId) && (existing().buyerUid == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.buyerUid == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(orderId)
+                    && isValidMarketplaceOrder(incoming())
+                    && incoming().buyerUid == request.auth.uid
+                    && incoming().status == 'PENDING'
+                    && exists(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId));
+      allow update: if isAdmin() && isValidId(orderId)
+                    && isValidMarketplaceOrder(incoming())
+                    && !(existing().status in ['FULFILLED', 'REFUNDED'])
+                    && incoming().buyerUid == existing().buyerUid
+                    && incoming().productId == existing().productId
+                    && incoming().createdAt == existing().createdAt
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'paymentProvider', 'paymentReference', 'updatedAt', 'serverTimestamp']);
+      allow delete: if false;
+    }
+
+    match /2rcreations_marketplace_entitlements/{entitlementId} {
+      allow get: if isSignedIn() && isValidId(entitlementId) && (existing().buyerUid == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.buyerUid == request.auth.uid;
+      allow create: if isAdmin() && isValidId(entitlementId) && isValidMarketplaceEntitlement(incoming())
+                    && exists(/databases/$(database)/documents/2rcreations_marketplace_orders/$(incoming().orderId))
+                    && exists(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId));
+      allow update: if isAdmin() && isValidId(entitlementId) && isValidMarketplaceEntitlement(incoming())
+                    && incoming().buyerUid == existing().buyerUid
+                    && incoming().productId == existing().productId
+                    && incoming().orderId == existing().orderId
+                    && incoming().createdAt == existing().createdAt
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['downloadCount', 'maxDownloads', 'revoked', 'serverTimestamp']);
+      allow delete: if false;
     }
   }
 }

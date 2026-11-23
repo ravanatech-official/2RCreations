@@ -122,7 +122,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
                   3. Asset Retention & Deletion
                 </h4>
                 <p>
-                  High-resolution photographic files, raw drafts, and working files provided for an album design engagement are archived for a maximum of 30 days following project completion and final print sign-off, after which they are securely deleted unless an extended archiving arrangement has been formally requested.
+                  High-resolution photographic files, raw drafts, and working files provided for an album design engagement are retained for up to 90 days following project completion and final print sign-off, after which they are securely deleted unless an extended archiving arrangement or immediate deletion has been formally requested.
                 </p>
               </div>
             </>

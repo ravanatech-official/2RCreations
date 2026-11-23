@@ -19,15 +19,19 @@
         },
         "whatsapp": {
           "type": "string",
+          "minLength": 5,
           "maxLength": 50,
           "description": "Phone or WhatsApp number with international country code"
         },
         "projectType": {
           "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
           "description": "Type of service requested (e.g. Wedding Album Design, Photo Retouching)"
         },
         "message": {
           "type": "string",
+          "maxLength": 4000,
           "description": "Project scope, timeline, or notes provided by client"
         },
         "requestFreeSample": {
@@ -36,19 +40,26 @@
         },
         "samplePhotosLink": {
           "type": "string",
+          "maxLength": 500,
           "description": "Optional cloud storage link (Google Drive, Dropbox, WeTransfer)"
+        },
+        "whatsappConsent": {
+          "type": "boolean",
+          "description": "Explicit opt-in consent flag for WhatsApp project updates"
         },
         "source": {
           "type": "string",
+          "maxLength": 80,
           "description": "Traffic source identifier (e.g. website_inquiry_form, contact_form)"
         },
         "createdAt": {
           "type": "string",
           "format": "date-time",
+          "maxLength": 40,
           "description": "ISO timestamp of submission creation"
         }
       },
-      "required": ["name", "email", "whatsapp", "projectType"]
+      "required": ["name", "email", "whatsapp", "projectType", "createdAt"]
     },
     "DataSubjectRequest": {
       "title": "DataSubjectRequest",
@@ -66,39 +77,255 @@
           "maxLength": 50,
           "description": "Phone number for WhatsApp opt-out verification"
         },
+        "name": {
+          "type": "string",
+          "maxLength": 120,
+          "description": "Full name or studio name of requestor"
+        },
         "requestType": {
           "type": "string",
+          "minLength": 3,
+          "maxLength": 50,
           "description": "Type of request (WHATSAPP_OPT_OUT, DATA_EXPORT, RIGHT_TO_BE_FORGOTTEN, COMMUNICATION_PREFERENCE)"
         },
         "details": {
           "type": "string",
+          "maxLength": 2000,
           "description": "Specific instructions or additional context from client"
         },
         "status": {
           "type": "string",
+          "enum": ["PENDING", "PROCESSED"],
           "description": "Workflow processing status (PENDING, PROCESSED)"
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "Origin UI path for audit tracking"
         },
         "createdAt": {
           "type": "string",
           "format": "date-time",
+          "maxLength": 40,
           "description": "ISO timestamp of request submission"
         }
       },
-      "required": ["email", "requestType"]
+      "required": ["email", "requestType", "status", "createdAt"]
+    },
+    "MarketplaceProduct": {
+      "title": "MarketplaceProduct",
+      "description": "Digital product template, LUT, or retouching asset available in the 2R Creations marketplace",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "pattern": "^[a-z0-9-]+$",
+          "description": "URL-safe product slug"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160,
+          "description": "Product display title"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 4000,
+          "description": "Detailed product specifications and compatibility"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["ALBUM_TEMPLATES", "LIGHTROOM_PRESETS", "RETOUCHING_ACTIONS", "COVER_MOCKUPS", "OVERLAYS_TEXTURES"],
+          "description": "Marketplace category"
+        },
+        "priceCents": {
+          "type": "integer",
+          "description": "Price in minor currency units"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "LKR"],
+          "description": "Billing currency"
+        },
+        "fileFormat": {
+          "type": "string",
+          "enum": ["PSD", "INDD", "XMP", "ATN", "ZIP"],
+          "description": "Downloadable asset format"
+        },
+        "previewImages": {
+          "type": "array",
+          "description": "Up to 6 preview image URLs"
+        },
+        "isPublished": {
+          "type": "boolean",
+          "description": "Visibility flag"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Featured placement flag"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 40
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 40
+        }
+      },
+      "required": ["slug", "title", "category", "priceCents", "currency", "fileFormat", "isPublished"]
+    },
+    "MarketplaceOrder": {
+      "title": "MarketplaceOrder",
+      "description": "Customer purchase order for a 2R Creations digital marketplace asset",
+      "type": "object",
+      "properties": {
+        "buyerUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "buyerEmail": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "productId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "amountCents": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "LKR"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "PAID", "FULFILLED", "REFUNDED", "CANCELLED"]
+        },
+        "paymentProvider": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "paymentReference": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 40
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 40
+        }
+      },
+      "required": ["buyerUid", "buyerEmail", "productId", "amountCents", "currency", "status"]
+    },
+    "MarketplaceEntitlement": {
+      "title": "MarketplaceEntitlement",
+      "description": "Licensed download entitlement issued after verified marketplace payment",
+      "type": "object",
+      "properties": {
+        "buyerUid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "productId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "orderId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "licenseKey": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128
+        },
+        "downloadCount": {
+          "type": "integer"
+        },
+        "maxDownloads": {
+          "type": "integer"
+        },
+        "revoked": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 40
+        }
+      },
+      "required": ["buyerUid", "productId", "orderId", "licenseKey", "revoked"]
     }
   },
   "firestore": {
-    "/leads/{leadId}": {
+    "/2rcreations_leads/{leadId}": {
+      "schema": { "$ref": "#/entities/LeadInquiry" },
+      "description": "Isolated collection of prospective client inquiries for 2R Creations inside shared Firebase projects"
+    },
+    "/2rcreations_data_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/DataSubjectRequest" },
+      "description": "Isolated collection of GDPR/TCPA user preference, WhatsApp opt-out, and data subject requests for 2R Creations"
+    },
+    "/2rcreations_marketplace_products/{productId}": {
+      "schema": { "$ref": "#/entities/MarketplaceProduct" },
+      "description": "Isolated marketplace digital asset catalog for 2R Creations"
+    },
+    "/2rcreations_marketplace_orders/{orderId}": {
+      "schema": { "$ref": "#/entities/MarketplaceOrder" },
+      "description": "Isolated marketplace purchase orders for 2R Creations"
+    },
+    "/2rcreations_marketplace_entitlements/{entitlementId}": {
+      "schema": { "$ref": "#/entities/MarketplaceEntitlement" },
+      "description": "Isolated digital download entitlements and license keys for 2R Creations"
+    },
+    "/admins/{uid}": {
       "schema": {
-        "$ref": "#/entities/LeadInquiry"
+        "title": "AdminRole",
+        "type": "object",
+        "properties": {
+          "role": { "type": "string", "enum": ["ADMIN"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        },
+        "required": ["role"]
       },
-      "description": "Collection of prospective client inquiries received by 2R Creations studio"
+      "description": "Server-provisioned studio administrator allowlist for two-r-creations-db"
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/LeadInquiry" },
+      "description": "Default standalone collection of prospective client inquiries received by 2R Creations studio"
     },
     "/data_requests/{requestId}": {
-      "schema": {
-        "$ref": "#/entities/DataSubjectRequest"
-      },
-      "description": "Collection of GDPR/TCPA user preference, WhatsApp opt-out, and data subject requests"
+      "schema": { "$ref": "#/entities/DataSubjectRequest" },
+      "description": "Default standalone collection of GDPR/TCPA user preference, WhatsApp opt-out, and data subject requests"
+    },
+    "/marketplace_products/{productId}": {
+      "schema": { "$ref": "#/entities/MarketplaceProduct" },
+      "description": "Standalone marketplace digital asset catalog for two-r-creations-db"
+    },
+    "/marketplace_orders/{orderId}": {
+      "schema": { "$ref": "#/entities/MarketplaceOrder" },
+      "description": "Standalone marketplace purchase orders for two-r-creations-db"
+    },
+    "/marketplace_entitlements/{entitlementId}": {
+      "schema": { "$ref": "#/entities/MarketplaceEntitlement" },
+      "description": "Standalone digital download entitlements and license keys for two-r-creations-db"
     }
   }
 }

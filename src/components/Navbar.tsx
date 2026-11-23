@@ -115,6 +115,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden p-2 text-[#1A1512] hover:text-[#644622] transition-colors cursor-pointer"
           aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation-drawer"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -122,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-full bg-[#D7BC97] border-b border-[#C2A57E] shadow-2xl px-6 py-8 flex flex-col gap-6 animate-fadeIn">
+        <div id="mobile-navigation-drawer" className="md:hidden fixed inset-x-0 top-full bg-[#D7BC97] border-b border-[#C2A57E] shadow-2xl px-6 py-8 flex flex-col gap-6 animate-fadeIn">
           <div className="flex flex-col gap-3 text-[16px] font-semibold tracking-[0.02em] text-[#1A1512]">
             <Link
               to="/"

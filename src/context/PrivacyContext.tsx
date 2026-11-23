@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { CookiePreferences } from '../types';
+import { syncAnalyticsConsent } from '../firebase';
 
 export type PreferenceTab = 'cookies' | 'communications' | 'rights';
 
@@ -16,10 +17,11 @@ interface PrivacyContextType {
   rejectNonEssentialCookies: () => void;
 }
 
+// GDPR / ePrivacy compliant default: non-essential tracking is OFF until explicit opt-in
 const DEFAULT_PREFERENCES: CookiePreferences = {
   necessary: true,
-  analytics: true,
-  functional: true,
+  analytics: false,
+  functional: false,
   updatedAt: new Date().toISOString()
 };
 
@@ -37,10 +39,18 @@ export const PrivacyProvider: React.FC<{ children: React.ReactNode }> = ({ child
           return {
             ...DEFAULT_PREFERENCES,
             ...parsed,
-            necessary: true // Enforce strict necessity
+            necessary: true
           };
         }
         const simpleConsent = window.localStorage.getItem('2r_cookie_consent');
+        if (simpleConsent === 'accepted') {
+          return {
+            necessary: true,
+            analytics: true,
+            functional: true,
+            updatedAt: new Date().toISOString()
+          };
+        }
         if (simpleConsent === 'declined') {
           return {
             necessary: true,
@@ -81,6 +91,7 @@ export const PrivacyProvider: React.FC<{ children: React.ReactNode }> = ({ child
         console.warn('Could not save cookie preferences:', err);
       }
     }
+    syncAnalyticsConsent(Boolean(prefs.analytics));
   };
 
   const updateCookiePreferences = (partial: Partial<CookiePreferences>) => {
