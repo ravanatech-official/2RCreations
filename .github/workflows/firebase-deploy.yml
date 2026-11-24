@@ -78,7 +78,9 @@ jobs:
               "ravanatek": {
                 "firebasehosting.googleapis.com": true,
                 "firebase.googleapis.com": true,
-                "cloudresourcemanager.googleapis.com": true
+                "cloudresourcemanager.googleapis.com": true,
+                "firestore.googleapis.com": true,
+                "firebaserules.googleapis.com": true
               }
             }
           }
