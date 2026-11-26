@@ -9,18 +9,20 @@
           "type": "string",
           "minLength": 2,
           "maxLength": 120,
-          "description": "Full name or studio name of the photographer/client"
+          "description": "Full name or studio name of the photographer/client (single-line safe text)"
         },
         "email": {
           "type": "string",
           "minLength": 5,
           "maxLength": 200,
+          "pattern": "^[^\\s@<>]+@[^\\s@<>]+\\.[^\\s@<>]{2,}$",
           "description": "Client email address for correspondence"
         },
         "whatsapp": {
           "type": "string",
           "minLength": 5,
           "maxLength": 50,
+          "pattern": "^[a-zA-Z0-9 +()\\-./]{5,50}$",
           "description": "Phone or WhatsApp number with international country code"
         },
         "projectType": {
@@ -40,8 +42,10 @@
         },
         "samplePhotosLink": {
           "type": "string",
+          "minLength": 12,
           "maxLength": 500,
-          "description": "Optional cloud storage link (Google Drive, Dropbox, WeTransfer)"
+          "pattern": "^https://([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:[0-9]{1,5})?(/.*)?$",
+          "description": "Optional HTTPS cloud storage link (Google Drive, Dropbox, Pixieset, WeTransfer)"
         },
         "whatsappConsent": {
           "type": "boolean",
@@ -49,6 +53,7 @@
         },
         "source": {
           "type": "string",
+          "minLength": 1,
           "maxLength": 80,
           "description": "Traffic source identifier (e.g. website_inquiry_form, contact_form)"
         },
@@ -56,7 +61,8 @@
           "type": "string",
           "format": "date-time",
           "maxLength": 40,
-          "description": "ISO timestamp of submission creation"
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?(Z|[+-]\\d{2}:\\d{2})$",
+          "description": "ISO-8601 timestamp of submission creation"
         }
       },
       "required": ["name", "email", "whatsapp", "projectType", "createdAt"]
@@ -70,6 +76,7 @@
           "type": "string",
           "minLength": 5,
           "maxLength": 200,
+          "pattern": "^[^\\s@<>]+@[^\\s@<>]+\\.[^\\s@<>]{2,}$",
           "description": "Client email associated with the inquiry"
         },
         "whatsapp": {
@@ -84,9 +91,8 @@
         },
         "requestType": {
           "type": "string",
-          "minLength": 3,
-          "maxLength": 50,
-          "description": "Type of request (WHATSAPP_OPT_OUT, DATA_EXPORT, RIGHT_TO_BE_FORGOTTEN, COMMUNICATION_PREFERENCE)"
+          "enum": ["WHATSAPP_OPT_OUT", "COMMUNICATION_PREFERENCE", "DATA_EXPORT", "RIGHT_TO_BE_FORGOTTEN"],
+          "description": "Type of request"
         },
         "details": {
           "type": "string",
@@ -96,10 +102,11 @@
         "status": {
           "type": "string",
           "enum": ["PENDING", "PROCESSED"],
-          "description": "Workflow processing status (PENDING, PROCESSED)"
+          "description": "Workflow processing status (PENDING on client creation)"
         },
         "source": {
           "type": "string",
+          "minLength": 1,
           "maxLength": 80,
           "description": "Origin UI path for audit tracking"
         },
@@ -107,7 +114,8 @@
           "type": "string",
           "format": "date-time",
           "maxLength": 40,
-          "description": "ISO timestamp of request submission"
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?(Z|[+-]\\d{2}:\\d{2})$",
+          "description": "ISO-8601 timestamp of request submission"
         }
       },
       "required": ["email", "requestType", "status", "createdAt"]
@@ -142,7 +150,7 @@
         },
         "priceCents": {
           "type": "integer",
-          "description": "Price in minor currency units"
+          "description": "Price in minor currency units (0..10000000)"
         },
         "currency": {
           "type": "string",
@@ -156,7 +164,7 @@
         },
         "previewImages": {
           "type": "array",
-          "description": "Up to 6 preview image URLs"
+          "description": "Up to 6 HTTPS preview image URLs"
         },
         "isPublished": {
           "type": "boolean",
@@ -177,7 +185,7 @@
           "maxLength": 40
         }
       },
-      "required": ["slug", "title", "category", "priceCents", "currency", "fileFormat", "isPublished"]
+      "required": ["slug", "title", "description", "category", "priceCents", "currency", "fileFormat", "previewImages", "isPublished", "featured", "createdAt", "updatedAt"]
     },
     "MarketplaceOrder": {
       "title": "MarketplaceOrder",
@@ -192,7 +200,8 @@
         "buyerEmail": {
           "type": "string",
           "minLength": 5,
-          "maxLength": 200
+          "maxLength": 200,
+          "pattern": "^[^\\s@<>]+@[^\\s@<>]+\\.[^\\s@<>]{2,}$"
         },
         "productId": {
           "type": "string",
@@ -229,7 +238,7 @@
           "maxLength": 40
         }
       },
-      "required": ["buyerUid", "buyerEmail", "productId", "amountCents", "currency", "status"]
+      "required": ["buyerUid", "buyerEmail", "productId", "amountCents", "currency", "status", "createdAt", "updatedAt"]
     },
     "MarketplaceEntitlement": {
       "title": "MarketplaceEntitlement",
@@ -254,7 +263,8 @@
         "licenseKey": {
           "type": "string",
           "minLength": 8,
-          "maxLength": 128
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9\\-_]+$"
         },
         "downloadCount": {
           "type": "integer"
@@ -271,7 +281,7 @@
           "maxLength": 40
         }
       },
-      "required": ["buyerUid", "productId", "orderId", "licenseKey", "revoked"]
+      "required": ["buyerUid", "productId", "orderId", "licenseKey", "downloadCount", "maxDownloads", "revoked", "createdAt"]
     }
   },
   "firestore": {

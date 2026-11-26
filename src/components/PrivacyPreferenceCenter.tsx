@@ -260,7 +260,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
                       </span>
                     </div>
                     <p className="text-xs text-[#242424]/70 mt-1.5 leading-relaxed font-light">
-                      Essential for secure session navigation, inquiry recovery drafts (ensuring you do not lose project notes if your connection disconnects), and anti-spam honeypot security. These cannot be disabled.
+                      Essential for secure session navigation, privacy consent storage, and anti-spam submission protection. Inquiry notes stay strictly in temporary page memory until submitted and are never written unencrypted to persistent browser storage.
                     </p>
                   </div>
                   <div className="shrink-0 pt-0.5">

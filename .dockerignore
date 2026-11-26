@@ -1,9 +1,16 @@
 node_modules
 dist
+dist-server
 .git
 .env
 .env.*
 !.env.example
 *.log
+*.pem
+*.key
+*service-account*.json
+firebase-debug.log*
+firestore-debug.log*
 .DS_Store
 public/assets/aistudio
+walkthrough.md

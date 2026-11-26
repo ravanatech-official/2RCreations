@@ -34,6 +34,41 @@ service cloud.firestore {
           );
     }
 
+    function isValidEmail(email) {
+      return email is string
+          && email.size() >= 5
+          && email.size() <= 200
+          && !email.matches('.*[<>].*')
+          && email.matches('^[^\\s@<>]+@[^\\s@<>]+\\.[^\\s@<>]{2,}$');
+    }
+
+    function isValidIsoTimestamp(ts) {
+      return ts is string
+          && ts.size() >= 20
+          && ts.size() <= 40
+          && ts.matches('^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?(Z|[+-]\\d{2}:\\d{2})$');
+    }
+
+    function isValidHttpsCloudUrl(url) {
+      return url is string
+          && url.size() >= 12
+          && url.size() <= 500
+          && !url.matches('.*[<>].*')
+          && url.matches('^https://([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:[0-9]{1,5})?(/.*)?$');
+    }
+
+    function isSafeSingleLineText(val, minLen, maxLen) {
+      return val is string
+          && val.size() >= minLen
+          && val.size() <= maxLen
+          && !val.matches('.*[<>\\r\\n].*');
+    }
+
+    function isValidImageItem(images, idx) {
+      return images.size() <= idx
+          || isValidHttpsCloudUrl(images[idx]);
+    }
+
     function isValidLeadInquiry(data) {
       return data.keys().hasAll(['name', 'email', 'whatsapp', 'projectType', 'createdAt', 'serverTimestamp'])
           && data.keys().hasOnly([
@@ -41,17 +76,17 @@ service cloud.firestore {
                'requestFreeSample', 'samplePhotosLink', 'whatsappConsent',
                'source', 'createdAt', 'serverTimestamp'
              ])
-          && data.name is string && data.name.size() >= 2 && data.name.size() <= 120
-          && data.email is string && data.email.size() >= 5 && data.email.size() <= 200
-          && data.whatsapp is string && data.whatsapp.size() >= 5 && data.whatsapp.size() <= 50
-          && data.projectType is string && data.projectType.size() >= 2 && data.projectType.size() <= 120
-          && data.createdAt is string && data.createdAt.size() <= 40
+          && isSafeSingleLineText(data.name, 2, 120)
+          && isValidEmail(data.email)
+          && data.whatsapp is string && data.whatsapp.size() >= 5 && data.whatsapp.size() <= 50 && data.whatsapp.matches('^[a-zA-Z0-9 +()\\-./]{5,50}$')
+          && isSafeSingleLineText(data.projectType, 2, 120)
+          && isValidIsoTimestamp(data.createdAt)
           && data.serverTimestamp == request.time
           && (!('message' in data) || (data.message is string && data.message.size() <= 4000))
           && (!('requestFreeSample' in data) || data.requestFreeSample is bool)
           && (!('whatsappConsent' in data) || data.whatsappConsent is bool)
-          && (!('samplePhotosLink' in data) || (data.samplePhotosLink is string && data.samplePhotosLink.size() <= 500 && data.samplePhotosLink.matches('^https?://.*')))
-          && (!('source' in data) || (data.source is string && data.source.size() <= 80));
+          && (!('samplePhotosLink' in data) || isValidHttpsCloudUrl(data.samplePhotosLink))
+          && (!('source' in data) || isSafeSingleLineText(data.source, 1, 80));
     }
 
     function isValidDataSubjectRequest(data) {
@@ -60,15 +95,15 @@ service cloud.firestore {
                'email', 'whatsapp', 'name', 'requestType',
                'details', 'status', 'createdAt', 'source', 'serverTimestamp'
              ])
-          && data.email is string && data.email.size() >= 5 && data.email.size() <= 200
+          && isValidEmail(data.email)
           && data.requestType in ['WHATSAPP_OPT_OUT', 'COMMUNICATION_PREFERENCE', 'DATA_EXPORT', 'RIGHT_TO_BE_FORGOTTEN']
           && data.status == 'PENDING'
-          && data.createdAt is string && data.createdAt.size() <= 40
+          && isValidIsoTimestamp(data.createdAt)
           && data.serverTimestamp == request.time
-          && (!('whatsapp' in data) || (data.whatsapp is string && data.whatsapp.size() <= 50))
-          && (!('name' in data) || (data.name is string && data.name.size() <= 120))
+          && (!('whatsapp' in data) || (data.whatsapp is string && data.whatsapp.size() <= 50 && (data.whatsapp.size() == 0 || data.whatsapp.matches('^[a-zA-Z0-9 +()\\-./]{5,50}$'))))
+          && (!('name' in data) || (data.name is string && data.name.size() <= 120 && !data.name.matches('.*[<>\\r\\n].*')))
           && (!('details' in data) || (data.details is string && data.details.size() <= 2000))
-          && (!('source' in data) || (data.source is string && data.source.size() <= 80));
+          && (!('source' in data) || isSafeSingleLineText(data.source, 1, 80));
     }
 
     function isValidMarketplaceProduct(data) {
@@ -83,18 +118,23 @@ service cloud.firestore {
                'createdAt', 'updatedAt', 'serverTimestamp'
              ])
           && data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 120 && data.slug.matches('^[a-z0-9\\-]+$')
-          && data.title is string && data.title.size() >= 3 && data.title.size() <= 160
+          && isSafeSingleLineText(data.title, 3, 160)
           && data.description is string && data.description.size() <= 4000
           && data.category in ['ALBUM_TEMPLATES', 'LIGHTROOM_PRESETS', 'RETOUCHING_ACTIONS', 'COVER_MOCKUPS', 'OVERLAYS_TEXTURES']
           && data.priceCents is int && data.priceCents >= 0 && data.priceCents <= 10000000
           && data.currency in ['USD', 'LKR']
           && data.fileFormat in ['PSD', 'INDD', 'XMP', 'ATN', 'ZIP']
           && data.previewImages is list && data.previewImages.size() <= 6
-          && (data.previewImages.size() == 0 || (data.previewImages[0] is string && data.previewImages[0].size() <= 500))
+          && isValidImageItem(data.previewImages, 0)
+          && isValidImageItem(data.previewImages, 1)
+          && isValidImageItem(data.previewImages, 2)
+          && isValidImageItem(data.previewImages, 3)
+          && isValidImageItem(data.previewImages, 4)
+          && isValidImageItem(data.previewImages, 5)
           && data.isPublished is bool
           && data.featured is bool
-          && data.createdAt is string && data.createdAt.size() <= 40
-          && data.updatedAt is string && data.updatedAt.size() <= 40
+          && isValidIsoTimestamp(data.createdAt)
+          && isValidIsoTimestamp(data.updatedAt)
           && data.serverTimestamp == request.time;
     }
 
@@ -109,15 +149,15 @@ service cloud.firestore {
                'createdAt', 'updatedAt', 'serverTimestamp'
              ])
           && isValidId(data.buyerUid)
-          && data.buyerEmail is string && data.buyerEmail.size() >= 5 && data.buyerEmail.size() <= 200
+          && isValidEmail(data.buyerEmail)
           && isValidId(data.productId)
           && data.amountCents is int && data.amountCents >= 0 && data.amountCents <= 10000000
           && data.currency in ['USD', 'LKR']
           && data.status in ['PENDING', 'PAID', 'FULFILLED', 'REFUNDED', 'CANCELLED']
-          && (!('paymentProvider' in data) || (data.paymentProvider is string && data.paymentProvider.size() <= 50))
-          && (!('paymentReference' in data) || (data.paymentReference is string && data.paymentReference.size() <= 160))
-          && data.createdAt is string && data.createdAt.size() <= 40
-          && data.updatedAt is string && data.updatedAt.size() <= 40
+          && (!('paymentProvider' in data) || isSafeSingleLineText(data.paymentProvider, 1, 50))
+          && (!('paymentReference' in data) || isSafeSingleLineText(data.paymentReference, 1, 160))
+          && isValidIsoTimestamp(data.createdAt)
+          && isValidIsoTimestamp(data.updatedAt)
           && data.serverTimestamp == request.time;
     }
 
@@ -133,11 +173,11 @@ service cloud.firestore {
           && isValidId(data.buyerUid)
           && isValidId(data.productId)
           && isValidId(data.orderId)
-          && data.licenseKey is string && data.licenseKey.size() >= 8 && data.licenseKey.size() <= 128
-          && data.downloadCount is int && data.downloadCount >= 0 && data.downloadCount <= 1000
+          && data.licenseKey is string && data.licenseKey.size() >= 8 && data.licenseKey.size() <= 128 && data.licenseKey.matches('^[a-zA-Z0-9\\-_]+$')
+          && data.downloadCount is int && data.downloadCount >= 0 && data.downloadCount <= data.maxDownloads
           && data.maxDownloads is int && data.maxDownloads >= 1 && data.maxDownloads <= 100
           && data.revoked is bool
-          && data.createdAt is string && data.createdAt.size() <= 40
+          && isValidIsoTimestamp(data.createdAt)
           && data.serverTimestamp == request.time;
     }
 
@@ -173,12 +213,17 @@ service cloud.firestore {
                     && isValidMarketplaceOrder(incoming())
                     && incoming().buyerUid == request.auth.uid
                     && incoming().status == 'PENDING'
-                    && exists(/databases/$(database)/documents/marketplace_products/$(incoming().productId));
+                    && exists(/databases/$(database)/documents/marketplace_products/$(incoming().productId))
+                    && get(/databases/$(database)/documents/marketplace_products/$(incoming().productId)).data.isPublished == true
+                    && get(/databases/$(database)/documents/marketplace_products/$(incoming().productId)).data.priceCents == incoming().amountCents
+                    && get(/databases/$(database)/documents/marketplace_products/$(incoming().productId)).data.currency == incoming().currency;
       allow update: if isAdmin() && isValidId(orderId)
                     && isValidMarketplaceOrder(incoming())
                     && !(existing().status in ['FULFILLED', 'REFUNDED'])
                     && incoming().buyerUid == existing().buyerUid
                     && incoming().productId == existing().productId
+                    && incoming().amountCents == existing().amountCents
+                    && incoming().currency == existing().currency
                     && incoming().createdAt == existing().createdAt
                     && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'paymentProvider', 'paymentReference', 'updatedAt', 'serverTimestamp']);
       allow delete: if false;
@@ -194,7 +239,9 @@ service cloud.firestore {
                     && incoming().buyerUid == existing().buyerUid
                     && incoming().productId == existing().productId
                     && incoming().orderId == existing().orderId
+                    && incoming().licenseKey == existing().licenseKey
                     && incoming().createdAt == existing().createdAt
+                    && incoming().downloadCount >= existing().downloadCount
                     && incoming().diff(existing()).affectedKeys().hasOnly(['downloadCount', 'maxDownloads', 'revoked', 'serverTimestamp']);
       allow delete: if false;
     }
@@ -231,12 +278,17 @@ service cloud.firestore {
                     && isValidMarketplaceOrder(incoming())
                     && incoming().buyerUid == request.auth.uid
                     && incoming().status == 'PENDING'
-                    && exists(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId));
+                    && exists(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId))
+                    && get(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId)).data.isPublished == true
+                    && get(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId)).data.priceCents == incoming().amountCents
+                    && get(/databases/$(database)/documents/2rcreations_marketplace_products/$(incoming().productId)).data.currency == incoming().currency;
       allow update: if isAdmin() && isValidId(orderId)
                     && isValidMarketplaceOrder(incoming())
                     && !(existing().status in ['FULFILLED', 'REFUNDED'])
                     && incoming().buyerUid == existing().buyerUid
                     && incoming().productId == existing().productId
+                    && incoming().amountCents == existing().amountCents
+                    && incoming().currency == existing().currency
                     && incoming().createdAt == existing().createdAt
                     && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'paymentProvider', 'paymentReference', 'updatedAt', 'serverTimestamp']);
       allow delete: if false;
@@ -252,7 +304,9 @@ service cloud.firestore {
                     && incoming().buyerUid == existing().buyerUid
                     && incoming().productId == existing().productId
                     && incoming().orderId == existing().orderId
+                    && incoming().licenseKey == existing().licenseKey
                     && incoming().createdAt == existing().createdAt
+                    && incoming().downloadCount >= existing().downloadCount
                     && incoming().diff(existing()).affectedKeys().hasOnly(['downloadCount', 'maxDownloads', 'revoked', 'serverTimestamp']);
       allow delete: if false;
     }

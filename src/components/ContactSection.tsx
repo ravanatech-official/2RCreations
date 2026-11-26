@@ -370,6 +370,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       id="contact-whatsapp"
                       type="tel"
                       required
+                      maxLength={50}
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value)}
                       placeholder="+1 (555) 012-3456"
@@ -426,6 +427,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       <input
                         id="contact-sample-link"
                         type="url"
+                        pattern="https://.*"
+                        title="Please enter a secure https:// cloud folder link (Google Drive, Dropbox, Pixieset, WeTransfer)"
+                        maxLength={500}
                         value={samplePhotosLink}
                         onChange={(e) => setSamplePhotosLink(e.target.value)}
                         placeholder="https://drive.google.com/..."
@@ -443,6 +447,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                   <textarea
                     id="contact-message"
                     rows={4}
+                    maxLength={4000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about the celebration, estimated spread count, preferred lab, and delivery deadline..."

@@ -116,6 +116,8 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                     <input
                       type="text"
                       required
+                      minLength={2}
+                      maxLength={120}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Elena Vance Photography"
@@ -130,6 +132,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                     <input
                       type="email"
                       required
+                      maxLength={200}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="studio@example.com"
@@ -145,6 +148,9 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                   <input
                     type="url"
                     required
+                    pattern="https://.*"
+                    title="Please enter a secure https:// cloud folder link"
+                    maxLength={500}
                     value={cloudLink}
                     onChange={(e) => setCloudLink(e.target.value)}
                     placeholder="https://drive.google.com/... or https://pixieset.com/..."
@@ -158,6 +164,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                   </label>
                   <textarea
                     rows={2}
+                    maxLength={4000}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="e.g. Outdoor sunset light, modern serif typography, preferred print lab if known..."
