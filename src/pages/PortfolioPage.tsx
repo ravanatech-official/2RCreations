@@ -48,10 +48,31 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
   useEffect(() => {
     updateSEO({
       title: activeTab === 'ALBUMS'
-        ? 'Portfolio & Signature Album Concepts | 2R CREATIONS'
-        : 'Photo Retouching & Color Grading Portfolio | 2R CREATIONS',
-      description: 'Explore signature wedding album design concepts, editorial pacing, natural skin retouching, and color grading created by 2R Creations for fine art photographers.',
-      canonicalPath: '/portfolio'
+        ? 'Wedding Album Design Portfolio | 2R Creations'
+        : 'Photo Retouching & Color Grading Portfolio | 2R Creations',
+      description: 'Explore bespoke wedding album concepts, editorial spread pacing, natural skin retouching, and before/after color grading crafted by 2R Creations.',
+      canonicalPath: '/portfolio',
+      ogImage: ALBUMS[0]?.coverImage,
+      ogImageAlt: '2R Creations Signature Wedding Album Design Portfolio',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Portfolio', path: '/portfolio' }
+      ],
+      structuredData: {
+        '@type': 'CollectionPage',
+        name: '2R Creations Wedding Album & Retouching Portfolio',
+        url: 'https://2rcreations.com/portfolio',
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: ALBUMS.length,
+          itemListElement: ALBUMS.map((album, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: album.title,
+            url: `https://2rcreations.com/portfolio/${album.slug}`
+          }))
+        }
+      }
     });
   }, [activeTab]);
 

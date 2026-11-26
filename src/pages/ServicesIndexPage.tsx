@@ -18,9 +18,34 @@ export const ServicesIndexPage: React.FC = () => {
 
   useEffect(() => {
     updateSEO({
-      title: 'Services & Capabilities | 2R CREATIONS',
-      description: 'Comprehensive post-production and album design services for wedding photographers and studios worldwide.',
-      canonicalPath: '/services'
+      title: 'Album Design & Retouching Services | 2R Creations',
+      description: 'Wedding album layout design, cover typography, pre-shoot monographs, photo retouching, culling, and object removal for photographers worldwide.',
+      canonicalPath: '/services',
+      ogImage: SERVICES[0]?.heroImage,
+      ogImageAlt: '2R Creations Wedding Album Design & Fine Art Retouching Services',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' }
+      ],
+      structuredData: {
+        '@type': 'CollectionPage',
+        name: '2R Creations Services & Capabilities',
+        url: 'https://2rcreations.com/services',
+        mainEntity: {
+          '@type': 'OfferCatalog',
+          name: 'Studio Services',
+          itemListElement: SERVICES.map((svc, idx) => ({
+            '@type': 'Offer',
+            position: idx + 1,
+            itemOffered: {
+              '@type': 'Service',
+              name: svc.title,
+              description: svc.tagline,
+              url: `https://2rcreations.com/services/${svc.slug}`
+            }
+          }))
+        }
+      }
     });
   }, []);
 

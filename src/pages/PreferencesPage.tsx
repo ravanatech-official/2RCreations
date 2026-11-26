@@ -8,9 +8,13 @@ import { updateSEO } from '../utils/seo';
 export const PreferencesPage: React.FC = () => {
   useEffect(() => {
     updateSEO({
-      title: 'Privacy Preferences & WhatsApp Opt-Out | 2R CREATIONS',
+      title: 'Privacy Preferences & Opt-Out | 2R Creations',
       description: 'Manage your cookie consent preferences, submit an instant WhatsApp opt-out, or exercise GDPR/CCPA data export and erasure rights.',
-      canonicalPath: '/preferences'
+      canonicalPath: '/preferences',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Privacy Preferences', path: '/preferences' }
+      ]
     });
     window.scrollTo(0, 0);
   }, []);

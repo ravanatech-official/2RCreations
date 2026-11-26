@@ -17,9 +17,11 @@ import { analytics } from '../services/analytics';
 
 interface ContactSectionProps {
   initialProjectType?: string;
+  headingAs?: 'h1' | 'h2';
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectType }) => {
+export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectType, headingAs = 'h2' }) => {
+  const HeadingTag = headingAs;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -111,9 +113,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
               <span className="text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
                 START A CONVERSATION
               </span>
-              <h2 className="type-section-h2 text-[#111111] mb-5">
+              <HeadingTag className="type-section-h2 text-[#111111] mb-5">
                 Let’s create something lasting together.
-              </h2>
+              </HeadingTag>
               <p className="text-sm sm:text-base text-[#242424]/75 font-light leading-relaxed mb-8">
                 Whether you’re a wedding photographer looking to outsource album production, or a couple desiring a custom heirloom book, we’d love to review your timeline and gallery scope.
               </p>

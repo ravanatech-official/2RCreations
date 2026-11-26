@@ -6,9 +6,11 @@ import { STUDIO_CONFIG, getWhatsAppUrl, hasWhatsApp, getGmailComposeUrl } from '
 
 interface AboutSectionProps {
   isPreview?: boolean;
+  headingAs?: 'h1' | 'h2';
 }
 
-export const AboutSection: React.FC<AboutSectionProps> = ({ isPreview = false }) => {
+export const AboutSection: React.FC<AboutSectionProps> = ({ isPreview = false, headingAs = 'h2' }) => {
+  const HeadingTag = headingAs;
   const whatsappUrl = getWhatsAppUrl();
 
   return (
@@ -57,9 +59,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isPreview = false })
             </span>
             
             <div className="mb-1">
-              <h2 className="type-section-h2 text-[#111111] mb-1 font-serif tracking-tight">
+              <HeadingTag className="type-section-h2 text-[#111111] mb-1 font-serif tracking-tight">
                 SACHINI FERNANDO
-              </h2>
+              </HeadingTag>
               <p className="text-[13px] sm:text-[14px] uppercase tracking-[0.15em] text-[#C5A880] font-medium font-mono">
                 Professional Album Designer | High End Retoucher
               </p>

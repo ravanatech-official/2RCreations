@@ -14,9 +14,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenAlbum }) => {
 
   useEffect(() => {
     updateSEO({
-      title: '2R CREATIONS — Professional Wedding Album Designer',
-      description: 'Story-driven wedding album design for fine art photographers and studios worldwide. Paced layouts, refined typography, and 2–3 day turnaround.',
-      canonicalPath: '/'
+      title: '2R Creations — Wedding Album Design & Retouching Studio',
+      description: 'Bespoke wedding album design and fine art photo retouching for photographers worldwide. Editorial layouts, natural skin polish, and 2–3 day turnaround.',
+      canonicalPath: '/',
+      structuredData: {
+        '@type': 'WebPage',
+        name: '2R Creations — Wedding Album Design & Retouching Studio',
+        url: 'https://2rcreations.com/',
+        description: 'Bespoke wedding album design and fine art photo retouching for photographers worldwide.'
+      }
     });
     window.scrollTo(0, 0);
   }, []);

@@ -135,9 +135,40 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
   useEffect(() => {
     if (service) {
       updateSEO({
-        title: `${service.title} | 2R CREATIONS`,
-        description: service.heroDescription,
-        canonicalPath: `/services/${service.slug}`
+        title: `${service.title} | 2R Creations`,
+        description: service.heroDescription.slice(0, 158),
+        canonicalPath: `/services/${service.slug}`,
+        ogImage: service.heroImage,
+        ogImageAlt: `${service.title} — 2R Creations Studio`,
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Services', path: '/services' },
+          { name: service.shortTitle, path: `/services/${service.slug}` }
+        ],
+        structuredData: [
+          {
+            '@type': 'Service',
+            name: service.title,
+            serviceType: service.shortTitle,
+            description: service.heroDescription,
+            url: `https://2rcreations.com/services/${service.slug}`,
+            image: `https://2rcreations.com${service.heroImage}`,
+            provider: {
+              '@id': 'https://2rcreations.com/#organization'
+            },
+            areaServed: ['US', 'GB', 'AU', 'CA', 'NZ', 'LK', 'IN', 'EU']
+          },
+          {
+            '@type': 'HowTo',
+            name: `${service.title} Workflow`,
+            step: service.howItWorks.map((st, idx) => ({
+              '@type': 'HowToStep',
+              position: idx + 1,
+              name: st.title,
+              text: st.description
+            }))
+          }
+        ]
       });
       window.scrollTo(0, 0);
     }

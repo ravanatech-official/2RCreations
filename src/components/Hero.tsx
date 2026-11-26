@@ -41,7 +41,7 @@ export const Hero: React.FC<HeroProps> = ({
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/assets/video/hero-wedding-poster.webp"
           className="absolute inset-0 w-full h-full object-cover filter brightness-[0.78] contrast-[1.08] scale-[1.01]"
         >

@@ -1,7 +1,12 @@
 import React from 'react';
 import { UploadCloud, Palette, Eye, PackageCheck } from 'lucide-react';
 
-export const ProcessSection: React.FC = () => {
+interface ProcessSectionProps {
+  headingAs?: 'h1' | 'h2';
+}
+
+export const ProcessSection: React.FC<ProcessSectionProps> = ({ headingAs = 'h2' }) => {
+  const HeadingTag = headingAs;
   const steps = [
     {
       step: '01',
@@ -37,9 +42,9 @@ export const ProcessSection: React.FC = () => {
           <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3">
             HOW IT WORKS
           </span>
-          <h2 className="type-section-h2 text-[#111111] mb-4">
+          <HeadingTag className="type-section-h2 text-[#111111] mb-4">
             A Straightforward Design Workflow
-          </h2>
+          </HeadingTag>
           <p className="type-large-body text-[#242424]/75">
             Eliminate project friction. Seamless collaboration designed to integrate directly into your studio schedule.
           </p>

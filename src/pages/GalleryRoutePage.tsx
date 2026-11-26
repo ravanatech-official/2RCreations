@@ -16,9 +16,18 @@ export const GalleryRoutePage: React.FC<GalleryRoutePageProps> = ({
 
   useEffect(() => {
     updateSEO({
-      title: 'Selected Work & Client Archive | 2R CREATIONS',
-      description: 'A selection of completed wedding album designs, retouching studies, and visual stories created for photographers and studios worldwide.',
-      canonicalPath: '/gallery'
+      title: 'Selected Work & Client Archive | 2R Creations',
+      description: 'Curated wedding album designs, retouching case studies, and print-ready spreads crafted for fine art photographers and studios worldwide.',
+      canonicalPath: '/gallery',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Gallery', path: '/gallery' }
+      ],
+      structuredData: {
+        '@type': 'CollectionPage',
+        name: '2R Creations Selected Work & Client Archive',
+        url: 'https://2rcreations.com/gallery'
+      }
     });
   }, []);
 

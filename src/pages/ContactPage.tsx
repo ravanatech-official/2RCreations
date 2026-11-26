@@ -9,15 +9,27 @@ export const ContactPage: React.FC = () => {
 
   useEffect(() => {
     updateSEO({
-      title: 'Contact Studio & Start a Project | 2R CREATIONS',
-      description: 'Submit your wedding album scope or project inquiry to 2R Creations. Receive a custom quote and turnaround timeline.',
-      canonicalPath: '/contact'
+      title: 'Start Your Wedding Album Project | 2R Creations',
+      description: 'Contact 2R Creations for a custom wedding album design or retouching quote, free sample spread, and 2–3 day turnaround schedule.',
+      canonicalPath: '/contact',
+      breadcrumbs: [
+        { name: 'Home', path: '/' },
+        { name: 'Contact', path: '/contact' }
+      ],
+      structuredData: {
+        '@type': 'ContactPage',
+        name: 'Contact 2R Creations Studio',
+        url: 'https://2rcreations.com/contact',
+        mainEntity: {
+          '@id': 'https://2rcreations.com/#organization'
+        }
+      }
     });
   }, []);
 
   return (
     <div className="pt-20">
-      <ContactSection initialProjectType={initialProject} />
+      <ContactSection initialProjectType={initialProject} headingAs="h1" />
     </div>
   );
 };

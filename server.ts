@@ -263,6 +263,7 @@ async function startServer() {
     app.use(
       express.static(distDir, {
         index: false,
+        extensions: ['html'],
         maxAge: '1d'
       })
     );

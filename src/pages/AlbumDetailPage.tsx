@@ -18,10 +18,29 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
   useEffect(() => {
     if (album) {
       updateSEO({
-        title: `${album.title} — Signature Album Concept | 2R CREATIONS`,
-        description: `${album.description} ${album.totalSpreads} spreads, ${album.totalPages} pages designed by 2R Creations with bespoke editorial pacing.`,
+        title: `${album.title} Album Design | 2R Creations`,
+        description: `${album.description} ${album.totalSpreads} spreads (${album.totalPages} pages) crafted with editorial pacing by 2R Creations.`,
         canonicalPath: `/portfolio/${album.slug}`,
-        ogImage: album.coverImage
+        ogImage: album.coverImage,
+        ogImageAlt: `${album.title} — ${album.subtitle} | 2R Creations`,
+        type: 'article',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Portfolio', path: '/portfolio' },
+          { name: album.title, path: `/portfolio/${album.slug}` }
+        ],
+        structuredData: {
+          '@type': 'CreativeWork',
+          name: album.title,
+          headline: album.subtitle,
+          description: album.description,
+          url: `https://2rcreations.com/portfolio/${album.slug}`,
+          image: `https://2rcreations.com${album.coverImage}`,
+          keywords: album.tags.join(', '),
+          creator: {
+            '@id': 'https://2rcreations.com/#organization'
+          }
+        }
       });
       window.scrollTo(0, 0);
     }

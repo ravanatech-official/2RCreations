@@ -28,21 +28,33 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
     window.scrollTo(0, 0);
     if (activePolicy === 'client-image-policy') {
       updateSEO({
-        title: 'Client Image Protection Policy | 2R CREATIONS',
-        description: 'Our strict confidentiality standards for client wedding photographs and non-disclosure commitments.',
-        canonicalPath: '/client-image-policy'
+        title: 'Client Image Protection Policy | 2R Creations',
+        description: 'Our strict confidentiality standards for client wedding photographs, encrypted storage, and non-disclosure commitments.',
+        canonicalPath: '/client-image-policy',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Client Image Policy', path: '/client-image-policy' }
+        ]
       });
     } else if (activePolicy === 'terms') {
       updateSEO({
-        title: 'Terms of Service | 2R CREATIONS',
+        title: 'Terms of Service | 2R Creations',
         description: 'Terms and conditions governing album design orders, turnaround estimates, proofing revisions, and lab print exports.',
-        canonicalPath: '/terms'
+        canonicalPath: '/terms',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Terms of Service', path: '/terms' }
+        ]
       });
     } else {
       updateSEO({
-        title: 'Privacy Policy | 2R CREATIONS',
-        description: 'How 2R Creations collects, protects, and handles contact form submissions and inquiry details.',
-        canonicalPath: '/privacy'
+        title: 'Privacy Policy | 2R Creations',
+        description: 'How 2R Creations collects, protects, and handles contact form submissions and studio inquiry details.',
+        canonicalPath: '/privacy',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Privacy Policy', path: '/privacy' }
+        ]
       });
     }
   }, [activePolicy]);
