@@ -245,15 +245,15 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
     : retouchingItems.filter(item => item.category === activeRetouchCategory);
 
   return (
-    <div className="pt-32 pb-24 bg-[#FBF9F5]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 bg-[#FBF9F5]">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         
         {/* Header */}
         <div className="max-w-3xl mb-8">
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-4">
+          <h1 className="type-hero-h1 text-[#111111] mb-4">
             {activeTab === 'ALBUMS' ? 'Signature Album Concepts' : 'Photo Retouching & Color Grading'}
           </h1>
-          <p className="text-base text-[#242424]/75 font-light leading-relaxed max-w-2xl">
+          <p className="type-large-body text-[#242424]/75 font-light max-w-2xl">
             {activeTab === 'ALBUMS'
               ? 'Explore our signature album design studies and visual styles. Each curated collection demonstrates emotional pacing, bespoke typography pairing, and print-calibrated layout architecture.'
               : 'Discover our fine art post-production and retouching artistry. Natural skin preservation, spread-to-spread color harmony, and museum-grade object removal tailored for fine art photographers.'
@@ -262,19 +262,19 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
         </div>
 
         {/* Primary Portfolio Mode Tabs (Album Designs vs Photo Retouching) */}
-        <div className="flex items-center gap-3 p-1.5 bg-[#FAF8F5] border border-[#242424]/12 rounded-sm w-fit mb-10 shadow-2xs">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-1.5 bg-[#FAF8F5] border border-[#242424]/12 rounded-sm w-full sm:w-fit mb-8 sm:mb-10 shadow-2xs">
           <button
             onClick={() => {
               setActiveTab('ALBUMS');
               analytics.portfolioCategoryChange?.('ALBUMS');
             }}
-            className={`flex items-center gap-2.5 px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wide rounded-xs transition-all duration-200 cursor-pointer ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wide rounded-xs transition-all duration-200 cursor-pointer whitespace-nowrap ${
               activeTab === 'ALBUMS'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/70 hover:text-[#111111] hover:bg-[#242424]/5'
             }`}
           >
-            <BookOpen className="w-4 h-4 text-[#C5A880]" />
+            <BookOpen className="w-4 h-4 text-[#C5A880] shrink-0" />
             <span>Album Designs ({ALBUMS.length})</span>
           </button>
 
@@ -283,13 +283,13 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
               setActiveTab('RETOUCHING');
               analytics.portfolioCategoryChange?.('RETOUCHING');
             }}
-            className={`flex items-center gap-2.5 px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wide rounded-xs transition-all duration-200 cursor-pointer ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold tracking-wide rounded-xs transition-all duration-200 cursor-pointer whitespace-nowrap ${
               activeTab === 'RETOUCHING'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/70 hover:text-[#111111] hover:bg-[#242424]/5'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-[#C5A880]" />
+            <Sparkles className="w-4 h-4 text-[#C5A880] shrink-0" />
             <span>Photo Retouching ({retouchingItems.length})</span>
           </button>
         </div>
@@ -411,7 +411,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
             </div>
 
             {/* Global Standard Redirection Banner to Gallery Archive */}
-            <div className="p-8 sm:p-10 bg-[#161616] text-[#FBF9F5] border border-[#C5A880]/30 rounded-xs flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl mb-12">
+            <div className="p-5 sm:p-8 lg:p-10 bg-[#161616] text-[#FBF9F5] border border-[#C5A880]/30 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl mb-12">
               <div className="text-left">
                 <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-1 font-semibold">
                   LOOKING FOR MORE CONCEPTS & REAL STORIES?
@@ -426,7 +426,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
 
               <Link
                 to="/gallery"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all shrink-0 cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all shrink-0 cursor-pointer text-center"
               >
                 <span>View All In Gallery</span>
                 <ArrowRight className="w-4 h-4" />
@@ -462,7 +462,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
             </div>
 
             {/* Philosophy Banner */}
-            <div className="mb-12 p-6 sm:p-7 bg-[#111111] text-[#FBF9F5] rounded-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#242424]">
+            <div className="mb-10 sm:mb-12 p-5 sm:p-7 bg-[#111111] text-[#FBF9F5] rounded-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#242424]">
               <div>
                 <div className="flex items-center gap-2 text-[#C5A880] text-xs font-mono tracking-wider uppercase mb-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
@@ -478,7 +478,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
 
               <Link
                 to="/services/photo-retouching"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors shrink-0 whitespace-nowrap"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors shrink-0 sm:whitespace-nowrap text-center"
               >
                 <span>Full Retouching Specs</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -519,8 +519,8 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
                             }`}
                           />
                           {/* Top Bar: Kicker + Optional Pose Switcher */}
-                          <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none">
-                            <span className="text-[9px] font-mono tracking-widest text-[#C5A880] uppercase px-2 py-0.5 bg-[#111111]/85 backdrop-blur-xs rounded-xs border border-[#C5A880]/20">
+                          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 right-2.5 sm:right-3 flex flex-wrap items-center justify-between gap-1.5 z-20 pointer-events-none">
+                            <span className="text-[8.5px] sm:text-[9px] font-mono tracking-widest text-[#C5A880] uppercase px-2 py-0.5 bg-[#111111]/85 backdrop-blur-xs rounded-xs border border-[#C5A880]/20">
                               {item.badge}
                             </span>
 
@@ -537,7 +537,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
                                       e.stopPropagation();
                                       setCardFrameIndices((prev) => ({ ...prev, [item.id]: fIdx }));
                                     }}
-                                    className={`px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-xs transition-colors cursor-pointer whitespace-nowrap ${
+                                    className={`px-1.5 py-0.5 text-[8.5px] sm:text-[9px] font-mono uppercase tracking-wider rounded-xs transition-colors cursor-pointer whitespace-nowrap ${
                                       currentFrameIdx === fIdx
                                         ? 'bg-[#C5A880] text-[#111111] font-semibold'
                                         : 'text-[#FBF9F5]/75 hover:text-[#FBF9F5]'
@@ -548,7 +548,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
                                 ))}
                               </div>
                             ) : (
-                              <span className="text-[9px] font-mono tracking-widest text-[#FBF9F5]/85 uppercase px-2 py-0.5 bg-[#111111]/85 backdrop-blur-xs rounded-xs">
+                              <span className="text-[8.5px] sm:text-[9px] font-mono tracking-widest text-[#FBF9F5]/85 uppercase px-2 py-0.5 bg-[#111111]/85 backdrop-blur-xs rounded-xs">
                                 DRAG TO COMPARE
                               </span>
                             )}
@@ -654,7 +654,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
             </div>
 
             {/* Redirection to Gallery for All Retouching, Manipulation & Color Grading */}
-            <div className="p-8 sm:p-10 bg-[#161616] text-[#FBF9F5] border border-[#C5A880]/30 rounded-xs flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl mb-12">
+            <div className="p-5 sm:p-8 lg:p-10 bg-[#161616] text-[#FBF9F5] border border-[#C5A880]/30 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl mb-12">
               <div className="text-left">
                 <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-1 font-semibold">
                   NEED ADVANCED EDITORIAL MANIPULATION & COLOR HARMONY?
@@ -669,7 +669,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
 
               <Link
                 to="/gallery?tab=RETOUCHING"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all shrink-0 cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold text-xs uppercase tracking-widest rounded-xs shadow-md transition-all shrink-0 cursor-pointer text-center"
               >
                 <span>Explore All In Gallery</span>
                 <ArrowRight className="w-4 h-4" />
@@ -677,7 +677,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
             </div>
 
             {/* Retouching Order CTA Bar */}
-            <div className="mt-14 p-8 bg-[#FAF8F5] border border-[#C5A880]/40 rounded-xs flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="mt-10 sm:mt-14 p-5 sm:p-8 bg-[#FAF8F5] border border-[#C5A880]/40 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A880] block mb-1 font-semibold">
                   NEED RETOUCHING FOR AN UPCOMING WEDDING?
@@ -691,7 +691,7 @@ export const PortfolioPage: React.FC<PortfolioPageProps> = ({ onOpenAlbum, onOpe
               </div>
               <button
                 onClick={() => navigate('/contact?project=' + encodeURIComponent('Free Retouching Sample'))}
-                className="px-6 py-3 bg-[#111111] text-[#FBF9F5] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#C5A880] hover:text-[#111111] transition-colors shrink-0 whitespace-nowrap cursor-pointer shadow-xs"
+                className="w-full sm:w-auto px-6 py-3 bg-[#111111] text-[#FBF9F5] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#C5A880] hover:text-[#111111] transition-colors shrink-0 sm:whitespace-nowrap cursor-pointer shadow-xs text-center"
               >
                 Request Free Test Frame &rarr;
               </button>

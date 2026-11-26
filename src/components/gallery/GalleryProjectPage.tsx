@@ -39,11 +39,11 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
   };
 
   return (
-    <div className="pt-28 pb-24 bg-[#FBF9F5] min-h-screen text-[#242424]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+    <div className="pt-24 sm:pt-28 pb-16 sm:pb-24 bg-[#FBF9F5] min-h-screen text-[#242424]">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         
         {/* Navigation Breadcrumb / Return */}
-        <div className="mb-10">
+        <div className="mb-8 sm:mb-10">
           <button
             onClick={onBackToGallery}
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#242424]/70 hover:text-[#111111] transition-colors cursor-pointer group"
@@ -54,8 +54,8 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
         </div>
 
         {/* Editorial Case Study Header */}
-        <header className="max-w-4xl mb-14 sm:mb-16">
-          <div className="flex items-center gap-3 mb-4">
+        <header className="max-w-4xl mb-10 sm:mb-16">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-4">
             <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase">
               SELECTED PROJECT
             </span>
@@ -65,7 +65,7 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
             </span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-[#111111] leading-[1.1] mb-6">
+          <h1 className="type-hero-h1 text-[#111111] mb-6">
             {project.title}
           </h1>
 
@@ -177,7 +177,7 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
         <footer className="border-t border-[#242424]/10 pt-16">
           
           {/* Inspired Action Card */}
-          <div className="bg-[#FAF8F5] border border-[#242424]/8 p-8 sm:p-12 rounded-xs flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
+          <div className="bg-[#FAF8F5] border border-[#242424]/8 p-5 sm:p-8 lg:p-12 rounded-xs flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 sm:mb-16">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A880] block mb-2">
                 CREATE YOUR HEIRLOOM
@@ -211,7 +211,7 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
 
           {/* Adjacent Published Projects Navigation */}
           {(prev || next) && (
-            <div className="flex items-center justify-between pt-8 border-t border-[#242424]/5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-8 border-t border-[#242424]/5">
               {prev ? (
                 <button
                   onClick={() => onOpenProject(prev.slug)}
@@ -225,12 +225,12 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
                     {prev.title}
                   </span>
                 </button>
-              ) : <div />}
+              ) : <div className="hidden sm:block" />}
 
               {next ? (
                 <button
                   onClick={() => onOpenProject(next.slug)}
-                  className="group flex flex-col items-end text-right cursor-pointer"
+                  className="group flex flex-col items-start sm:items-end text-left sm:text-right cursor-pointer"
                 >
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[#242424]/50 flex items-center gap-1.5 mb-1 group-hover:text-[#C5A880] transition-colors">
                     Next Project
@@ -240,7 +240,7 @@ export const GalleryProjectPage: React.FC<GalleryProjectPageProps> = ({
                     {next.title}
                   </span>
                 </button>
-              ) : <div />}
+              ) : <div className="hidden sm:block" />}
             </div>
           )}
 

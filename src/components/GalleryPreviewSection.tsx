@@ -16,19 +16,19 @@ export const GalleryPreviewSection: React.FC<GalleryPreviewSectionProps> = ({ on
   if (featuredProjects.length === 0) return null;
 
   return (
-    <section id="gallery-preview-section" className="py-24 bg-[#FAF8F5] border-t border-[#242424]/8 text-[#242424]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+    <section id="gallery-preview-section" className="py-16 sm:py-24 bg-[#FAF8F5] border-t border-[#242424]/8 text-[#242424]">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
           <div className="max-w-2xl">
             <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.2em] text-[#C5A880] uppercase block mb-3">
               SELECTED WORK &bull; CLIENT ARCHIVE
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#111111] leading-[1.15]">
+            <h2 className="type-section-h2 text-[#111111]">
               Real Stories. Thoughtfully Designed.
             </h2>
-            <p className="text-sm sm:text-base text-[#242424]/75 font-light mt-3 leading-relaxed">
+            <p className="type-normal-body text-[#242424]/75 mt-3">
               Explore completed wedding albums and client stories crafted for leading wedding photographers, fine art studios, and heirloom couples.
             </p>
           </div>
@@ -37,16 +37,16 @@ export const GalleryPreviewSection: React.FC<GalleryPreviewSectionProps> = ({ on
             <Link
               to="/gallery"
               onClick={() => analytics.navClick('homepage_view_all_gallery')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#111111] bg-[#C5A880]/20 hover:bg-[#C5A880] hover:text-[#111111] border border-[#C5A880]/50 transition-all rounded-xs cursor-pointer group shadow-xs"
+              className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#111111] bg-[#C5A880]/20 hover:bg-[#C5A880] hover:text-[#111111] border border-[#C5A880]/50 transition-all rounded-xs cursor-pointer group shadow-xs w-full sm:w-auto text-center"
             >
               <span>Explore Full Gallery ({getPublishedFeaturedProjects().length} Projects)</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-4 h-4 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>
         </div>
 
         {/* Featured 3-Column Editorial Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {featuredProjects.map((project: GalleryProject, idx: number) => {
             const formattedIndex = String(idx + 1).padStart(2, '0');
 
@@ -115,7 +115,7 @@ export const GalleryPreviewSection: React.FC<GalleryPreviewSectionProps> = ({ on
         </div>
 
         {/* Banner Link to Full Archive */}
-        <div className="mt-14 p-6 bg-[#F5F2EB] border border-[#242424]/8 rounded-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-10 sm:mt-14 p-5 sm:p-6 bg-[#F5F2EB] border border-[#242424]/8 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Layers className="w-5 h-5 text-[#C5A880] shrink-0" />
             <p className="text-xs text-[#242424]/80 leading-relaxed font-normal">

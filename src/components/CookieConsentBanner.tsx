@@ -45,14 +45,14 @@ export const CookieConsentBanner: React.FC = () => {
   return (
     <aside
       aria-label="Cookie consent banner"
-      className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-md z-40 animate-in fade-in slide-in-from-bottom-4 duration-500"
+      className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-3 right-3 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-md z-40 animate-in fade-in slide-in-from-bottom-4 duration-500"
     >
-      <div className="bg-[#141414]/95 text-[#FBF9F5] backdrop-blur-md p-5 rounded-xs border border-white/15 shadow-2xl">
-        <div className="flex items-start gap-3.5 mb-3">
+      <div className="bg-[#141414]/95 text-[#FBF9F5] backdrop-blur-md p-4 sm:p-5 rounded-xs border border-white/15 shadow-2xl">
+        <div className="flex items-start gap-3 mb-3">
           <div className="w-8 h-8 rounded-xs bg-[#C5A880]/15 text-[#C5A880] flex items-center justify-center shrink-0 mt-0.5">
             <Cookie className="w-4 h-4" />
           </div>
-          <div className="flex-1 min-w-0 pr-2">
+          <div className="flex-1 min-w-0 pr-1">
             <h4 className="font-serif text-sm font-normal text-[#FBF9F5] mb-1">
               Privacy &amp; Viewing Experience
             </h4>
@@ -64,7 +64,7 @@ export const CookieConsentBanner: React.FC = () => {
             type="button"
             onClick={handleDecline}
             aria-label="Dismiss cookie notice"
-            className="text-white/40 hover:text-white p-1 transition-colors cursor-pointer"
+            className="text-white/40 hover:text-white p-1 transition-colors cursor-pointer shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -84,14 +84,14 @@ export const CookieConsentBanner: React.FC = () => {
             <button
               type="button"
               onClick={handleDecline}
-              className="px-2.5 py-1.5 text-[11px] font-mono uppercase tracking-wider text-white/75 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-xs transition-colors cursor-pointer"
+              className="px-2.5 py-1.5 text-[11px] font-mono uppercase tracking-wider text-white/75 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-xs transition-colors cursor-pointer whitespace-nowrap"
             >
               Essential Only
             </button>
             <button
               type="button"
               onClick={handleAccept}
-              className="inline-flex items-center gap-1 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider font-semibold bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] rounded-xs shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider font-semibold bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] rounded-xs shadow-xs transition-colors cursor-pointer whitespace-nowrap"
             >
               <Check className="w-3 h-3 text-[#111111]" />
               <span>Accept All</span>

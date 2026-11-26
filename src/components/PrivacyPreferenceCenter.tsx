@@ -151,17 +151,17 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
   };
 
   const content = (
-    <div className="bg-[#FAF8F5] text-[#111111] rounded-xs shadow-2xl border border-[#242424]/15 overflow-hidden flex flex-col max-h-[90vh] max-w-3xl w-full">
+    <div className={`bg-[#FAF8F5] text-[#111111] rounded-xs shadow-2xl border border-[#242424]/15 overflow-hidden flex flex-col w-full ${isPageEmbed ? 'max-w-4xl' : 'max-h-[92dvh] max-w-3xl'}`}>
       {/* Header */}
-      <div className="bg-[#141414] text-[#FBF9F5] px-6 py-5 border-b border-[#C5A880]/20 flex items-start justify-between gap-4">
-        <div>
+      <div className="bg-[#141414] text-[#FBF9F5] px-4 sm:px-6 py-4 sm:py-5 border-b border-[#C5A880]/20 flex items-start justify-between gap-3 shrink-0">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#C5A880]" />
-            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#C5A880]">
+            <span className="w-2 h-2 rounded-full bg-[#C5A880] shrink-0" />
+            <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#C5A880] truncate">
               2R CREATIONS &bull; PRIVACY &amp; CONSENT GOVERNANCE
             </span>
           </div>
-          <h2 className="font-serif text-2xl font-normal text-[#FBF9F5] tracking-tight">
+          <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#FBF9F5] tracking-tight">
             Privacy Preference Center
           </h2>
           <p className="text-xs text-[#FBF9F5]/70 font-light mt-0.5">
@@ -173,7 +173,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
           <button
             type="button"
             onClick={closePreferencesModal}
-            className="text-white/50 hover:text-white p-1.5 transition-colors cursor-pointer rounded-xs hover:bg-white/10"
+            className="text-white/50 hover:text-white p-1.5 transition-colors cursor-pointer rounded-xs hover:bg-white/10 shrink-0"
             aria-label="Close Preference Center"
           >
             <X className="w-5 h-5" />
@@ -182,11 +182,11 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
       </div>
 
       {/* Tab Navigation */}
-      <div className="bg-[#ECE7DC] border-b border-[#242424]/10 px-6 flex items-center gap-2 sm:gap-6 overflow-x-auto">
+      <div className="bg-[#ECE7DC] border-b border-[#242424]/10 px-4 sm:px-6 flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar shrink-0">
         <button
           type="button"
           onClick={() => setActiveTab('cookies')}
-          className={`py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap ${
+          className={`py-3 sm:py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap shrink-0 ${
             activeTab === 'cookies'
               ? 'border-[#111111] text-[#111111] font-semibold'
               : 'border-transparent text-[#242424]/60 hover:text-[#111111]'
@@ -199,7 +199,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
         <button
           type="button"
           onClick={() => setActiveTab('communications')}
-          className={`py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap ${
+          className={`py-3 sm:py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap shrink-0 ${
             activeTab === 'communications'
               ? 'border-[#111111] text-[#111111] font-semibold'
               : 'border-transparent text-[#242424]/60 hover:text-[#111111]'
@@ -212,7 +212,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
         <button
           type="button"
           onClick={() => setActiveTab('rights')}
-          className={`py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap ${
+          className={`py-3 sm:py-3.5 px-2 text-xs font-mono uppercase tracking-wider border-b-2 flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap shrink-0 ${
             activeTab === 'rights'
               ? 'border-[#111111] text-[#111111] font-semibold'
               : 'border-transparent text-[#242424]/60 hover:text-[#111111]'
@@ -224,7 +224,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
       </div>
 
       {/* Tab Body */}
-      <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1 text-xs sm:text-sm">
+      <div className="p-4 sm:p-6 md:p-8 overflow-y-auto overscroll-contain space-y-6 flex-1 text-xs sm:text-sm">
         {/* ============================================================== */}
         {/* TAB 1: COOKIES & LOCAL STORAGE */}
         {/* ============================================================== */}
@@ -720,7 +720,7 @@ export const PrivacyPreferenceCenter: React.FC<PrivacyPreferenceCenterProps> = (
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-[#111111]/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-300"
+      className="fixed inset-0 z-50 bg-[#111111]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-300"
       role="dialog"
       aria-modal="true"
       aria-label="Privacy Preference Center"

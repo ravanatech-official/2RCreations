@@ -118,8 +118,8 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
               1. Information We Collect &amp; Data Controller
             </h2>
-            <p>
-              2R Creations (Colombo, Sri Lanka — reachable at <a href={`mailto:${STUDIO_CONFIG.email}`} className="underline font-medium text-[#111111]">{STUDIO_CONFIG.email}</a>) acts as the Data Controller for project inquiries submitted on this website. When you submit a project inquiry or sample request, we collect your name or studio name, email address, phone/WhatsApp number, project specifications, and optional cloud gallery links solely to respond to your inquiry and deliver project estimates.
+            <p className="break-words">
+              2R Creations (Colombo, Sri Lanka — reachable at <a href={`mailto:${STUDIO_CONFIG.email}`} className="underline font-medium text-[#111111] break-all sm:break-normal">{STUDIO_CONFIG.email}</a>) acts as the Data Controller for project inquiries submitted on this website. When you submit a project inquiry or sample request, we collect your name or studio name, email address, phone/WhatsApp number, project specifications, and optional cloud gallery links solely to respond to your inquiry and deliver project estimates.
             </p>
 
             <h2 className="font-serif text-2xl font-normal text-[#111111] mt-8 mb-4">
@@ -177,20 +177,20 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
   };
 
   return (
-    <div className="pt-32 pb-24 bg-[#FBF9F5]">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+    <div className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 bg-[#FBF9F5]">
+      <div className="max-w-4xl 2xl:max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8">
         
         {/* Navigation back */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#242424]/60 hover:text-[#111111] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#242424]/60 hover:text-[#111111] mb-6 sm:mb-8 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Home</span>
         </Link>
 
         {/* Policy Selector Tabs */}
-        <div className="flex flex-wrap items-center gap-3 pb-4 mb-8 border-b border-[#242424]/10 text-xs font-mono uppercase tracking-wider">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 pb-4 mb-8 border-b border-[#242424]/10 text-xs font-mono uppercase tracking-wider">
           <Link
             to="/privacy"
             className={`px-3 py-1.5 rounded-xs transition-colors ${
@@ -223,18 +223,18 @@ export const LegalPage: React.FC<LegalPageProps> = ({ policy }) => {
           </Link>
           <Link
             to="/preferences"
-            className="px-3 py-1.5 rounded-xs text-[#644622] hover:text-[#111111] transition-colors border border-[#C5A880]/30 hover:border-[#C5A880] ml-auto font-semibold"
+            className="px-3 py-1.5 rounded-xs text-[#644622] hover:text-[#111111] transition-colors border border-[#C5A880]/30 hover:border-[#C5A880] sm:ml-auto font-semibold"
           >
             Preferences &amp; Opt-Out &rarr;
           </Link>
         </div>
 
         {/* Main Document Body */}
-        <div className="bg-[#FAF8F5] p-8 sm:p-12 rounded-xs border border-[#242424]/10 shadow-2xs">
+        <div className="bg-[#FAF8F5] p-5 sm:p-8 lg:p-12 rounded-xs border border-[#242424]/10 shadow-2xs break-words">
           <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
             LEGAL &amp; STUDIO PROTOCOLS
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-normal text-[#111111] mb-6">
+          <h1 className="type-section-h2 text-[#111111] mb-6">
             {getTitle()}
           </h1>
           <p className="text-xs font-mono text-[#242424]/50 mb-8 pb-4 border-b border-[#242424]/10">

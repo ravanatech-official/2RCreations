@@ -225,36 +225,36 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
       role="dialog"
       aria-modal="true"
       aria-label={`${album.title} — Digital Album Experience`}
-      className="fixed inset-0 z-50 bg-[#0F0F0F] text-[#FBF9F5] flex flex-col select-none overflow-hidden"
+      className="fixed inset-0 h-[100dvh] w-full z-50 bg-[#0F0F0F] text-[#FBF9F5] flex flex-col select-none overflow-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       {/* 01 VIEWER HEADER */}
-      <header className="h-16 px-6 sm:px-8 border-b border-[#FBF9F5]/10 flex items-center justify-between bg-[#141414]/90 backdrop-blur-md z-30 shrink-0">
-        <div className="flex items-center gap-3">
+      <header className="h-14 sm:h-16 px-3 sm:px-6 lg:px-8 border-b border-[#FBF9F5]/10 flex items-center justify-between gap-2 bg-[#141414]/90 backdrop-blur-md z-30 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <button
             onClick={onClose}
-            className="p-2 -ml-2 rounded-xs text-[#FBF9F5]/70 hover:text-[#FBF9F5] hover:bg-[#FBF9F5]/10 transition-colors cursor-pointer"
+            className="p-2 -ml-1 sm:-ml-2 rounded-xs text-[#FBF9F5]/70 hover:text-[#FBF9F5] hover:bg-[#FBF9F5]/10 transition-colors cursor-pointer shrink-0"
             aria-label="Close album viewer (Esc)"
             title="Close viewer (Esc)"
           >
             <X className="w-5 h-5" />
           </button>
           
-          <div className="border-l border-[#FBF9F5]/15 pl-3">
-            <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block">
+          <div className="border-l border-[#FBF9F5]/15 pl-2.5 sm:pl-3 min-w-0 flex-1">
+            <span className="text-[9.5px] sm:text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block truncate">
               {album.category} &bull; SIGNATURE STUDY
             </span>
-            <h2 className="font-serif text-sm sm:text-base font-medium tracking-tight text-[#FBF9F5] truncate max-w-[200px] sm:max-w-md">
+            <h2 className="font-serif text-sm sm:text-base font-medium tracking-tight text-[#FBF9F5] truncate">
               {album.title}
             </h2>
           </div>
         </div>
 
         {/* Right header controls */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-1 sm:gap-3 lg:gap-4 shrink-0">
           {/* Spread indicator */}
-          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#FBF9F5]/70 bg-[#242424]/60 px-3 py-1.5 rounded-xs border border-[#FBF9F5]/10">
+          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-[#FBF9F5]/70 bg-[#242424]/60 px-3 py-1.5 rounded-xs border border-[#FBF9F5]/10 whitespace-nowrap">
             <BookOpen className="w-3.5 h-3.5 text-[#C5A880]" />
             <span>
               {isCover && `COVER (${isSquarePage ? singlePageDimLabel : 'CLOSED'})`}
@@ -281,7 +281,7 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
             ) : (
               <VolumeX className="w-4 h-4" />
             )}
-            <span className="hidden lg:inline text-[11px] font-mono tracking-wider uppercase opacity-75">
+            <span className="hidden xl:inline text-[11px] font-mono tracking-wider uppercase opacity-75">
               {!isSoundMuted ? 'Sound On' : 'Muted'}
             </span>
           </button>
@@ -316,16 +316,21 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
               analytics.projectCtaClick('album_viewer_header');
               onStartProject();
             }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-sm cursor-pointer ml-1"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-sm cursor-pointer whitespace-nowrap"
           >
-            <span>Start Project</span>
+            <span className="hidden xs:inline sm:inline">Start Project</span>
+            <span className="xs:hidden sm:hidden">Inquire</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </header>
 
       {/* 02 MAIN SPREAD STAGE */}
-      <main className="flex-1 relative flex items-center justify-center p-4 sm:p-8 lg:p-12 overflow-hidden">
+      <main
+        className={`flex-1 min-h-0 relative flex justify-center p-2.5 sm:p-6 lg:p-10 ${
+          isFinalSpread ? 'overflow-y-auto items-start sm:items-center' : 'overflow-hidden items-center'
+        }`}
+      >
         
         {/* Navigation arrows (Floating) */}
         {!isCover && (
@@ -333,9 +338,9 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
             onClick={handlePrev}
             disabled={isFlipping}
             aria-label="Previous spread (Left arrow)"
-            className="absolute left-3 sm:left-6 z-20 w-11 h-11 rounded-full bg-[#181818]/80 hover:bg-[#C5A880] text-[#FBF9F5] hover:text-[#111111] border border-[#FBF9F5]/15 backdrop-blur-md flex items-center justify-center transition-all shadow-xl cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="absolute left-1.5 sm:left-5 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#181818]/85 hover:bg-[#C5A880] text-[#FBF9F5] hover:text-[#111111] border border-[#FBF9F5]/15 backdrop-blur-md flex items-center justify-center transition-all shadow-xl cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed group"
           >
-            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-0.5 transition-transform" />
           </button>
         )}
 
@@ -344,43 +349,45 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
             onClick={handleNext}
             disabled={isFlipping}
             aria-label="Next spread (Right arrow)"
-            className="absolute right-3 sm:right-6 z-20 w-11 h-11 rounded-full bg-[#181818]/80 hover:bg-[#C5A880] text-[#FBF9F5] hover:text-[#111111] border border-[#FBF9F5]/15 backdrop-blur-md flex items-center justify-center transition-all shadow-xl cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="absolute right-1.5 sm:right-5 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#181818]/85 hover:bg-[#C5A880] text-[#FBF9F5] hover:text-[#111111] border border-[#FBF9F5]/15 backdrop-blur-md flex items-center justify-center transition-all shadow-xl cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed group"
           >
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-0.5 transition-transform" />
           </button>
         )}
 
         {/* 03 ACTIVE PAGE CONTAINER */}
-        <div className={`w-full max-h-[84vh] relative flex items-center justify-center transition-all ${
-          isCover 
-            ? (isSquarePage ? 'max-w-xl aspect-square' : 'max-w-xl aspect-[1/1] sm:aspect-[4/3]')
-            : isPage01 || isPageLast 
-            ? (isSquarePage ? 'max-w-xl aspect-square' : 'max-w-2xl aspect-[12/17]')
-            : isFinalSpread
-            ? 'max-w-2xl'
-            : (isSquarePage ? 'max-w-[min(1360px,calc(82vh*2))] aspect-[2/1]' : 'max-w-[min(1200px,calc(82vh*24/17))] aspect-[24/17]')
-        }`}>
+        <div
+          className={`w-full relative flex items-center justify-center transition-all ${
+            isFinalSpread
+              ? 'max-w-2xl my-auto'
+              : isCover
+              ? 'h-full min-h-0 max-w-xl'
+              : isPage01 || isPageLast
+              ? 'h-full min-h-0 max-w-3xl'
+              : 'h-full min-h-0 max-w-6xl 2xl:max-w-[1440px]'
+          }`}
+        >
           
           {/* VIEW A: FRONT COVER PRESENTATION */}
           {isCover && (
-            <div className={`w-full ${isSquarePage ? 'max-w-md aspect-square' : 'max-w-lg aspect-[1/1] sm:aspect-[4/3]'} bg-[#161616] rounded-xs shadow-2xl border border-[#FBF9F5]/20 relative overflow-hidden flex flex-col justify-between p-4 sm:p-6 group`}>
+            <div className="w-full h-full max-h-full max-w-lg bg-[#161616] rounded-xs shadow-2xl border border-[#FBF9F5]/20 relative overflow-hidden flex flex-col justify-between p-3 sm:p-6 group">
               {/* Actual physical cover photo (e.g. 01 Cover.jpg) */}
-              <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-xs bg-[#111111]">
+              <div className="relative flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden rounded-xs bg-[#111111]">
                 <img
                   src={album.physicalCoverImage || album.coverImage}
                   alt={`${album.title} Cover`}
-                  className="w-full h-full object-contain filter contrast-[1.02] shadow-2xl"
+                  className="max-w-full max-h-full w-auto h-auto object-contain filter contrast-[1.02] shadow-2xl"
                 />
 
                 {/* Open Cover Action Buttons */}
-                <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+                <div className="absolute inset-x-2.5 bottom-2.5 sm:inset-x-auto sm:bottom-4 sm:right-4 z-20 flex flex-wrap items-center justify-end gap-2">
                   {hasPage01 && (
                     <button
                       onClick={() => {
                         albumSound.playPageTurn('next');
                         setCurrentStep(1);
                       }}
-                      className="py-2.5 px-3.5 bg-black/80 hover:bg-[#C5A880] text-white hover:text-[#111111] font-mono text-[10.5px] uppercase tracking-wider rounded-xs backdrop-blur-xs border border-white/20 transition-all cursor-pointer"
+                      className="py-2 px-3 bg-black/85 hover:bg-[#C5A880] text-white hover:text-[#111111] font-mono text-[10px] sm:text-[10.5px] uppercase tracking-wider rounded-xs backdrop-blur-xs border border-white/20 transition-all cursor-pointer whitespace-nowrap"
                     >
                       <span>Dedication (P.01)</span>
                     </button>
@@ -390,7 +397,7 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
                       albumSound.playPageTurn('next');
                       setCurrentStep(spreadOffset);
                     }}
-                    className="py-2.5 px-5 bg-[#FAF8F5] hover:bg-[#C5A880] text-[#111111] font-semibold text-xs uppercase tracking-[0.16em] rounded-xs shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-[#C5A880]/30"
+                    className="py-2 sm:py-2.5 px-3.5 sm:px-5 bg-[#FAF8F5] hover:bg-[#C5A880] text-[#111111] font-semibold text-[11px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.16em] rounded-xs shadow-xl transition-all flex items-center gap-2 cursor-pointer border border-[#C5A880]/30 whitespace-nowrap"
                   >
                     <span>Open {spreadDimLabel} Spreads &rarr;</span>
                   </button>
@@ -398,9 +405,9 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
               </div>
 
               {/* Cover Meta Footer */}
-              <div className="mt-2.5 flex items-center justify-between text-[10px] font-mono text-[#FBF9F5]/60 px-1">
-                <span className="text-[#C5A880] uppercase tracking-wider">{album.category} &bull; HEIRLOOM ALBUM</span>
-                <span>{totalSpreads} SPREADS &bull; {album.totalPages || totalSpreads * 2} PAGES ({spreadDimLabel})</span>
+              <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-[9.5px] sm:text-[10px] font-mono text-[#FBF9F5]/60 px-1 shrink-0">
+                <span className="text-[#C5A880] uppercase tracking-wider truncate">{album.category} &bull; HEIRLOOM ALBUM</span>
+                <span className="whitespace-nowrap">{totalSpreads} SPREADS &bull; {album.totalPages || totalSpreads * 2} PAGES ({spreadDimLabel})</span>
               </div>
             </div>
           )}
@@ -408,32 +415,30 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
           {/* VIEW B1: 1ST PAGE (02 1st page.jpg) - Dedicated Single Page */}
           {isPage01 && album.page01Image && (
             <div 
-              className={`w-full h-full bg-[#141414] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/10 transition-opacity duration-300 ${
+              className={`w-full h-full min-h-0 bg-[#141414] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/10 transition-opacity duration-300 ${
                 isFlipping ? 'opacity-40 scale-[0.99]' : 'opacity-100 scale-100'
               }`}
             >
               {/* Single Page Image Centered in Aspect */}
-              <div className="flex-1 w-full h-full flex items-center justify-center p-3 sm:p-5 relative bg-[#0D0D0D]">
-                <div className={`h-full max-h-[75vh] ${isSquarePage ? 'aspect-square' : 'aspect-[12/17]'} relative rounded-xs overflow-hidden shadow-2xl bg-[#111111] border border-[#FBF9F5]/15 flex items-center justify-center`}>
-                  <img
-                    src={album.page01Image}
-                    alt={`${album.title} - Page 01`}
-                    className="w-full h-full object-contain filter contrast-[1.02]"
-                  />
-                </div>
+              <div className="flex-1 min-h-0 w-full flex items-center justify-center p-2.5 sm:p-5 relative bg-[#0D0D0D]">
+                <img
+                  src={album.page01Image}
+                  alt={`${album.title} - Page 01`}
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-xs shadow-2xl border border-[#FBF9F5]/15 filter contrast-[1.02]"
+                />
               </div>
 
               {/* Bottom Running Header */}
-              <div className="px-5 py-2.5 bg-[#141414] border-t border-[#FBF9F5]/10 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
-                <span className="uppercase tracking-wider text-[#C5A880]">
-                  PAGE 01 &bull; DEDICATION & INTRO (SINGLE PAGE &bull; {singlePageDimLabel})
+              <div className="px-3 sm:px-5 py-2 sm:py-2.5 bg-[#141414] border-t border-[#FBF9F5]/10 flex flex-wrap items-center justify-between gap-2 text-[9.5px] sm:text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
+                <span className="uppercase tracking-wider text-[#C5A880] truncate min-w-0">
+                  PAGE 01 &bull; INTRO ({singlePageDimLabel})
                 </span>
                 <button
                   onClick={() => {
                     albumSound.playPageTurn('next');
                     setCurrentStep(spreadOffset);
                   }}
-                  className="px-3 py-1 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold uppercase tracking-wider rounded-xs text-[10px] cursor-pointer"
+                  className="px-2.5 sm:px-3 py-1 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold uppercase tracking-wider rounded-xs text-[9.5px] sm:text-[10px] cursor-pointer whitespace-nowrap"
                 >
                   View Full {spreadDimLabel} Spreads &rarr;
                 </button>
@@ -444,12 +449,12 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
           {/* VIEW B2: INSIDE SPREADS (Spreads 1..24 - Full Spread View) */}
           {isSpread && currentSpread && (
             <div 
-              className={`w-full h-full bg-[#0D0D0D] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/15 transition-opacity duration-300 ${
+              className={`w-full h-full min-h-0 bg-[#0D0D0D] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/15 transition-opacity duration-300 ${
                 isFlipping ? 'opacity-40 scale-[0.99]' : 'opacity-100 scale-100'
               }`}
             >
               {/* Spread Content Stage - full bleed uncropped continuous view */}
-              <div className="flex-1 w-full h-full relative flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
+              <div className="flex-1 min-h-0 w-full relative flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
                 <AlbumSpreadImage
                   src={currentSpread.heroImage?.url}
                   fallbackSrc={currentSpread.leftImage?.url}
@@ -466,12 +471,12 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
               </div>
 
               {/* Spread Bottom Running Header */}
-              <div className="px-5 py-2 bg-[#141414] border-t border-[#FBF9F5]/10 flex items-center justify-between text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
-                <span className="uppercase tracking-wider text-[#C5A880] truncate max-w-[240px] sm:max-w-md">
+              <div className="px-3 sm:px-5 py-2 bg-[#141414] border-t border-[#FBF9F5]/10 flex items-center justify-between gap-2 text-[9.5px] sm:text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
+                <span className="uppercase tracking-wider text-[#C5A880] truncate min-w-0">
                   {currentSpread.editorialLabel}
                 </span>
-                <span className="text-[#FBF9F5]/90 font-semibold shrink-0">
-                  {spreadDimLabel} FULL SPREAD {currentSpread.spreadNumber} OF {totalSpreads}
+                <span className="text-[#FBF9F5]/90 font-semibold shrink-0 whitespace-nowrap">
+                  {spreadDimLabel} SPREAD {currentSpread.spreadNumber}/{totalSpreads}
                 </span>
               </div>
             </div>
@@ -480,30 +485,28 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
           {/* VIEW B3: LAST PAGE (27 Last Page.jpg) */}
           {isPageLast && album.pageLastImage && (
             <div 
-              className={`w-full h-full bg-[#141414] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/10 transition-opacity duration-300 ${
+              className={`w-full h-full min-h-0 bg-[#141414] text-[#FBF9F5] shadow-2xl rounded-xs flex flex-col justify-between overflow-hidden border border-[#FBF9F5]/10 transition-opacity duration-300 ${
                 isFlipping ? 'opacity-40 scale-[0.99]' : 'opacity-100 scale-100'
               }`}
             >
-              <div className="flex-1 w-full h-full flex items-center justify-center p-3 sm:p-5 relative bg-[#0D0D0D]">
-                <div className={`h-full max-h-[75vh] ${isSquarePage ? 'aspect-square' : 'aspect-[12/17]'} relative rounded-xs overflow-hidden shadow-2xl bg-[#111111] border border-[#FBF9F5]/15 flex items-center justify-center`}>
-                  <img
-                    src={album.pageLastImage}
-                    alt={`${album.title} - Last Page`}
-                    className="w-full h-full object-contain filter contrast-[1.02]"
-                  />
-                </div>
+              <div className="flex-1 min-h-0 w-full flex items-center justify-center p-2.5 sm:p-5 relative bg-[#0D0D0D]">
+                <img
+                  src={album.pageLastImage}
+                  alt={`${album.title} - Last Page`}
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-xs shadow-2xl border border-[#FBF9F5]/15 filter contrast-[1.02]"
+                />
               </div>
 
-              <div className="px-5 py-2.5 bg-[#141414] border-t border-[#FBF9F5]/10 flex items-center justify-between text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
-                <span className="uppercase tracking-wider text-[#C5A880]">
-                  FINAL PAGE &bull; HEIRLOOM EPILOGUE (SINGLE PAGE &bull; {singlePageDimLabel})
+              <div className="px-3 sm:px-5 py-2 sm:py-2.5 bg-[#141414] border-t border-[#FBF9F5]/10 flex flex-wrap items-center justify-between gap-2 text-[9.5px] sm:text-[10px] font-mono text-[#FBF9F5]/80 shrink-0">
+                <span className="uppercase tracking-wider text-[#C5A880] truncate min-w-0">
+                  FINAL PAGE &bull; EPILOGUE ({singlePageDimLabel})
                 </span>
                 <button
                   onClick={() => {
                     albumSound.playPageTurn('next');
                     setCurrentStep(finaleStep);
                   }}
-                  className="px-3 py-1 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold uppercase tracking-wider rounded-xs text-[10px] cursor-pointer"
+                  className="px-2.5 sm:px-3 py-1 bg-[#C5A880] hover:bg-[#d6bc97] text-[#111111] font-semibold uppercase tracking-wider rounded-xs text-[9.5px] sm:text-[10px] cursor-pointer whitespace-nowrap"
                 >
                   Continue &rarr;
                 </button>
@@ -513,27 +516,27 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
 
           {/* VIEW C: FINALE CONVERSION SPREAD */}
           {isFinalSpread && (
-            <div className="w-full max-w-2xl bg-[#181818] border border-[#FBF9F5]/15 rounded-xs p-8 sm:p-12 text-center shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[380px]">
+            <div className="w-full max-w-2xl bg-[#181818] border border-[#FBF9F5]/15 rounded-xs p-5 sm:p-10 text-center shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[320px]">
               <div className="absolute inset-0 bg-radial from-[#C5A880]/10 via-transparent to-transparent pointer-events-none" />
 
               <div className="relative z-10 max-w-lg mx-auto my-auto">
-                <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
+                <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-2.5 font-semibold">
                   LIKE WHAT YOU SEE?
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-[#FBF9F5] leading-tight mb-3">
+                <h3 className="font-serif text-xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-[#FBF9F5] leading-tight mb-3">
                   Let’s create an album your clients will want to keep forever.
                 </h3>
-                <p className="text-xs sm:text-sm text-[#FBF9F5]/75 font-light leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-[#FBF9F5]/75 font-light leading-relaxed mb-5 sm:mb-6">
                   Every 2R Creations album is custom designed with cinematic pacing, refined white space, and cultural elegance.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-5 sm:mb-6">
                   <button
                     onClick={() => {
                       analytics.projectCtaClick('album_viewer_final_spread');
                       onStartProject();
                     }}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-lg cursor-pointer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-lg cursor-pointer"
                   >
                     <span>Start a Project &rarr;</span>
                   </button>
@@ -544,7 +547,7 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => analytics.whatsappClick('album_viewer_final_spread')}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#25D366] hover:text-[#25D366] border border-[#FBF9F5]/15 rounded-xs transition-colors"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#25D366] hover:text-[#25D366] border border-[#FBF9F5]/15 rounded-xs transition-colors"
                     >
                       <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
                       <span>WhatsApp Studio</span>
@@ -554,7 +557,7 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
                       href={getGmailComposeUrl(`Inquiry regarding ${album.title}`)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#C5A880] hover:text-[#C5A880] border border-[#FBF9F5]/15 rounded-xs transition-colors"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#C5A880] hover:text-[#C5A880] border border-[#FBF9F5]/15 rounded-xs transition-colors"
                     >
                       <Mail className="w-3.5 h-3.5 text-[#C5A880]" />
                       <span>Email Studio</span>
@@ -593,7 +596,7 @@ export const AlbumViewer: React.FC<AlbumViewerProps> = ({
 
       {/* THUMBNAIL DRAWER ("Browse Spreads") */}
       {showThumbnails && (
-        <div className="bg-[#141414] border-t border-[#FBF9F5]/10 px-6 py-3.5 overflow-x-auto z-30 animate-fadeIn flex items-center gap-3 shrink-0">
+        <div className="bg-[#141414] border-t border-[#FBF9F5]/10 px-3 sm:px-6 py-2.5 sm:py-3.5 overflow-x-auto overscroll-x-contain z-30 animate-fadeIn flex items-center gap-2.5 sm:gap-3 shrink-0">
           <div className="text-[9.5px] font-mono tracking-widest text-[#C5A880] uppercase shrink-0">
             SPREADS:
           </div>

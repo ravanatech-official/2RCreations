@@ -27,20 +27,20 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onStartProject }) => {
   };
 
   return (
-    <section id="final-cta-section" className="py-24 sm:py-32 bg-[#111111] text-[#FBF9F5] relative overflow-hidden">
+    <section id="final-cta-section" className="py-16 sm:py-24 lg:py-32 bg-[#111111] text-[#FBF9F5] relative overflow-hidden">
       {/* Editorial ambient radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#C5A880]/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] max-w-full h-[350px] bg-[#C5A880]/10 blur-[130px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center relative z-10">
+      <div className="max-w-4xl 2xl:max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8 text-center relative z-10">
         <span className="text-[10.5px] sm:text-[11.5px] font-mono font-semibold tracking-[0.25em] text-[#C5A880] uppercase block mb-4">
           BEGIN YOUR COLLABORATION
         </span>
 
-        <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-[#FBF9F5] leading-tight mb-6">
+        <h2 className="font-serif text-[clamp(1.75rem,4vw,3.5rem)] font-normal tracking-tight text-[#FBF9F5] leading-tight mb-6 text-balance">
           Ready to Turn Your Wedding Galleries into Heirloom Albums?
         </h2>
 
-        <p className="text-base sm:text-lg text-[#FBF9F5]/75 font-light leading-relaxed max-w-2xl mx-auto mb-10">
+        <p className="type-large-body text-[#FBF9F5]/75 max-w-2xl mx-auto mb-8 sm:mb-10">
           Send your project details and let's craft an album experience your clients will treasure for a lifetime.
         </p>
 

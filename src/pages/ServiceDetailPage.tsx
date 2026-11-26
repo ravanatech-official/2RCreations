@@ -162,9 +162,9 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
   const whatsappUrl = getWhatsAppUrl(`Hi 2R Creations, I’d like to inquire about your ${service.title} service.`);
 
   return (
-    <div className="pt-28 pb-24 bg-[#FBF9F5]">
+    <div className="pt-24 sm:pt-28 pb-16 sm:pb-24 bg-[#FBF9F5]">
       {/* Top Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mb-8">
+      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 mb-8">
         <Link
           to="/services"
           className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#242424]/60 hover:text-[#111111] transition-colors"
@@ -175,18 +175,18 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
       </div>
 
       {/* Hero Service Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mb-16">
+      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 mb-12 sm:mb-16">
         <div className="max-w-3xl">
           <span className="text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
             SERVICE SPECIFICATIONS
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-3">
+          <h1 className="type-hero-h1 text-[#111111] mb-3">
             {service.title}
           </h1>
           <p className="text-base sm:text-lg text-[#C5A880] font-normal mb-6">
             {service.tagline}
           </p>
-          <p className="text-sm sm:text-base text-[#242424]/80 font-light leading-relaxed mb-6">
+          <p className="type-normal-body text-[#242424]/80 font-light mb-6">
             {service.heroDescription}
           </p>
 
@@ -195,10 +195,10 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
             <p>{service.editorialNote}</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <button
               onClick={() => navigate(`/contact?project=${encodeURIComponent(service.title)}`)}
-              className="px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#111111] hover:bg-[#C5A880] hover:text-[#111111] transition-all rounded-xs shadow-md cursor-pointer"
+              className="w-full sm:w-auto px-6 sm:px-7 py-3 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#111111] hover:bg-[#C5A880] hover:text-[#111111] transition-all rounded-xs shadow-md cursor-pointer text-center"
             >
               Start {service.shortTitle} Project &rarr;
             </button>
@@ -208,7 +208,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FAF8F5] border border-[#242424]/20 hover:border-[#C5A880] transition-colors rounded-xs inline-flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FAF8F5] border border-[#242424]/20 hover:border-[#C5A880] transition-colors rounded-xs inline-flex items-center justify-center gap-2"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-[#C5A880]" />
                 <span>Chat on WhatsApp</span>
@@ -219,11 +219,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
       </section>
 
       {/* Who It's For & What Client Provides */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
           
           {/* Who It's For */}
-          <div className="bg-[#FAF8F5] p-8 rounded-xs border border-[#242424]/10 shadow-2xs">
+          <div className="bg-[#FAF8F5] p-5 sm:p-8 rounded-xs border border-[#242424]/10 shadow-2xs">
             <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-3 font-semibold">
               IDEAL APPLICATION
             </span>
@@ -241,7 +241,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
           </div>
 
           {/* What You Provide */}
-          <div className="bg-[#FAF8F5] p-8 rounded-xs border border-[#242424]/10 shadow-2xs">
+          <div className="bg-[#FAF8F5] p-5 sm:p-8 rounded-xs border border-[#242424]/10 shadow-2xs">
             <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-3 font-semibold">
               PROJECT INTAKE
             </span>
@@ -264,7 +264,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
       </section>
 
       {/* 4-Step How It Works */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
+      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
         <span className="text-[10.5px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
           WORKFLOW DISCIPLINE
         </span>
@@ -296,7 +296,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
         const activeFrame = activeStudy.frames[safeFrameIdx];
 
         return (
-          <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-14 border-t border-[#242424]/10">
+          <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-14 border-t border-[#242424]/10">
             {/* Study Discipline Selector */}
             <div className="flex flex-wrap items-center gap-2 mb-8">
               {RETOUCHING_LAB_STUDIES.map((lab, idx) => (
@@ -307,7 +307,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
                     setActiveLabStudyIdx(idx);
                     setActivePortraitFrame(0);
                   }}
-                  className={`px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border transition-colors cursor-pointer ${
+                  className={`px-3.5 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-xs border transition-colors cursor-pointer ${
                     activeLabStudyIdx === idx
                       ? 'bg-[#111111] text-[#C5A880] border-[#111111] font-semibold'
                       : 'bg-[#FAF8F5] text-[#242424]/70 border-[#242424]/12 hover:text-[#111111] hover:border-[#C5A880]/50'
@@ -318,18 +318,18 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
               {/* Native 2:3 Uncropped Interactive Before/After Portrait */}
               <div className="lg:col-span-5">
                 {/* Frame Selector Tabs (shown when multiple poses exist in the active study) */}
                 {activeStudy.frames.length > 1 && (
-                  <div className="max-w-[420px] mx-auto lg:mx-0 flex items-center gap-1.5 p-1 bg-[#FAF8F5] border border-[#242424]/12 rounded-xs mb-3">
+                  <div className="max-w-[420px] mx-auto lg:mx-0 flex items-center gap-1 p-1 bg-[#FAF8F5] border border-[#242424]/12 rounded-xs mb-3 overflow-x-auto no-scrollbar">
                     {activeStudy.frames.map((frame, idx) => (
                       <button
                         key={frame.id}
                         type="button"
                         onClick={() => setActivePortraitFrame(idx)}
-                        className={`flex-1 py-2 px-3 text-[11px] font-mono uppercase tracking-wider rounded-xs transition-colors cursor-pointer whitespace-nowrap ${
+                        className={`flex-1 py-2 px-2.5 sm:px-3 text-[10.5px] sm:text-[11px] font-mono uppercase tracking-wider rounded-xs transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                           safeFrameIdx === idx
                             ? 'bg-[#111111] text-[#C5A880] font-semibold shadow-2xs'
                             : 'text-[#242424]/65 hover:text-[#111111]'
@@ -394,22 +394,22 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
                   ))}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                   {onOpenRetouching && (
                     <button
                       onClick={() => onOpenRetouching(activeStudy.id, safeFrameIdx + 1)}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#111111] text-[#FBF9F5] hover:bg-[#C5A880] hover:text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-xs transition-colors shadow-xs cursor-pointer whitespace-nowrap"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 bg-[#111111] text-[#FBF9F5] hover:bg-[#C5A880] hover:text-[#111111] text-xs font-semibold uppercase tracking-widest rounded-xs transition-colors shadow-xs cursor-pointer text-center sm:whitespace-nowrap"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-[#C5A880] group-hover:text-[#111111]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
                       <span>Open Fullscreen Split &amp; Side-by-Side</span>
                     </button>
                   )}
                   <button
                     onClick={() => navigate('/contact?project=' + encodeURIComponent('Free Retouching Sample'))}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#FAF8F5] text-[#111111] border border-[#242424]/20 hover:border-[#C5A880] text-xs font-semibold uppercase tracking-widest rounded-xs transition-colors cursor-pointer whitespace-nowrap"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 bg-[#FAF8F5] text-[#111111] border border-[#242424]/20 hover:border-[#C5A880] text-xs font-semibold uppercase tracking-widest rounded-xs transition-colors cursor-pointer text-center sm:whitespace-nowrap"
                   >
                     <span>Request Free Sample Frame</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A880]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
                   </button>
                 </div>
               </div>
@@ -419,7 +419,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
       })()}
 
       {/* 6 Visual Concept Studies */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
+      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
         <div className="max-w-2xl mb-10">
           <span className="text-[10.5px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
             DESIGN STUDIES & SAMPLES
@@ -464,8 +464,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
       </section>
 
       {/* Pricing & Project Inquiry Banner */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
-        <div className="p-8 sm:p-12 bg-[#161616] text-[#FBF9F5] rounded-xs border border-[#242424]/20 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
+      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
+        <div className="p-5 sm:p-8 lg:p-12 bg-[#161616] text-[#FBF9F5] rounded-xs border border-[#242424]/20 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-xl">
             <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
               TRANSPARENT TAILORED ESTIMATE
@@ -481,10 +481,10 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full md:w-auto">
             <button
               onClick={() => navigate(`/contact?project=${encodeURIComponent(service.title)}`)}
-              className="px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#C5A880] hover:bg-[#d6bc97] rounded-xs shadow-md transition-colors cursor-pointer text-center"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#C5A880] hover:bg-[#d6bc97] rounded-xs shadow-md transition-colors cursor-pointer text-center"
             >
               Request Scope & Quote &rarr;
             </button>
@@ -492,7 +492,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
               href={getGmailComposeUrl(`Inquiry: ${service.title}`)}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#C5A880] border border-[#FBF9F5]/15 rounded-xs transition-colors text-center inline-flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#FBF9F5] bg-[#242424] hover:border-[#C5A880] border border-[#FBF9F5]/15 rounded-xs transition-colors text-center inline-flex items-center justify-center gap-2"
             >
               <Mail className="w-3.5 h-3.5 text-[#C5A880]" />
               <span>Direct Email</span>
@@ -503,7 +503,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ onOpenReto
 
       {/* Related Services */}
       {service.relatedServices.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-8">
+        <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-6 sm:pt-8">
           <h4 className="text-xs uppercase tracking-wider text-[#242424]/60 font-semibold mb-4">
             Related Capabilities:
           </h4>

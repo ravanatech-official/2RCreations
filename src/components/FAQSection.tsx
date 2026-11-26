@@ -48,10 +48,10 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ isCompact = false }) => 
   };
 
   return (
-    <section id="faq-section" className="py-24 bg-[#F8F6F0] border-t border-[#242424]/5">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+    <section id="faq-section" className="py-16 sm:py-24 bg-[#F8F6F0] border-t border-[#242424]/5">
+      <div className="max-w-4xl 2xl:max-w-[1100px] mx-auto px-4 sm:px-6 md:px-8">
         
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3">
             QUESTIONS & ANSWERS
           </span>
@@ -74,10 +74,10 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ isCompact = false }) => 
               >
                 <button
                   onClick={() => toggleFAQ(idx)}
-                  className="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
+                  className="w-full px-4 sm:px-6 py-4 text-left flex items-center justify-between gap-3 sm:gap-4 focus:outline-none cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-[16px] sm:text-[18px] font-semibold tracking-tight text-[#111111]">
+                  <span className="text-[15px] sm:text-[18px] font-semibold tracking-tight text-[#111111]">
                     {faq.question}
                   </span>
                   <span className="p-1 rounded-full bg-[#F5F2EB] text-[#C5A880] shrink-0">
@@ -86,7 +86,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ isCompact = false }) => 
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1.5 type-normal-body text-[#242424]/80 border-t border-[#242424]/5 animate-fadeIn">
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-1.5 type-normal-body text-[#242424]/80 border-t border-[#242424]/5 animate-fadeIn">
                     {faq.answer}
                   </div>
                 )}
