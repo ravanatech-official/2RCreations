@@ -169,7 +169,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 h-[100dvh] w-full z-50 bg-[#0e0e0e] text-[#FBF9F5] flex flex-col select-none overflow-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-0 z-50 bg-[#0e0e0e] text-[#FBF9F5] flex flex-col select-none overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-label={`${study.title} Retouching Viewer`}
@@ -177,12 +177,12 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
       {/* ========================================================================= */}
       {/* 1. TOP CONTROL BAR                                                        */}
       {/* ========================================================================= */}
-      <div className="h-14 sm:h-16 px-3 sm:px-6 lg:px-8 border-b border-white/10 flex items-center justify-between gap-2 bg-[#141414] shrink-0 z-30">
-        <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
-          <span className="hidden xs:inline-block sm:inline-block text-[9.5px] sm:text-[11px] font-mono tracking-widest text-[#C5A880] uppercase px-2 sm:px-2.5 py-1 bg-black/60 rounded-xs border border-[#C5A880]/30 shrink-0 max-w-[110px] sm:max-w-none truncate">
+      <div className="h-16 px-4 sm:px-8 border-b border-white/10 flex items-center justify-between bg-[#141414] shrink-0 z-30">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+          <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#C5A880] uppercase px-2.5 py-1 bg-black/60 rounded-xs border border-[#C5A880]/30 shrink-0">
             {study.badge}
           </span>
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0">
             <h2 className="font-serif text-sm sm:text-base text-[#FBF9F5] truncate leading-tight">
               {study.title}
             </h2>
@@ -198,10 +198,10 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
 
         {/* View Mode Switcher (When viewing a comparison slide) */}
         {!isIntro && !isFinal && (
-          <div className="hidden lg:flex items-center gap-1 bg-black/50 p-1 rounded-xs border border-white/10 text-xs shrink-0">
+          <div className="hidden md:flex items-center gap-1 bg-black/50 p-1 rounded-xs border border-white/10 text-xs">
             <button
               onClick={() => setViewMode('slider')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-xs transition-colors cursor-pointer whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-xs transition-colors cursor-pointer ${
                 viewMode === 'slider' ? 'bg-[#C5A880] text-[#111111] font-semibold' : 'text-white/70 hover:text-white'
               }`}
               title="Interactive Slide Splitter"
@@ -211,7 +211,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
             </button>
             <button
               onClick={() => setViewMode('side-by-side')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-xs transition-colors cursor-pointer whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-xs transition-colors cursor-pointer ${
                 viewMode === 'side-by-side' ? 'bg-[#C5A880] text-[#111111] font-semibold' : 'text-white/70 hover:text-white'
               }`}
               title="Side-by-Side Comparison"
@@ -224,7 +224,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
               onMouseUp={() => setIsPressingBefore(false)}
               onTouchStart={() => setIsPressingBefore(true)}
               onTouchEnd={() => setIsPressingBefore(false)}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-xs text-white/80 hover:text-white bg-white/5 hover:bg-white/10 transition-colors cursor-pointer whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-xs text-white/80 hover:text-white bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
               title="Hold to see RAW Before"
             >
               <Eye className="w-3.5 h-3.5 text-[#C5A880]" />
@@ -234,17 +234,17 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
         )}
 
         {/* Action icons */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             onClick={() => onStartProject(`Photo Retouching (${study.title})`)}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-[#C5A880] text-[#111111] text-[11px] font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer whitespace-nowrap"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#C5A880] text-[#111111] text-[11px] font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer"
           >
             <span>Inquire Work</span>
           </button>
 
           <button
             onClick={toggleFullscreen}
-            className="hidden sm:block p-2 text-white/70 hover:text-white hover:bg-white/5 rounded-xs transition-colors cursor-pointer"
+            className="p-2 text-white/70 hover:text-white hover:bg-white/5 rounded-xs transition-colors cursor-pointer"
             aria-label="Toggle Fullscreen"
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -263,41 +263,35 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
       {/* ========================================================================= */}
       {/* 2. MAIN STAGE (Page Turning Animation & Before/After Display)             */}
       {/* ========================================================================= */}
-      <div
-        className={`flex-1 min-h-0 relative flex justify-center p-2.5 sm:p-5 lg:p-8 ${
-          isIntro || isFinal ? 'overflow-y-auto overscroll-contain items-start md:items-center' : 'overflow-hidden items-center'
-        }`}
-      >
+      <div className="flex-1 relative overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8">
         
         {/* Previous Button */}
         <button
           onClick={handlePrev}
           disabled={currentSlideIndex === 0}
-          className={`absolute left-1.5 sm:left-5 z-30 p-2 sm:p-3.5 rounded-full bg-black/80 hover:bg-[#111111] text-white border border-white/15 transition-all shadow-xl cursor-pointer ${
+          className={`absolute left-3 sm:left-6 z-30 p-3 sm:p-4 rounded-full bg-black/75 hover:bg-[#111111] text-white border border-white/15 transition-all shadow-xl cursor-pointer ${
             currentSlideIndex === 0 ? 'opacity-20 cursor-not-allowed pointer-events-none' : 'hover:scale-105'
           }`}
           aria-label="Previous Slide"
         >
-          <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-[#C5A880]" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[#C5A880]" />
         </button>
 
         {/* Next Button */}
         <button
           onClick={handleNext}
           disabled={currentSlideIndex === totalSlides + 1}
-          className={`absolute right-1.5 sm:right-5 z-30 p-2 sm:p-3.5 rounded-full bg-black/80 hover:bg-[#111111] text-white border border-white/15 transition-all shadow-xl cursor-pointer ${
+          className={`absolute right-3 sm:right-6 z-30 p-3 sm:p-4 rounded-full bg-black/75 hover:bg-[#111111] text-white border border-white/15 transition-all shadow-xl cursor-pointer ${
             currentSlideIndex === totalSlides + 1 ? 'opacity-20 cursor-not-allowed pointer-events-none' : 'hover:scale-105'
           }`}
           aria-label="Next Slide"
         >
-          <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-[#C5A880]" />
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#C5A880]" />
         </button>
 
         {/* Flipping Container */}
         <div
-          className={`w-full max-w-6xl 2xl:max-w-[1440px] flex flex-col items-center transition-all duration-300 ${
-            isIntro || isFinal ? 'my-auto' : 'h-full min-h-0 justify-center'
-          } ${
+          className={`w-full max-w-6xl h-full flex flex-col justify-center items-center transition-all duration-300 ${
             isFlipping
               ? flipDirection === 'next'
                 ? 'opacity-0 scale-95 translate-x-8'
@@ -309,8 +303,8 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
           {/* SLIDE TYPE A: INTRO / OVERVIEW (Slide 0)                              */}
           {/* ===================================================================== */}
           {isIntro && (
-            <div className="w-full max-w-3xl bg-[#141414] border border-white/15 rounded-xs p-4 sm:p-8 lg:p-10 shadow-2xl flex flex-col md:flex-row items-center gap-5 sm:gap-8">
-              <div className="w-full max-w-[260px] md:max-w-none md:w-1/2 aspect-[4/5] max-h-[36dvh] md:max-h-[60dvh] rounded-xs overflow-hidden relative bg-black shadow-lg shrink-0">
+            <div className="w-full max-w-3xl bg-[#141414] border border-white/15 rounded-xs p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row items-center gap-8">
+              <div className="w-full md:w-1/2 aspect-[4/5] rounded-xs overflow-hidden relative bg-black shadow-lg">
                 <img
                   src={study.thumbnail}
                   alt={study.title}
@@ -322,37 +316,37 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
                 </span>
               </div>
 
-              <div className="w-full md:w-1/2 flex flex-col justify-center min-w-0">
-                <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase mb-1.5">
+              <div className="w-full md:w-1/2 flex flex-col justify-center">
+                <span className="text-[10px] font-mono tracking-[0.25em] text-[#C5A880] uppercase mb-2">
                   CASE STUDY OVERVIEW
                 </span>
-                <h3 className="font-serif text-xl sm:text-3xl text-white mb-1.5 leading-tight">
+                <h3 className="font-serif text-2xl sm:text-3xl text-white mb-2 leading-tight">
                   {study.title}
                 </h3>
-                <p className="text-xs text-[#C5A880] font-mono uppercase tracking-wider mb-3">
+                <p className="text-xs text-[#C5A880] font-mono uppercase tracking-wider mb-4">
                   {study.subtitle}
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 font-light leading-relaxed mb-5">
+                <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
                   {study.description}
                 </p>
 
-                <div className="space-y-2 mb-6 border-t border-white/10 pt-3.5 text-xs text-white/70">
-                  <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880] shrink-0 mt-0.5" />
+                <div className="space-y-2 mb-8 border-t border-white/10 pt-4 text-xs text-white/70">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880]" />
                     <span><strong>Objective:</strong> {study.objective}</span>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880] shrink-0 mt-0.5" />
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#C5A880]" />
                     <span><strong>Turnaround:</strong> {study.turnaroundNote}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handleNext}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer"
                 >
                   <span>Start Before / After Comparison</span>
-                  <ArrowRight className="w-4 h-4 shrink-0" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -362,24 +356,24 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
           {/* SLIDE TYPE B: INTERACTIVE BEFORE / AFTER SLIDE (1..N)                 */}
           {/* ===================================================================== */}
           {currentSlide && (
-            <div className="w-full h-full min-h-0 flex flex-col justify-between">
+            <div className="w-full h-full max-h-[82vh] flex flex-col justify-between">
               
               {/* Slide Title Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-2 sm:mb-3 px-1 sm:px-2 shrink-0">
-                <div className="min-w-0 flex-1">
-                  <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-widest text-[#C5A880] block truncate">
+              <div className="flex items-center justify-between mb-2 sm:mb-3 px-2">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A880]">
                     Spread {currentSlide.slideNumber} of {totalSlides} &bull; {currentSlide.technique}
                   </span>
-                  <h3 className="font-serif text-sm sm:text-xl text-[#FBF9F5] leading-tight truncate">
+                  <h3 className="font-serif text-base sm:text-xl text-[#FBF9F5] leading-tight">
                     {currentSlide.title}
                   </h3>
                 </div>
 
-                {/* Mobile & Tablet Mode Controls */}
-                <div className="flex items-center gap-1.5 lg:hidden shrink-0">
+                {/* Mobile Mode Controls */}
+                <div className="flex items-center gap-1.5 md:hidden shrink-0">
                   <button
                     onClick={() => setViewMode(viewMode === 'slider' ? 'side-by-side' : 'slider')}
-                    className="flex items-center gap-1 px-2 sm:px-2.5 py-1 bg-white/10 text-[10.5px] sm:text-[11px] rounded-xs text-[#FBF9F5] border border-white/10 cursor-pointer whitespace-nowrap"
+                    className="flex items-center gap-1 px-2.5 py-1 bg-white/10 text-[11px] rounded-xs text-[#FBF9F5] border border-white/10 cursor-pointer whitespace-nowrap"
                   >
                     {viewMode === 'slider' ? (
                       <>
@@ -398,7 +392,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
                     onMouseUp={() => setIsPressingBefore(false)}
                     onTouchStart={() => setIsPressingBefore(true)}
                     onTouchEnd={() => setIsPressingBefore(false)}
-                    className="flex items-center gap-1 px-2 sm:px-2.5 py-1 bg-white/10 text-[10.5px] sm:text-[11px] rounded-xs text-[#C5A880] border border-[#C5A880]/25 cursor-pointer whitespace-nowrap"
+                    className="flex items-center gap-1 px-2.5 py-1 bg-white/10 text-[11px] rounded-xs text-[#C5A880] border border-[#C5A880]/25 cursor-pointer whitespace-nowrap"
                   >
                     <Eye className="w-3 h-3" />
                     <span>RAW</span>
@@ -407,7 +401,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
               </div>
 
               {/* Main Comparison Canvas */}
-              <div className="flex-1 min-h-[180px] relative rounded-xs overflow-hidden border border-white/15 bg-black flex items-center justify-center">
+              <div className="flex-1 relative rounded-xs overflow-hidden border border-white/15 bg-black flex items-center justify-center min-h-[300px]">
                 
                 {/* 1. SLIDER VIEW MODE (Default Interactive Split) */}
                 {viewMode === 'slider' && (
@@ -427,7 +421,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
                         className="w-full h-full object-contain pointer-events-none select-none"
                       />
                       <span
-                        className={`absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-10 px-2.5 sm:px-3 py-1 bg-black/80 backdrop-blur-xs text-[10px] sm:text-[11px] font-mono tracking-widest text-[#C5A880] uppercase rounded-xs border border-[#C5A880]/30 transition-opacity duration-150 ${
+                        className={`absolute bottom-4 right-4 z-10 px-3 py-1 bg-black/80 backdrop-blur-xs text-[11px] font-mono tracking-widest text-[#C5A880] uppercase rounded-xs border border-[#C5A880]/30 transition-opacity duration-150 ${
                           sliderPosition > 85 ? 'opacity-0' : 'opacity-100'
                         }`}
                       >
@@ -449,7 +443,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
                           className="w-full h-full object-contain pointer-events-none select-none"
                         />
                         <span
-                          className={`absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 px-2.5 sm:px-3 py-1 bg-black/80 backdrop-blur-xs text-[10px] sm:text-[11px] font-mono tracking-widest text-white/85 uppercase rounded-xs border border-white/20 transition-opacity duration-150 ${
+                          className={`absolute bottom-4 left-4 z-10 px-3 py-1 bg-black/80 backdrop-blur-xs text-[11px] font-mono tracking-widest text-white/85 uppercase rounded-xs border border-white/20 transition-opacity duration-150 ${
                             sliderPosition < 15 ? 'opacity-0' : 'opacity-100'
                           }`}
                         >
@@ -474,29 +468,29 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
 
                 {/* 2. SIDE BY SIDE MODE */}
                 {viewMode === 'side-by-side' && (
-                  <div className="w-full h-full min-h-0 grid grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 divide-y md:divide-y-0 md:divide-x divide-white/15">
+                  <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/15">
                     {/* Before */}
-                    <div className="relative w-full h-full min-h-0 flex items-center justify-center p-1.5 sm:p-2 bg-black/40">
+                    <div className="relative w-full h-full flex items-center justify-center p-2 bg-black/40">
                       <img
                         src={currentSlide.beforeImage}
                         alt="Before"
                         style={currentSlide.beforeFilterStyle}
                         className="w-full h-full object-contain"
                       />
-                      <span className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-black/80 text-[9.5px] sm:text-[10px] font-mono tracking-wider text-white/70 uppercase rounded-xs border border-white/20">
+                      <span className="absolute bottom-3 left-3 px-2.5 py-1 bg-black/80 text-[10px] font-mono tracking-wider text-white/70 uppercase rounded-xs border border-white/20">
                         {currentSlide.beforeLabel}
                       </span>
                     </div>
 
                     {/* After */}
-                    <div className="relative w-full h-full min-h-0 flex items-center justify-center p-1.5 sm:p-2 bg-black/40">
+                    <div className="relative w-full h-full flex items-center justify-center p-2 bg-black/40">
                       <img
                         src={currentSlide.afterImage}
                         alt="After"
                         style={currentSlide.afterFilterStyle}
                         className="w-full h-full object-contain"
                       />
-                      <span className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-black/80 text-[9.5px] sm:text-[10px] font-mono tracking-wider text-[#C5A880] uppercase rounded-xs border border-[#C5A880]/30">
+                      <span className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/80 text-[10px] font-mono tracking-wider text-[#C5A880] uppercase rounded-xs border border-[#C5A880]/30">
                         {currentSlide.afterLabel}
                       </span>
                     </div>
@@ -506,22 +500,22 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
               </div>
 
               {/* Bottom Adjustment Points */}
-              <div className="mt-2 sm:mt-3 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#141414] border border-white/10 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 text-[11px] sm:text-xs shrink-0">
-                <div className="text-white/80 font-light max-w-xl line-clamp-2 sm:line-clamp-none">
+              <div className="mt-3 px-4 py-2.5 bg-[#141414] border border-white/10 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="text-white/80 font-light max-w-xl">
                   <span className="text-[#C5A880] font-semibold font-mono uppercase text-[10px] mr-2">
                     Focal Study:
                   </span>
                   {currentSlide.focalSummary}
                 </div>
 
-                <div className="hidden xs:flex sm:flex flex-wrap items-center gap-1.5 sm:gap-2 shrink-0">
+                <div className="flex flex-wrap items-center gap-2">
                   {currentSlide.keyAdjustments.slice(0, 2).map((adj, i) => (
                     <span
                       key={i}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 bg-black/60 text-[9.5px] sm:text-[10px] font-mono text-white/70 rounded-xs border border-white/5"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 bg-black/60 text-[10px] font-mono text-white/70 rounded-xs border border-white/5"
                     >
-                      <CheckCircle2 className="w-2.5 h-2.5 text-[#C5A880] shrink-0" />
-                      <span className="truncate max-w-[160px] sm:max-w-none">{adj}</span>
+                      <CheckCircle2 className="w-2.5 h-2.5 text-[#C5A880]" />
+                      {adj}
                     </span>
                   ))}
                 </div>
@@ -533,34 +527,34 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
           {/* SLIDE TYPE C: CONCLUDING INQUIRY SPREAD (Slide totalSlides + 1)      */}
           {/* ===================================================================== */}
           {isFinal && (
-            <div className="w-full max-w-2xl bg-[#141414] border border-[#C5A880]/40 rounded-xs p-5 sm:p-10 lg:p-12 text-center shadow-2xl">
-              <span className="text-[10.5px] sm:text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-2.5 font-semibold">
+            <div className="w-full max-w-2xl bg-[#141414] border border-[#C5A880]/40 rounded-xs p-8 sm:p-12 text-center shadow-2xl">
+              <span className="text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
                 END OF CASE STUDY
               </span>
-              <h3 className="font-serif text-xl sm:text-3xl lg:text-4xl text-white mb-3">
+              <h3 className="font-serif text-2xl sm:text-4xl text-white mb-4">
                 Ready for Flawless Album Retouching?
               </h3>
-              <p className="text-xs sm:text-sm text-white/75 font-light leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto">
+              <p className="text-sm text-white/75 font-light leading-relaxed mb-8 max-w-lg mx-auto">
                 We provide custom retouching and color harmonization for fine art photographers worldwide. Test our craft with 1–2 complimentary RAW frames before booking your complete gallery.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button
                   onClick={() => onStartProject(`Photo Retouching (${study.title})`)}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer shadow-md"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#C5A880] text-[#111111] text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-[#D4BC96] transition-colors cursor-pointer shadow-md"
                 >
                   Request Retouching Quote &rarr;
                 </button>
                 <button
                   onClick={() => setCurrentSlideIndex(1)}
-                  className="w-full sm:w-auto px-6 py-3 sm:py-3.5 bg-white/5 text-white text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-white/10 border border-white/15 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-white/5 text-white text-xs font-semibold uppercase tracking-wider rounded-xs hover:bg-white/10 border border-white/15 transition-colors cursor-pointer"
                 >
                   Review Spreads Again
                 </button>
               </div>
 
               {/* Other Studies quick jump */}
-              <div className="mt-7 sm:mt-10 pt-5 sm:pt-6 border-t border-white/10 text-left">
+              <div className="mt-10 pt-6 border-t border-white/10 text-left">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-white/50 block mb-3">
                   EXPLORE OTHER RETOUCHING STUDIES:
                 </span>
@@ -590,14 +584,14 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
       {/* ========================================================================= */}
       {/* 3. BOTTOM THUMBNAIL / SPREAD STEPPER BAR                                  */}
       {/* ========================================================================= */}
-      <div className="h-14 sm:h-16 px-3 sm:px-8 border-t border-white/10 flex items-center justify-between gap-2 sm:gap-4 bg-[#141414] shrink-0 z-30">
+      <div className="h-16 px-4 sm:px-8 border-t border-white/10 flex items-center justify-between bg-[#141414] shrink-0 z-30">
         
-        {/* Step indicator (scrollable on narrow mobile) */}
-        <div className="flex-1 min-w-0 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1">
+        {/* Step indicator */}
+        <div className="flex items-center gap-2">
           {/* Overview button */}
           <button
             onClick={() => setCurrentSlideIndex(0)}
-            className={`px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-mono rounded-xs transition-all cursor-pointer shrink-0 ${
+            className={`px-3 py-1 text-xs font-mono rounded-xs transition-all cursor-pointer ${
               currentSlideIndex === 0
                 ? 'bg-[#C5A880] text-[#111111] font-semibold'
                 : 'text-white/60 hover:text-white bg-white/5'
@@ -614,7 +608,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
               <button
                 key={slide.id}
                 onClick={() => setCurrentSlideIndex(pageNum)}
-                className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-mono rounded-xs transition-all cursor-pointer shrink-0 ${
+                className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs font-mono rounded-xs transition-all cursor-pointer ${
                   isActive
                     ? 'bg-[#C5A880] text-[#111111] font-bold shadow-xs'
                     : 'text-white/60 hover:text-white bg-white/5 hover:bg-white/10'
@@ -629,7 +623,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
           {/* Inquire / Final button */}
           <button
             onClick={() => setCurrentSlideIndex(totalSlides + 1)}
-            className={`px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-mono rounded-xs transition-all cursor-pointer shrink-0 ${
+            className={`px-3 py-1 text-xs font-mono rounded-xs transition-all cursor-pointer ${
               currentSlideIndex === totalSlides + 1
                 ? 'bg-[#C5A880] text-[#111111] font-semibold'
                 : 'text-white/60 hover:text-white bg-white/5'
@@ -641,17 +635,17 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
 
         {/* Drag Helper Tooltip */}
         {!isIntro && !isFinal && viewMode === 'slider' && (
-          <span className="hidden lg:inline-block text-[11px] font-mono text-white/50 tracking-wider shrink-0">
+          <span className="hidden sm:inline-block text-[11px] font-mono text-white/50 tracking-wider">
             &larr; Drag slider to inspect RAW Before vs Retouched After &rarr;
           </span>
         )}
 
         {/* Spread Navigation shortcuts */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-2">
           <button
             onClick={handlePrev}
             disabled={currentSlideIndex === 0}
-            className="px-2 sm:px-3 py-1 text-[11px] sm:text-xs text-white/70 hover:text-white disabled:opacity-30 cursor-pointer whitespace-nowrap"
+            className="px-3 py-1 text-xs text-white/70 hover:text-white disabled:opacity-30 cursor-pointer"
           >
             &larr; Prev
           </button>
@@ -659,7 +653,7 @@ export const RetouchingViewer: React.FC<RetouchingViewerProps> = ({
           <button
             onClick={handleNext}
             disabled={currentSlideIndex === totalSlides + 1}
-            className="px-2 sm:px-3 py-1 text-[11px] sm:text-xs text-white/70 hover:text-white disabled:opacity-30 cursor-pointer whitespace-nowrap"
+            className="px-3 py-1 text-xs text-white/70 hover:text-white disabled:opacity-30 cursor-pointer"
           >
             Next &rarr;
           </button>

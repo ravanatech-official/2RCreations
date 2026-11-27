@@ -13,11 +13,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ isCompact = fa
   const navigate = useNavigate();
 
   return (
-    <section id="services-section" className="py-16 sm:py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <section id="services-section" className="py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div className="max-w-2xl">
             <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3 font-mono">
               STUDIO SERVICES
@@ -32,7 +32,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ isCompact = fa
 
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#111111] hover:text-[#C5A880] transition-colors shrink-0 pb-1 border-b border-[#111111]/20 hover:border-[#C5A880] w-fit"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#111111] hover:text-[#C5A880] transition-colors shrink-0 pb-1 border-b border-[#111111]/20 hover:border-[#C5A880]"
           >
             <span>View All Service Specifications</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#C5A880]" />
@@ -40,7 +40,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ isCompact = fa
         </div>
 
         {/* 6 Services Grid — Home service card format */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((service) => (
             <div
               key={service.id}
@@ -67,7 +67,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ isCompact = fa
                   </span>
                 </div>
 
-                <div className="p-5 sm:p-6">
+                <div className="p-6">
                   {/* H3 */}
                   <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#111111] mb-2 group-hover:text-[#C5A880] transition-colors">
                     {service.title}
@@ -81,7 +81,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ isCompact = fa
               </div>
 
               {/* Explore Service CTA */}
-              <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-2 border-t border-[#242424]/6 flex items-center justify-between gap-2">
+              <div className="px-6 pb-6 pt-2 border-t border-[#242424]/6 flex items-center justify-between">
                 <Link
                   to={`/services/${service.slug}`}
                   onClick={() => analytics.projectCtaClick(`service_explore_${service.slug}`)}

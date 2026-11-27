@@ -18,56 +18,31 @@ export const ServicesIndexPage: React.FC = () => {
 
   useEffect(() => {
     updateSEO({
-      title: 'Album Design & Retouching Services | 2R Creations',
-      description: 'Wedding album layout design, cover typography, pre-shoot monographs, photo retouching, culling, and object removal for photographers worldwide.',
-      canonicalPath: '/services',
-      ogImage: SERVICES[0]?.heroImage,
-      ogImageAlt: '2R Creations Wedding Album Design & Fine Art Retouching Services',
-      breadcrumbs: [
-        { name: 'Home', path: '/' },
-        { name: 'Services', path: '/services' }
-      ],
-      structuredData: {
-        '@type': 'CollectionPage',
-        name: '2R Creations Services & Capabilities',
-        url: 'https://2rcreations.com/services',
-        mainEntity: {
-          '@type': 'OfferCatalog',
-          name: 'Studio Services',
-          itemListElement: SERVICES.map((svc, idx) => ({
-            '@type': 'Offer',
-            position: idx + 1,
-            itemOffered: {
-              '@type': 'Service',
-              name: svc.title,
-              description: svc.tagline,
-              url: `https://2rcreations.com/services/${svc.slug}`
-            }
-          }))
-        }
-      }
+      title: 'Services & Capabilities | 2R CREATIONS',
+      description: 'Comprehensive post-production and album design services for wedding photographers and studios worldwide.',
+      canonicalPath: '/services'
     });
   }, []);
 
   return (
-    <div className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 bg-[#FBF9F5]">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <div className="pt-32 pb-24 bg-[#FBF9F5]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-10 sm:mb-14">
+        <div className="max-w-3xl mb-14">
           <span className="text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
             CAPABILITIES & EXPERTISE
           </span>
-          <h1 className="type-hero-h1 text-[#111111] mb-4">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-4">
             Services Tailored for Photographers & Studios
           </h1>
-          <p className="type-large-body text-[#242424]/75 font-light">
+          <p className="text-base text-[#242424]/75 font-light leading-relaxed">
             From complete narrative wedding albums to fine-art photo retouching, every deliverable is crafted to elevated print-ready standards with 2–3 day typical turnaround.
           </p>
         </div>
 
         {/* 6 Services Grid — High-End Visual Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {SERVICES.map((service, index) => {
             const Icon = SERVICE_ICONS[service.id] || BookMarked;
             const isPrimary = index === 0 || service.id === 'photo-retouching';
@@ -155,7 +130,7 @@ export const ServicesIndexPage: React.FC = () => {
         </div>
 
         {/* Free Sample Callout */}
-        <div className="p-5 sm:p-8 lg:p-10 bg-[#161616] text-[#FBF9F5] rounded-xs flex flex-col md:flex-row md:items-center justify-between gap-6 border border-[#242424]/20 shadow-xl">
+        <div className="p-8 sm:p-10 bg-[#161616] text-[#FBF9F5] rounded-xs flex flex-col md:flex-row items-center justify-between gap-6 border border-[#242424]/20 shadow-xl">
           <div className="max-w-xl">
             <span className="text-[10px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
               COMPLIMENTARY TRIAL FOR PHOTOGRAPHERS
@@ -169,7 +144,7 @@ export const ServicesIndexPage: React.FC = () => {
           </div>
           <button
             onClick={() => navigate('/contact?sample=true')}
-            className="w-full md:w-auto px-6 sm:px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] rounded-xs shrink-0 shadow-md cursor-pointer transition-colors text-center"
+            className="px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] rounded-xs shrink-0 shadow-md cursor-pointer transition-colors"
           >
             Claim Free Sample Design &rarr;
           </button>

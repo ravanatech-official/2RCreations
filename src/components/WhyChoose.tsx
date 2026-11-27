@@ -30,10 +30,10 @@ export const WhyChoose: React.FC = () => {
   ];
 
   return (
-    <section id="why-section" className="py-16 sm:py-24 bg-[#F8F6F0] border-t border-[#242424]/5">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <section id="why-section" className="py-24 bg-[#F8F6F0] border-t border-[#242424]/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         
-        <div className="max-w-3xl mb-10 sm:mb-14">
+        <div className="max-w-3xl mb-14">
           <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3 font-mono">
             WHY 2R CREATIONS
           </span>
@@ -46,13 +46,13 @@ export const WhyChoose: React.FC = () => {
         </div>
 
         {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {points.map((pt) => {
             const Icon = pt.icon;
             return (
               <div
                 key={pt.num}
-                className="bg-[#FAF8F5] p-5 sm:p-7 rounded-sm border border-[#242424]/8 flex flex-col justify-between hover:border-[#C5A880]/50 transition-colors shadow-2xs"
+                className="bg-[#FAF8F5] p-7 rounded-sm border border-[#242424]/8 flex flex-col justify-between hover:border-[#C5A880]/50 transition-colors shadow-2xs"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">

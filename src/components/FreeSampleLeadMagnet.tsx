@@ -50,9 +50,9 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
   );
 
   return (
-    <section id="free-sample-section" className="py-16 sm:py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
-      <div className="max-w-5xl 2xl:max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8">
-        <div className="relative bg-[#161616] text-[#FBF9F5] rounded-xs p-5 sm:p-10 lg:p-14 overflow-hidden shadow-2xl border border-[#C5A880]/20">
+    <section id="free-sample-section" className="py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8">
+        <div className="relative bg-[#161616] text-[#FBF9F5] rounded-xs p-8 sm:p-12 lg:p-14 overflow-hidden shadow-2xl border border-[#C5A880]/20">
           
           {/* Subtle background warm glow */}
           <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
@@ -68,7 +68,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
             </div>
 
             {/* H2 */}
-            <h2 className="type-section-h2 text-[#FBF9F5] mb-4">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FBF9F5] tracking-tight mb-4 leading-tight">
               Test My Pacing On 2 Real Spreads
             </h2>
 
@@ -116,8 +116,6 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                     <input
                       type="text"
                       required
-                      minLength={2}
-                      maxLength={120}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Elena Vance Photography"
@@ -132,7 +130,6 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                     <input
                       type="email"
                       required
-                      maxLength={200}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="studio@example.com"
@@ -148,9 +145,6 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                   <input
                     type="url"
                     required
-                    pattern="https://.*"
-                    title="Please enter a secure https:// cloud folder link"
-                    maxLength={500}
                     value={cloudLink}
                     onChange={(e) => setCloudLink(e.target.value)}
                     placeholder="https://drive.google.com/... or https://pixieset.com/..."
@@ -164,7 +158,6 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                   </label>
                   <textarea
                     rows={2}
-                    maxLength={4000}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="e.g. Outdoor sunset light, modern serif typography, preferred print lab if known..."
@@ -225,7 +218,7 @@ export const FreeSampleLeadMagnet: React.FC<FreeSampleLeadMagnetProps> = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-md cursor-pointer disabled:opacity-50"
+                    className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-semibold uppercase tracking-widest text-[#111111] bg-[#FBF9F5] hover:bg-[#C5A880] transition-colors rounded-xs shadow-md cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>

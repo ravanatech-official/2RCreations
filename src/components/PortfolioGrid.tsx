@@ -40,11 +40,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
   };
 
   return (
-    <section id="portfolio-section" className="py-16 sm:py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <section id="portfolio-section" className="py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Header */}
-        <div className="max-w-3xl mb-10 sm:mb-12">
+        <div className="max-w-3xl mb-12">
           <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3">
             SIGNATURE CONCEPTS · THE PORTFOLIO
           </span>
@@ -54,7 +54,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
           <p className="type-large-body text-[#242424]/80">
             Explore our signature album design concepts and visual styles. Each curated study demonstrates emotional pacing, bespoke typography pairing, and print-calibrated album architecture.
           </p>
-          <div className="mt-3.5 flex flex-wrap items-center gap-2">
+          <div className="mt-3.5 flex items-center gap-2">
             <span className="text-xs text-[#242424]/70">Looking for our real completed client work archive?</span>
             <Link
               to="/gallery"

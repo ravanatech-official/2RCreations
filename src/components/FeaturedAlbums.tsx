@@ -25,11 +25,11 @@ export const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({
   };
 
   return (
-    <section id="featured-work" className="py-16 sm:py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <section id="featured-work" className="py-24 bg-[#FBF9F5] border-t border-[#242424]/5">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>
             <span className="text-[10.5px] sm:text-[11.5px] font-semibold tracking-[0.16em] text-[#C5A880] uppercase block mb-3 font-mono">
               FEATURED ALBUMS
@@ -44,7 +44,7 @@ export const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({
         </div>
 
         {/* 3 Featured Editorial Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
           {featured.map((album) => (
             <div
               key={album.id}
@@ -98,7 +98,7 @@ export const FeaturedAlbums: React.FC<FeaturedAlbumsProps> = ({
                   {album.subtitle}
                 </p>
 
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#242424]/6">
+                <div className="flex items-center justify-between pt-2 border-t border-[#242424]/6">
                   <Link
                     to={`/portfolio/${album.slug}`}
                     className="inline-flex items-center gap-1 text-[12px] font-semibold tracking-wider uppercase text-[#111111] hover:text-[#C5A880] transition-colors"

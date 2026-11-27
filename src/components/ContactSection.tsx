@@ -17,11 +17,9 @@ import { analytics } from '../services/analytics';
 
 interface ContactSectionProps {
   initialProjectType?: string;
-  headingAs?: 'h1' | 'h2';
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectType, headingAs = 'h2' }) => {
-  const HeadingTag = headingAs;
+export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectType }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -98,24 +96,29 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
     }
   };
 
+  const whatsappServiceText =
+    projectType === 'Wedding Album Design'
+      ? 'ALBUM DESIGN & FINE ART RETOUCHING SERVICE'
+      : `ALBUM DESIGN & FINE ART RETOUCHING SERVICE (${projectType})`;
+
   const whatsappInquiryUrl = getWhatsAppUrl(
-    `Hi 2R Creations, I’m interested in your ${projectType} service. (Name: ${name || 'Prospective Client'})`
+    `Hi 2R Creations, I’m interested in your ${whatsappServiceText}. (Name: ${name || 'Prospective Client'})`
   );
 
   return (
-    <section id="contact" className="py-16 sm:py-24 lg:py-32 bg-[#F5F2EB] border-t border-[#242424]/10 scroll-mt-20">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+    <section id="contact" className="py-24 sm:py-32 bg-[#F5F2EB] border-t border-[#242424]/10 scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           
           {/* Left Column: Studio Editorial & Direct Contact */}
-          <div className="lg:col-span-5 flex flex-col justify-between min-w-0">
+          <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <span className="text-[11px] font-mono tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-semibold">
                 START A CONVERSATION
               </span>
-              <HeadingTag className="type-section-h2 text-[#111111] mb-5">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-5">
                 Let’s create something lasting together.
-              </HeadingTag>
+              </h2>
               <p className="text-sm sm:text-base text-[#242424]/75 font-light leading-relaxed mb-8">
                 Whether you’re a wedding photographer looking to outsource album production, or a couple desiring a custom heirloom book, we’d love to review your timeline and gallery scope.
               </p>
@@ -129,22 +132,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => analytics.whatsappClick('contact_direct')}
-                    className="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#FAF8F5] border border-[#242424]/10 rounded-xs hover:border-[#C5A880] hover:shadow-xs transition-all group cursor-pointer"
+                    className="flex items-center justify-between p-4 bg-[#FAF8F5] border border-[#242424]/10 rounded-xs hover:border-[#C5A880] hover:shadow-xs transition-all group cursor-pointer"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex items-center gap-3.5">
                       <div className="w-10 h-10 rounded-xs bg-[#25D366]/15 text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors flex items-center justify-center shrink-0">
                         <WhatsAppIcon className="w-5 h-5 fill-current" />
                       </div>
-                      <div className="min-w-0">
+                      <div>
                         <p className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                           WhatsApp Direct
                         </p>
-                        <p className="text-xs text-[#242424]/70 font-mono truncate">
+                        <p className="text-xs text-[#242424]/70 font-mono">
                           +94 72 638 7340 &bull; Instant Response
                         </p>
                       </div>
                     </div>
-                    <span className="text-xs font-semibold text-[#111111] group-hover:text-[#C5A880] flex items-center gap-1 whitespace-nowrap ml-auto">
+                    <span className="text-xs font-semibold text-[#111111] group-hover:text-[#C5A880] flex items-center gap-1">
                       Open WhatsApp &rarr;
                     </span>
                   </a>
@@ -152,16 +155,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
 
                 {/* Email Direct Channel with Direct Gmail & Copy options */}
                 <div className="p-4 bg-[#FAF8F5] border border-[#242424]/10 rounded-xs hover:border-[#C5A880] hover:shadow-xs transition-all">
-                  <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-3.5">
                       <div className="w-10 h-10 rounded-xs bg-[#EA4335]/10 text-[#EA4335] flex items-center justify-center shrink-0">
                         <Mail className="w-5 h-5" />
                       </div>
-                      <div className="min-w-0">
+                      <div>
                         <p className="text-xs uppercase tracking-wider font-semibold text-[#111111]">
                           Direct Email
                         </p>
-                        <p className="text-xs text-[#242424]/80 font-mono select-all break-all sm:break-normal">
+                        <p className="text-xs text-[#242424]/80 font-mono select-all">
                           {STUDIO_CONFIG.email}
                         </p>
                       </div>
@@ -223,7 +226,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
           </div>
 
           {/* Right Column: Lead Capture Form */}
-          <div className="lg:col-span-7 bg-[#FAF8F5] p-5 sm:p-8 lg:p-10 rounded-xs border border-[#242424]/10 shadow-xs min-w-0">
+          <div className="lg:col-span-7 bg-[#FAF8F5] p-8 sm:p-10 rounded-xs border border-[#242424]/10 shadow-xs">
             {submitted && submissionResult?.success ? (
               <div className="text-center py-12">
                 <div className="w-14 h-14 rounded-full bg-[#C5A880]/15 text-[#C5A880] flex items-center justify-center mx-auto mb-5">
@@ -370,7 +373,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       id="contact-whatsapp"
                       type="tel"
                       required
-                      maxLength={50}
                       value={whatsapp}
                       onChange={(e) => setWhatsapp(e.target.value)}
                       placeholder="+1 (555) 012-3456"
@@ -427,9 +429,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                       <input
                         id="contact-sample-link"
                         type="url"
-                        pattern="https://.*"
-                        title="Please enter a secure https:// cloud folder link (Google Drive, Dropbox, Pixieset, WeTransfer)"
-                        maxLength={500}
                         value={samplePhotosLink}
                         onChange={(e) => setSamplePhotosLink(e.target.value)}
                         placeholder="https://drive.google.com/..."
@@ -447,7 +446,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialProjectTy
                   <textarea
                     id="contact-message"
                     rows={4}
-                    maxLength={4000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about the celebration, estimated spread count, preferred lab, and delivery deadline..."

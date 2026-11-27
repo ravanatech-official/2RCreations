@@ -1,177 +1,101 @@
 /**
- * SEO, OpenGraph, Twitter & Schema.org JSON-LD Utility for 2R Creations
- * Dynamically manages route-level metadata, canonical URLs, social cards, and structured data.
+ * SEO & Metadata Utility for 2R Creations
+ * Manages document title, meta descriptions, robots directives, canonical URLs, and OpenGraph tags dynamically.
  */
-
-export interface BreadcrumbItem {
-  name: string;
-  path: string;
-}
 
 interface SEOProps {
   title: string;
   description: string;
   canonicalPath?: string;
   ogImage?: string;
-  ogImageAlt?: string;
   type?: 'website' | 'article';
   noIndex?: boolean;
-  breadcrumbs?: BreadcrumbItem[];
-  structuredData?: Record<string, any> | Record<string, any>[];
 }
 
-const DEFAULT_OG_IMAGE = '/assets/og/default-og.jpg';
-const DEFAULT_OG_ALT = '2R Creations — Specialist Wedding Album Designer & Editions of Timeless Memories';
-const PRODUCTION_BASE_URL = 'https://2rcreations.com';
+export function updateSEO({
+  title,
+  description,
+  canonicalPath = '',
+  ogImage = '/assets/images/2R-Creations-Designer-Portrait-Editorial.jpg',
+  type = 'website',
+  noIndex = false
+}: SEOProps) {
+  if (typeof document === 'undefined') return;
 
-export function getCanonicalBaseUrl(): string {
-  const configured = (import.meta.env.VITE_APP_URL as string | undefined)?.trim();
-  if (configured) {
-    return configured.replace(/\/+$/, '');
-  }
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin.replace(/\/+$/, '');
-  }
-  return PRODUCTION_BASE_URL;
-}
+  // Title
+  const formattedTitle = title.includes('2R CREATIONS') ? title : `${title} | 2R CREATIONS`;
+  document.title = formattedTitle;
 
-function setMetaByAttr(attr: 'name' | 'property', key: string, value: string) {
-  let meta = document.querySelector(`meta[${attr}="${key}"]`);
-  if (!meta) {
-    meta = document.createElement('meta');
-    meta.setAttribute(attr, key);
-    document.head.appendChild(meta);
+  // Description
+  let descMeta = document.querySelector('meta[name="description"]');
+  if (!descMeta) {
+    descMeta = document.createElement('meta');
+    descMeta.setAttribute('name', 'description');
+    document.head.appendChild(descMeta);
   }
-  meta.setAttribute('content', value);
-}
+  descMeta.setAttribute('content', description);
 
-function setCanonicalLink(href: string) {
+  // Robots directive (prevent soft-404 indexing while keeping normal pages indexable)
+  let robotsMeta = document.querySelector('meta[name="robots"]');
+  if (!robotsMeta) {
+    robotsMeta = document.createElement('meta');
+    robotsMeta.setAttribute('name', 'robots');
+    document.head.appendChild(robotsMeta);
+  }
+  robotsMeta.setAttribute(
+    'content',
+    noIndex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  );
+
+  // Canonical URL
+  const baseUrl = import.meta.env.VITE_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'https://2rcreations.com');
+  const fullUrl = `${baseUrl}${canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`}`;
+
   let canonicalLink = document.querySelector('link[rel="canonical"]');
   if (!canonicalLink) {
     canonicalLink = document.createElement('link');
     canonicalLink.setAttribute('rel', 'canonical');
     document.head.appendChild(canonicalLink);
   }
-  canonicalLink.setAttribute('href', href);
-}
+  canonicalLink.setAttribute('href', fullUrl);
 
-function syncRouteStructuredData(
-  baseUrl: string,
-  breadcrumbs?: BreadcrumbItem[],
-  structuredData?: Record<string, any> | Record<string, any>[]
-) {
-  const scriptId = 'route-structured-data';
-  const existing = document.getElementById(scriptId);
-
-  const graph: Record<string, any>[] = [];
-
-  if (breadcrumbs && breadcrumbs.length > 0) {
-    graph.push({
-      '@type': 'BreadcrumbList',
-      itemListElement: breadcrumbs.map((crumb, index) => {
-        const normalizedPath = crumb.path === '/' ? '/' : `/${crumb.path.replace(/^\/+/, '')}`;
-        return {
-          '@type': 'ListItem',
-          position: index + 1,
-          name: crumb.name,
-          item: `${baseUrl}${normalizedPath}`
-        };
-      })
-    });
-  }
-
-  if (structuredData) {
-    if (Array.isArray(structuredData)) {
-      graph.push(...structuredData);
-    } else {
-      graph.push(structuredData);
-    }
-  }
-
-  if (graph.length === 0) {
-    if (existing) existing.remove();
-    return;
-  }
-
-  const payload = {
-    '@context': 'https://schema.org',
-    '@graph': graph
+  // Open Graph
+  const ogTags: Record<string, string> = {
+    'og:title': formattedTitle,
+    'og:description': description,
+    'og:url': fullUrl,
+    'og:type': type,
+    'og:image': ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`,
+    'og:site_name': '2R CREATIONS — Professional Wedding Album Designer'
   };
 
-  let script = existing as HTMLScriptElement | null;
-  if (!script) {
-    script = document.createElement('script');
-    script.id = scriptId;
-    script.type = 'application/ld+json';
-    document.head.appendChild(script);
+  for (const [property, content] of Object.entries(ogTags)) {
+    let meta = document.querySelector(`meta[property="${property}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('property', property);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', content);
   }
-  script.textContent = JSON.stringify(payload);
-}
 
-export function updateSEO({
-  title,
-  description,
-  canonicalPath = '/',
-  ogImage = DEFAULT_OG_IMAGE,
-  ogImageAlt = DEFAULT_OG_ALT,
-  type = 'website',
-  noIndex = false,
-  breadcrumbs,
-  structuredData
-}: SEOProps) {
-  if (typeof document === 'undefined') return;
+  // Twitter Card
+  const twitterTags: Record<string, string> = {
+    'twitter:card': 'summary_large_image',
+    'twitter:title': formattedTitle,
+    'twitter:description': description,
+    'twitter:image': ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`
+  };
 
-  // Title
-  const normalizedTitle = title.trim();
-  const formattedTitle =
-    normalizedTitle.toLowerCase().includes('2r creations')
-      ? normalizedTitle
-      : `${normalizedTitle} | 2R Creations`;
-  document.title = formattedTitle;
-
-  // Description & Robots
-  setMetaByAttr('name', 'description', description);
-  setMetaByAttr(
-    'name',
-    'robots',
-    noIndex
-      ? 'noindex, nofollow'
-      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-  );
-
-  // Canonical URL (normalized without trailing slash except root '/')
-  const baseUrl = getCanonicalBaseUrl();
-  const cleanPath =
-    !canonicalPath || canonicalPath === '/'
-      ? '/'
-      : `/${canonicalPath.replace(/^\/+|\/+$/g, '')}`;
-  const fullUrl = `${baseUrl}${cleanPath}`;
-  setCanonicalLink(fullUrl);
-
-  // Resolve absolute social image URL
-  const normalizedOgImage = ogImage.startsWith('http')
-    ? ogImage
-    : `${baseUrl}${ogImage.startsWith('/') ? ogImage : `/${ogImage}`}`;
-
-  // OpenGraph
-  setMetaByAttr('property', 'og:locale', 'en_US');
-  setMetaByAttr('property', 'og:type', type);
-  setMetaByAttr('property', 'og:site_name', '2R CREATIONS');
-  setMetaByAttr('property', 'og:url', fullUrl);
-  setMetaByAttr('property', 'og:title', formattedTitle);
-  setMetaByAttr('property', 'og:description', description);
-  setMetaByAttr('property', 'og:image', normalizedOgImage);
-  setMetaByAttr('property', 'og:image:secure_url', normalizedOgImage);
-  setMetaByAttr('property', 'og:image:alt', ogImageAlt);
-
-  // Twitter / X
-  setMetaByAttr('name', 'twitter:card', 'summary_large_image');
-  setMetaByAttr('name', 'twitter:url', fullUrl);
-  setMetaByAttr('name', 'twitter:title', formattedTitle);
-  setMetaByAttr('name', 'twitter:description', description);
-  setMetaByAttr('name', 'twitter:image', normalizedOgImage);
-  setMetaByAttr('name', 'twitter:image:alt', ogImageAlt);
-
-  // Dynamic Route JSON-LD (BreadcrumbList + Page/Service/CreativeWork/FAQPage)
-  syncRouteStructuredData(baseUrl, noIndex ? undefined : breadcrumbs, noIndex ? undefined : structuredData);
+  for (const [name, content] of Object.entries(twitterTags)) {
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', content);
+  }
 }

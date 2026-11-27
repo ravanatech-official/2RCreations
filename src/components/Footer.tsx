@@ -38,22 +38,22 @@ export const Footer: React.FC<FooterProps> = () => {
   };
 
   return (
-    <footer id="main-footer" className="bg-[#D7BC97] text-[#1A1512] border-t border-[#C2A57E] pt-16 sm:pt-20 pb-[max(2.5rem,env(safe-area-inset-bottom))] transition-colors duration-300">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <footer id="main-footer" className="bg-[#D7BC97] text-[#1A1512] border-t border-[#C2A57E] pt-20 pb-12 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 sm:pb-16 border-b border-[#C2A57E]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-[#C2A57E]">
           
           {/* Col 1: Wordmark & Positioning */}
-          <div className="lg:col-span-6 min-w-0">
-            <Link to="/" className="inline-flex items-center gap-3 sm:gap-3.5 group focus:outline-none mb-5 sm:mb-6">
+          <div className="lg:col-span-6">
+            <Link to="/" className="inline-flex items-center gap-3.5 group focus:outline-none mb-6">
               <img
                 src="/assets/images/2r-black-logo.jpg"
                 alt="2R Creations Emblem"
-                className="h-12 sm:h-14 w-auto object-contain rounded-xs border border-[#1A1512]/20 shadow-xs group-hover:scale-[1.02] transition-transform duration-200 shrink-0"
+                className="h-14 w-auto object-contain rounded-xs border border-[#1A1512]/20 shadow-xs group-hover:scale-[1.02] transition-transform duration-200"
               />
               <span 
-                className="text-lg sm:text-2xl font-bold tracking-[0.12em] sm:tracking-[0.14em] text-[#1A1512] group-hover:text-[#644622] transition-colors leading-none whitespace-nowrap"
+                className="text-xl sm:text-2xl font-bold tracking-[0.14em] text-[#1A1512] group-hover:text-[#644622] transition-colors leading-none"
                 style={{ fontFamily: "'Cinzel', 'Bodoni Moda', serif" }}
               >
                 2R CREATIONS
@@ -64,14 +64,14 @@ export const Footer: React.FC<FooterProps> = () => {
               Story-driven wedding album design crafted for photographers and studios worldwide. Every photograph has a place. Every spread has a purpose.
             </p>
 
-            <div className="flex flex-wrap items-center gap-2 text-xs text-[#1A1512]/90 font-mono">
+            <div className="flex items-center gap-2.5 text-xs text-[#1A1512]/90 font-mono">
               <Mail className="w-3.5 h-3.5 text-[#1A1512] shrink-0" />
               <a
                 href={getGmailComposeUrl('Wedding Album Design Inquiry')}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => analytics.emailClick('footer_gmail')}
-                className="hover:text-[#644622] transition-colors font-medium underline underline-offset-2 break-all sm:break-normal"
+                className="hover:text-[#644622] transition-colors font-medium underline underline-offset-2"
                 title="Click to compose directly in Gmail"
               >
                 {STUDIO_CONFIG.email}
@@ -79,7 +79,7 @@ export const Footer: React.FC<FooterProps> = () => {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-xs bg-[#1A1512]/10 hover:bg-[#1A1512]/15 text-[#1A1512] transition-colors cursor-pointer text-[10px] shrink-0"
+                className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-xs bg-[#1A1512]/10 hover:bg-[#1A1512]/15 text-[#1A1512] transition-colors cursor-pointer text-[10px]"
                 title="Copy email address"
               >
                 {copiedEmail ? (

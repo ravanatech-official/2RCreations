@@ -18,29 +18,10 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
   useEffect(() => {
     if (album) {
       updateSEO({
-        title: `${album.title} Album Design | 2R Creations`,
-        description: `${album.description} ${album.totalSpreads} spreads (${album.totalPages} pages) crafted with editorial pacing by 2R Creations.`,
+        title: `${album.title} — Signature Album Concept | 2R CREATIONS`,
+        description: `${album.description} ${album.totalSpreads} spreads, ${album.totalPages} pages designed by 2R Creations with bespoke editorial pacing.`,
         canonicalPath: `/portfolio/${album.slug}`,
-        ogImage: album.coverImage,
-        ogImageAlt: `${album.title} — ${album.subtitle} | 2R Creations`,
-        type: 'article',
-        breadcrumbs: [
-          { name: 'Home', path: '/' },
-          { name: 'Portfolio', path: '/portfolio' },
-          { name: album.title, path: `/portfolio/${album.slug}` }
-        ],
-        structuredData: {
-          '@type': 'CreativeWork',
-          name: album.title,
-          headline: album.subtitle,
-          description: album.description,
-          url: `https://2rcreations.com/portfolio/${album.slug}`,
-          image: `https://2rcreations.com${album.coverImage}`,
-          keywords: album.tags.join(', '),
-          creator: {
-            '@id': 'https://2rcreations.com/#organization'
-          }
-        }
+        ogImage: album.coverImage
       });
       window.scrollTo(0, 0);
     }
@@ -63,16 +44,16 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
   }
 
   const otherAlbums = ALBUMS.filter(a => a.id !== album.id);
-  const whatsappUrl = getWhatsAppUrl(`Hi 2R Creations, I’m interested in an album design similar to ${album.title}.`);
+  const whatsappUrl = getWhatsAppUrl(`Hi 2R Creations, I’m interested in your ALBUM DESIGN & FINE ART RETOUCHING SERVICE (similar to ${album.title}).`);
   const is12x24 = (album.dimensions?.includes('12') && album.dimensions?.includes('24')) || album.folderName === '03-luxury-estate';
   const is10x20 = album.dimensions?.includes('10') || album.folderName === '02-modern-editorial';
   const isSquarePage = is10x20 || is12x24;
   const spreadDimensions = album.dimensions || (is12x24 ? '12" × 24"' : (is10x20 ? '10" × 20"' : '17" × 24"'));
 
   return (
-    <div className="pt-24 sm:pt-28 pb-16 sm:pb-24 bg-[#FBF9F5]">
+    <div className="pt-28 pb-24 bg-[#FBF9F5]">
       {/* Top Breadcrumb & Return */}
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 mb-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mb-8">
         <Link
           to="/portfolio"
           className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#242424]/60 hover:text-[#111111] transition-colors"
@@ -83,8 +64,8 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
       </div>
 
       {/* Hero Album Overview */}
-      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 mb-12 sm:mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Cover Presentation Frame */}
           <div className="lg:col-span-6 flex justify-center">
@@ -97,25 +78,25 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30 pointer-events-none" />
 
               {/* Badges */}
-              <div className="absolute top-3.5 sm:top-5 left-3.5 sm:left-5 right-3.5 sm:right-5 flex flex-wrap items-center justify-between gap-2 text-[9px] sm:text-[10px] font-mono text-white/90">
-                <span className="px-2 sm:px-2.5 py-1 bg-black/70 backdrop-blur-xs rounded-xs border border-white/10 uppercase tracking-widest">
+              <div className="absolute top-5 left-5 right-5 flex items-center justify-between text-[10px] font-mono text-white/90">
+                <span className="px-2.5 py-1 bg-black/70 backdrop-blur-xs rounded-xs border border-white/10 uppercase tracking-widest">
                   CONCEPT ALBUM {album.id.toUpperCase()}
                 </span>
-                <span className="px-2 sm:px-2.5 py-1 bg-[#C5A880] text-[#111111] font-semibold rounded-xs uppercase tracking-widest">
+                <span className="px-2.5 py-1 bg-[#C5A880] text-[#111111] font-semibold rounded-xs uppercase tracking-widest">
                   {album.category}
                 </span>
               </div>
 
               {/* Bottom Card Overlay CTA */}
-              <div className="absolute bottom-3.5 sm:bottom-6 left-3.5 sm:left-6 right-3.5 sm:right-6">
+              <div className="absolute bottom-6 left-6 right-6">
                 <button
                   onClick={() => {
                     analytics.albumOpen(album.id, album.title);
                     onOpenViewer(album.id, 1);
                   }}
-                  className="w-full py-3 sm:py-3.5 px-3 sm:px-6 bg-[#FBF9F5] hover:bg-[#C5A880] text-[#111111] font-semibold text-[10.5px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em] rounded-xs shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-center leading-snug"
+                  className="w-full py-3.5 px-6 bg-[#FBF9F5] hover:bg-[#C5A880] text-[#111111] font-semibold text-xs uppercase tracking-[0.2em] rounded-xs shadow-xl transition-all flex items-center justify-center gap-2.5 cursor-pointer"
                 >
-                  <BookOpen className="w-4 h-4 text-[#C5A880] shrink-0" />
+                  <BookOpen className="w-4 h-4 text-[#C5A880]" />
                   <span>Open Full {spreadDimensions} Spread Viewer &rarr;</span>
                 </button>
               </div>
@@ -135,7 +116,7 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
               </span>
             </div>
 
-            <h1 className="type-hero-h1 text-[#111111] mb-3">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-3">
               {album.title}
             </h1>
             <p className="text-base sm:text-lg text-[#C5A880] font-normal mb-6">
@@ -268,7 +249,7 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
       </section>
 
       {/* Narrative Storyline Progression & Spread Samples */}
-      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
         <div className="max-w-2xl mb-8">
           <span className="text-[10.5px] font-mono tracking-widest text-[#C5A880] uppercase block mb-2 font-semibold">
             STORYLINE CADENCE
@@ -333,7 +314,7 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
         </div>
 
         {/* Open full reader banner */}
-        <div className="mt-8 p-5 sm:p-6 bg-[#161616] text-[#FBF9F5] rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="mt-8 p-6 bg-[#161616] text-[#FBF9F5] rounded-xs flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h4 className="font-serif text-lg font-medium text-[#FBF9F5] mb-1">
               Want to review all 24 spreads in sequence?
@@ -344,7 +325,7 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
           </div>
           <button
             onClick={() => onOpenViewer(album.id)}
-            className="w-full sm:w-auto px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#111111] bg-[#C5A880] hover:bg-[#d6bc97] rounded-xs shrink-0 cursor-pointer text-center"
+            className="px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#111111] bg-[#C5A880] hover:bg-[#d6bc97] rounded-xs shrink-0 cursor-pointer"
           >
             Launch Full Album Viewer &rarr;
           </button>
@@ -352,7 +333,7 @@ export const AlbumDetailPage: React.FC<AlbumDetailPageProps> = ({ onOpenViewer }
       </section>
 
       {/* Explore Other Concepts */}
-      <section className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-12 border-t border-[#242424]/10">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 border-t border-[#242424]/10">
         <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#111111] mb-6">
           Explore Other Signature Concepts
         </h3>

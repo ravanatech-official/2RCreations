@@ -14,7 +14,7 @@ export const STUDIO_CONFIG = {
   // International phone number for Sri Lanka (+94)
   whatsappNumber: '94726387340',
   whatsappDisplayNumber: '+94 72 638 7340',
-  whatsappPrefilledMessage: 'Hi 2R Creations, I’d love to know more details about your wedding album design packages.',
+  whatsappPrefilledMessage: 'Hi 2R Creations, I’d love to know more details about your ALBUM DESIGN & FINE ART RETOUCHING SERVICE.',
   
   // Social Profile Configuration:
   // Treat all external social URLs as unverified until confirmed by the owner.

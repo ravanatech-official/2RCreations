@@ -7,7 +7,7 @@
     "dev": "node scripts/generateAlbumManifest.mjs && tsx server.ts",
     "start": "node server.ts",
     "prebuild": "node scripts/generateAlbumManifest.mjs",
-    "build": "vite build && node scripts/generate-seo-routes.mjs",
+    "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"

@@ -47,31 +47,31 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   };
 
   return (
-    <div className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 bg-[#FBF9F5] min-h-screen text-[#242424]">
-      <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+    <div className="pt-32 pb-24 bg-[#FBF9F5] min-h-screen text-[#242424]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Gallery Intro / Hero Header */}
-        <header className="max-w-3xl mb-10 sm:mb-16">
+        <header className="max-w-3xl mb-12 sm:mb-16">
           <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C5A880] uppercase block mb-3 font-mono">
             STUDIO ARCHIVE &bull; ALL DISCIPLINES
           </span>
-          <h1 className="type-hero-h1 text-[#111111] mb-4">
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-[#111111] leading-[1.15] mb-4">
             The Complete Works &amp; Gallery Archive
           </h1>
-          <p className="type-large-body text-[#242424]/80 font-light">
+          <p className="text-base sm:text-lg text-[#242424]/80 leading-relaxed font-light">
             Every signature album concept, editorial spread architecture, high-frequency retouching study, and real client story curated across our studio services.
           </p>
         </header>
 
         {/* Global Reputed Category Navigation Bar */}
-        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-10 sm:mb-12 border-b border-[#242424]/10 no-scrollbar">
-          <span className="text-[10.5px] font-mono uppercase tracking-widest text-[#242424]/40 shrink-0 mr-1 sm:mr-2 whitespace-nowrap">
+        <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-12 border-b border-[#242424]/10 no-scrollbar">
+          <span className="text-[10.5px] font-mono uppercase tracking-widest text-[#242424]/40 shrink-0 mr-2">
             Discipline Archive:
           </span>
 
           <button
             onClick={() => handleTabChange('ALL')}
-            className={`px-3.5 sm:px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer whitespace-nowrap shrink-0 ${
+            className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer ${
               activeTab === 'ALL'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5'
@@ -82,45 +82,45 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
 
           <button
             onClick={() => handleTabChange('ALBUMS')}
-            className={`px-3.5 sm:px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+            className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'ALBUMS'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+            <BookOpen className="w-3.5 h-3.5 text-[#C5A880]" />
             <span>Album Concepts ({ALBUMS.length})</span>
           </button>
 
           <button
             onClick={() => handleTabChange('RETOUCHING')}
-            className={`px-3.5 sm:px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+            className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'RETOUCHING'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+            <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
             <span>Retouching Studies ({RETOUCHING_STUDIES.length})</span>
           </button>
 
           <button
             onClick={() => handleTabChange('REAL_WORK')}
-            className={`px-3.5 sm:px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+            className={`px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-all rounded-xs cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'REAL_WORK'
                 ? 'bg-[#111111] text-[#FBF9F5] shadow-xs'
                 : 'text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5'
             }`}
           >
-            <Layers className="w-3.5 h-3.5 text-[#C5A880] shrink-0" />
+            <Layers className="w-3.5 h-3.5 text-[#C5A880]" />
             <span>Client Real Weddings ({publishedProjects.length})</span>
           </button>
         </div>
 
         {/* SECTION 1: ALBUM CONCEPTS (All 6 Concepts with Complete Spreads) */}
         {(activeTab === 'ALL' || activeTab === 'ALBUMS') && (
-          <section className="mb-16 sm:mb-20">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-[#242424]/8">
+          <section className="mb-20">
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-[#242424]/8">
               <div>
                 <span className="text-[10px] font-mono tracking-widest uppercase text-[#C5A880] block font-semibold">
                   HEIRLOOM SPREAD DESIGNS
@@ -214,8 +214,8 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
 
         {/* SECTION 2: RETOUCHING & MANIPULATION STUDIES */}
         {(activeTab === 'ALL' || activeTab === 'RETOUCHING') && (
-          <section className="mb-16 sm:mb-20">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b border-[#242424]/8">
+          <section className="mb-20">
+            <div className="flex items-center justify-between mb-6 pb-3 border-b border-[#242424]/8">
               <div>
                 <span className="text-[10px] font-mono tracking-widest uppercase text-[#C5A880] block font-semibold">
                   FINE ART POST-PRODUCTION LAB
@@ -302,8 +302,8 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
 
         {/* SECTION 3: REAL CLIENT PROJECTS (Client-Authorized Real Weddings) */}
         {(activeTab === 'ALL' || activeTab === 'REAL_WORK') && (
-          <section className="mb-16 sm:mb-20">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-8 pb-3 border-b border-[#242424]/8">
+          <section className="mb-20">
+            <div className="flex items-center justify-between mb-8 pb-3 border-b border-[#242424]/8">
               <div>
                 <span className="text-[10px] font-mono tracking-widest uppercase text-[#C5A880] block font-semibold">
                   COMMISSIONED STORIES
@@ -318,7 +318,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
             </div>
 
             {publishedProjects.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-14 lg:gap-16">
                 {publishedProjects.map((project, index) => (
                   <GalleryProjectCard
                     key={project.id}
@@ -329,7 +329,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
                 ))}
               </div>
             ) : (
-              <div className="border border-[#242424]/10 bg-[#FAF8F5] p-6 sm:p-12 rounded-xs text-center">
+              <div className="border border-[#242424]/10 bg-[#FAF8F5] p-8 sm:p-12 rounded-xs text-center">
                 <div className="w-10 h-10 rounded-full border border-[#C5A880]/30 bg-[#F5F2EB] flex items-center justify-center mx-auto mb-4">
                   <Layers className="w-4 h-4 text-[#C5A880]" />
                 </div>

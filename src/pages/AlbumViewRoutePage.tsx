@@ -12,17 +12,10 @@ export const AlbumViewRoutePage: React.FC = () => {
   useEffect(() => {
     if (album) {
       updateSEO({
-        title: `${album.title} Spread Viewer | 2R Creations`,
-        description: `Flip through all ${album.totalSpreads} editorial spreads of the ${album.title} wedding album concept designed by 2R Creations.`,
+        title: `Interactive Album Viewer: ${album.title} | 2R CREATIONS`,
+        description: `Explore the full ${album.totalSpreads}-spread layout of the ${album.title} signature study with editorial cadence and page-turn pacing.`,
         canonicalPath: `/portfolio/${album.slug}/view`,
-        ogImage: album.coverImage,
-        ogImageAlt: `${album.title} Interactive Album Spread Viewer`,
-        breadcrumbs: [
-          { name: 'Home', path: '/' },
-          { name: 'Portfolio', path: '/portfolio' },
-          { name: album.title, path: `/portfolio/${album.slug}` },
-          { name: 'Spread Viewer', path: `/portfolio/${album.slug}/view` }
-        ]
+        ogImage: album.coverImage
       });
     }
   }, [album]);

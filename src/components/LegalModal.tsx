@@ -11,24 +11,24 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
   if (!type) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#111111]/85 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#111111]/85 backdrop-blur-sm animate-fadeIn">
       <div 
-        className="bg-[#FAF8F5] border border-[#242424]/15 rounded-xs w-full max-w-3xl max-h-[90dvh] flex flex-col shadow-2xl overflow-hidden"
+        className="bg-[#FAF8F5] border border-[#242424]/15 rounded-xs w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="legal-title"
       >
         {/* Header */}
-        <div className="p-4 sm:px-8 sm:py-6 border-b border-[#242424]/10 flex items-center justify-between gap-3 bg-[#F5F2EB] shrink-0">
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            {type === 'privacy' && <Lock className="w-5 h-5 text-[#C5A880] shrink-0" />}
-            {type === 'client-image-policy' && <Shield className="w-5 h-5 text-[#C5A880] shrink-0" />}
-            {type === 'terms' && <FileText className="w-5 h-5 text-[#C5A880] shrink-0" />}
-            <div className="min-w-0">
+        <div className="p-6 sm:px-8 border-b border-[#242424]/10 flex items-center justify-between bg-[#F5F2EB]">
+          <div className="flex items-center gap-3">
+            {type === 'privacy' && <Lock className="w-5 h-5 text-[#C5A880]" />}
+            {type === 'client-image-policy' && <Shield className="w-5 h-5 text-[#C5A880]" />}
+            {type === 'terms' && <FileText className="w-5 h-5 text-[#C5A880]" />}
+            <div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#C5A880] block">
                 LEGAL & STUDIO POLICIES
               </span>
-              <h3 id="legal-title" className="font-serif text-lg sm:text-2xl font-medium text-[#111111] leading-snug">
+              <h3 id="legal-title" className="font-serif text-2xl font-medium text-[#111111]">
                 {type === 'privacy' && 'Privacy Policy'}
                 {type === 'client-image-policy' && 'Client Image Confidentiality Policy'}
                 {type === 'terms' && 'Terms of Service & Collaboration'}
@@ -38,7 +38,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xs text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5 transition-colors cursor-pointer shrink-0"
+            className="p-2 rounded-xs text-[#242424]/60 hover:text-[#111111] hover:bg-[#242424]/5 transition-colors cursor-pointer"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -46,7 +46,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
         </div>
 
         {/* Content Body */}
-        <div className="p-4 sm:p-8 overflow-y-auto overscroll-contain space-y-6 text-sm text-[#242424]/85 leading-relaxed font-light">
+        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-sm text-[#242424]/85 leading-relaxed font-light">
           {type === 'privacy' && (
             <>
               <div>

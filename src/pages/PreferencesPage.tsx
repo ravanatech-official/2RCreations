@@ -8,22 +8,18 @@ import { updateSEO } from '../utils/seo';
 export const PreferencesPage: React.FC = () => {
   useEffect(() => {
     updateSEO({
-      title: 'Privacy Preferences & Opt-Out | 2R Creations',
+      title: 'Privacy Preferences & WhatsApp Opt-Out | 2R CREATIONS',
       description: 'Manage your cookie consent preferences, submit an instant WhatsApp opt-out, or exercise GDPR/CCPA data export and erasure rights.',
-      canonicalPath: '/preferences',
-      breadcrumbs: [
-        { name: 'Home', path: '/' },
-        { name: 'Privacy Preferences', path: '/preferences' }
-      ]
+      canonicalPath: '/preferences'
     });
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FBF9F5] text-[#242424] pt-24 sm:pt-28 pb-16 sm:pb-24">
-      <div className="max-w-5xl 2xl:max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8">
+    <div className="min-h-screen bg-[#FBF9F5] text-[#242424] pt-28 pb-24">
+      <div className="max-w-5xl mx-auto px-6 sm:px-8">
         {/* Breadcrumb & Navigation */}
-        <div className="flex items-center gap-2 text-xs font-mono text-[#242424]/60 uppercase tracking-wider mb-6 sm:mb-8">
+        <div className="flex items-center gap-2 text-xs font-mono text-[#242424]/60 uppercase tracking-wider mb-8">
           <Link to="/" className="hover:text-[#111111] flex items-center gap-1 transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Home</span>
@@ -33,19 +29,19 @@ export const PreferencesPage: React.FC = () => {
         </div>
 
         {/* Page Editorial Header */}
-        <div className="mb-10 sm:mb-12">
+        <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#C5A880]/15 border border-[#C5A880]/30 rounded-xs mb-4">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#644622] shrink-0" />
-            <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.16em] sm:tracking-[0.2em] uppercase font-semibold text-[#644622]">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#644622]" />
+            <span className="text-[11px] font-mono tracking-[0.2em] uppercase font-semibold text-[#644622]">
               DATA SOVEREIGNTY &amp; COMMUNICATION GOVERNANCE
             </span>
           </div>
 
-          <h1 className="type-hero-h1 text-[#111111] mb-4">
+          <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-[#111111] leading-tight mb-4">
             Privacy Preference Center &amp; WhatsApp Opt-Out
           </h1>
 
-          <p className="type-normal-body text-[#242424]/75 font-light max-w-2xl">
+          <p className="text-sm sm:text-base text-[#242424]/75 font-light leading-relaxed max-w-2xl">
             You maintain complete autonomy over how 2R Creations communicates with you and uses local browser tokens. Adjust your cookie governance, submit an instant WhatsApp opt-out, or request data export and erasure below.
           </p>
         </div>
@@ -98,7 +94,7 @@ export const PreferencesPage: React.FC = () => {
                 How can I reach your Data Controller directly?
               </h3>
               <p className="text-xs text-[#242424]/70 font-light leading-relaxed">
-                For urgent inquiries or legal notices, you can write directly to our data privacy officer at <a href={`mailto:${STUDIO_CONFIG.email}`} className="underline font-medium text-[#111111] break-all sm:break-normal">{STUDIO_CONFIG.email}</a> with the subject line <em>"Privacy Rights Notice"</em>.
+                For urgent inquiries or legal notices, you can write directly to our data privacy officer at <a href={`mailto:${STUDIO_CONFIG.email}`} className="underline font-medium text-[#111111]">{STUDIO_CONFIG.email}</a> with the subject line <em>"Privacy Rights Notice"</em>.
               </p>
             </div>
           </div>
